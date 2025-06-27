@@ -1,0 +1,69 @@
+# docker-compose.yml (v2 - Atualizado com arp-scan)
+# Laboratório para a Aula 8: Endereçamento IP & Subnetting
+# Kensei CyberSec - Formação 2025
+
+version: '3.8'
+
+services:
+  attacker:
+    image: alpine:latest
+    container_name: maquina-atacante
+    command: ["sleep", "infinity"]
+    networks:
+      rh_net:
+        ipv4_address: 172.20.10.100
+      visitante_net:
+        ipv4_address: 192.168.100.100
+    # Pré-instalação de ferramentas, agora incluindo arp-scan
+    entrypoint: |
+      /bin/sh -c "
+      apk update && apk add --no-cache iproute2 curl nmap net-tools arp-scan &&
+      echo 'Ambiente de ataque pronto. Use: docker exec -it maquina-atacante /bin/sh' &&
+      sleep infinity
+      "
+
+  servidor_rh:
+    image: nginx:alpine
+    container_name: servidor-rh
+    volumes:
+      - ./rh:/usr/share/nginx/html:ro
+    networks:
+      rh_net:
+        ipv4_address: 172.20.10.10
+
+  servidor_eng:
+    image: nginx:alpine
+    container_name: servidor-engenharia
+    volumes:
+      - ./eng:/usr/share/nginx/html:ro
+    networks:
+      eng_net:
+        ipv4_address: 172.20.20.20
+
+  impressora_visitante:
+    image: nginx:alpine
+    container_name: impressora-visitantes
+    volumes:
+      - ./visitantes:/usr/share/nginx/html:ro
+    networks:
+      visitante_net:
+        ipv4_address: 192.168.100.30
+
+networks:
+  rh_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.10.0/24
+
+  eng_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.20.0/24
+
+  visitante_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
