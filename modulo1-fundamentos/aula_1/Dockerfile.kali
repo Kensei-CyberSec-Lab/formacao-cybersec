@@ -1,0 +1,22 @@
+FROM kalilinux/kali-rolling:latest
+
+# Configurar repositórios do Kali Linux
+RUN echo 'deb http://http.kali.org/kali kali-rolling main contrib non-free non-free-firmware' > /etc/apt/sources.list
+
+# Atualizar e instalar pacotes necessários
+RUN apt update && \
+    apt install -y \
+    iputils-ping \
+    net-tools \
+    curl \
+    nmap \
+    dnsutils \
+    tcpdump \
+    wireshark \
+    netcat-traditional \
+    whois \
+    iproute2 && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+
+CMD ["bash"]
