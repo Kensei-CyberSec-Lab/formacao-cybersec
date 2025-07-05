@@ -8,12 +8,14 @@
 
 1. Clone o repositório (se aplicável)
 2. Suba o ambiente:
-   docker-compose up -d
+   docker-compose up --build -d
 3. Acesse os containers:
    docker exec -it ubuntu_lab bash
    docker exec -it kali_lab bash
 4. Acesse DVWA em: http://localhost:8080
 
+   **Nota técnica:** Após concluir os exemplos e testes no ambiente, é recomendável finalizar os containers para liberar recursos no sistema. Para isso, utilize o comando `docker-compose down`.
+
 ## Extras
 - DVWA: login padrão admin / password
-- Defina DVWA Security como "low" no primeiro acesso.
+- Defina DVWA Security como "low" no primeiro

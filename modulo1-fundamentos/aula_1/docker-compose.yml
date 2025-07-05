@@ -1,6 +1,8 @@
 services:
   ubuntu_lab:
-    image: ubuntu:20.04
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
     container_name: ubuntu_lab
     entrypoint: ["/bin/bash", "-c"]
     command: bash -c "\
@@ -17,21 +19,24 @@ services:
         ipv4_address: 172.28.1.10
 
   kali_lab:
-    image: kalilinux/kali-rolling
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
     container_name: kali_lab
-    entrypoint: ["/bin/bash", "-c"]
-    command: bash -c "\
-      apt update && \
-      apt install -y iputils-ping net-tools curl nmap dnsutils tcpdump wireshark netcat-traditional whois && \
-      bash"
     tty: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    security_opt:
+      - seccomp:unconfined
     networks:
       cyberlab:
         ipv4_address: 172.28.1.20
 
   dvwa_lab:
-    image: vulnerables/web-dvwa
-    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile.dvwa
     container_name: dvwa_lab
     ports:
       - "8080:80"

@@ -1,0 +1,6 @@
+FROM vulnerables/web-dvwa:latest
+
+# Configurar o arquivo FLAG
+RUN echo 'FLAG{sql_injection_realizada_com_sucesso}' > /var/www/html/flag.txt
+
+CMD ["bash"]
