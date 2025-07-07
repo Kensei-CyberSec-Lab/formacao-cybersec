@@ -1,0 +1,42 @@
+services:
+  gvm:
+    image: securecompliance/gvm
+    container_name: gvm
+    restart: unless-stopped
+    platform: linux/amd64
+    ports:
+      - "9392:9392"
+    environment:
+      - PASSWORD=admin
+    volumes:
+      - gvm-data:/data
+      - gvm-var-lib:/var/lib/openvas
+      - gvm-var-lib-sec:/var/lib/gvm
+      - gvm-var-cache:/var/cache/openvas
+      - gvm-run:/run/gvm
+    networks:
+      - gvm-net
+
+  alvo-vulneravel:
+    image: tleemcjr/metasploitable2
+    container_name: metasploitable-alvo
+    platform: linux/amd64
+    ports:
+      - "21:21"
+      - "80:80"
+      - "8180:8180"
+    privileged: true
+    tty: true
+    networks:
+      - gvm-net
+
+volumes:
+  gvm-data:
+  gvm-var-lib:
+  gvm-var-lib-sec:
+  gvm-var-cache:
+  gvm-run:
+
+networks:
+  gvm-net:
+    driver: bridge
