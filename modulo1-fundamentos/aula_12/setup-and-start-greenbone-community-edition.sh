@@ -18,7 +18,7 @@
 
 set -e
 
-DOWNLOAD_DIR=$HOME/greenbone-community-container
+# DOWNLOAD_DIR=$HOME/greenbone-community-container
 RELEASE="22.4"
 
 
@@ -48,21 +48,24 @@ installed curl
 installed docker
 installed docker compose
 
-mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
+# mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
 
-echo "Downloading docker-compose file..."
-curl -f -O https://greenbone.github.io/docs/latest/_static/docker-compose.yml
+# echo "Downloading docker-compose file..."
+# curl -f -O https://greenbone.github.io/docs/latest/_static/docker-compose.yml
 
 echo "Pulling Greenbone Community Containers"
-docker compose -f "$DOWNLOAD_DIR"/docker-compose.yml pull
+# docker compose -f "$DOWNLOAD_DIR"/docker-compose.yml pull
+docker compose -f docker-compose.yml pull
 echo
 
 echo "Starting Greenbone Community Containers"
-docker compose -f "$DOWNLOAD_DIR"/docker-compose.yml up -d
+# docker compose -f "$DOWNLOAD_DIR"/docker-compose.yml up -d
+docker compose -f docker-compose.yml up -d
 echo
 
 read -r -s -p "Password for admin user: " password
-docker compose -f "$DOWNLOAD_DIR"/docker-compose.yml \
+# docker compose -f "$DOWNLOAD_DIR"/docker-compose.yml \
+docker compose -f docker-compose.yml \
     exec -u gvmd gvmd gvmd --user=admin --new-password="$password"
 
 echo
