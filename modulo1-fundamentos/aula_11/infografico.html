@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infográfico: Desvendando SMB & SNMP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #F4F4F4;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+            max-width: 450px;
+        }
+        .kensei-card {
+            background-color: #2a2a2a;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #444;
+        }
+        .kensei-title {
+            font-weight: 900;
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            background: linear-gradient(90deg, #33FF57, #3357FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .kensei-arrow {
+            font-size: 3rem;
+            color: #FF5733;
+            line-height: 1;
+            align-self: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black mb-2 kensei-title">Desvendando SMB & SNMP</h1>
+            <p class="text-lg text-gray-400">Os Pilares e as Fraquezas da Rede Corporativa</p>
+        </header>
+
+        <section id="protocolos" class="mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="kensei-card">
+                    <h2 class="text-3xl font-bold mb-4 text-cyan-400">O que é SMB?</h2>
+                    <p class="mb-4 text-gray-300">O <span class="font-bold">Server Message Block</span> é o protocolo padrão para compartilhamento de arquivos e impressoras em redes locais. É o motor por trás da "Vizinhança de Rede" do Windows. Sua versão Linux é o Samba.</p>
+                    <div class="text-center bg-gray-800 p-3 rounded-lg">
+                        <p class="text-sm text-gray-400">Portas Comuns</p>
+                        <p class="text-2xl font-bold text-cyan-400">TCP 139 / 445</p>
+                    </div>
+                </div>
+
+                <div class="kensei-card">
+                    <h2 class="text-3xl font-bold mb-4 text-orange-400">O que é SNMP?</h2>
+                    <p class="mb-4 text-gray-300">O <span class="font-bold">Simple Network Management Protocol</span> é usado para monitorar e gerenciar dispositivos de rede como roteadores, switches e servidores, que reportam seu status para um ponto central.</p>
+                    <div class="text-center bg-gray-800 p-3 rounded-lg">
+                        <p class="text-sm text-gray-400">Porta Padrão</p>
+                        <p class="text-2xl font-bold text-orange-400">UDP 161</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="smb-vulns" class="mb-16 kensei-card">
+            <h2 class="text-3xl font-bold mb-2 text-center text-cyan-400">SMB: O Campo Minado</h2>
+            <p class="text-center text-gray-400 mb-8">Por ser tão comum e complexo, o SMB possui diversas vulnerabilidades clássicas.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Principais Vetores de Ataque</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li><span class="font-bold text-red-500">Acesso Anônimo (Null Session):</span> Permite a enumeração completa de usuários, grupos e shares sem autenticação.</li>
+                        <li><span class="font-bold text-red-500">Shares Mal Configurados:</span> Permissões de "Leitura/Escrita para Todos" abrem a porta para vazamento de dados e ransomware.</li>
+                        <li><span class="font-bold text-red-500">Sistemas Desatualizados:</span> Abrem brechas para exploits críticos como o EternalBlue (usado pelo WannaCry).</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="smbVulnerabilitiesChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-2">Nível de risco associado a cada tipo de falha SMB.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="snmp-vulns" class="mb-16 kensei-card">
+            <h2 class="text-3xl font-bold mb-2 text-center text-orange-400">SNMP: A Porta Escancarada</h2>
+            <p class="text-center text-gray-400 mb-8">A simplicidade do SNMP é também sua maior fraqueza, especialmente quando mal configurado.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                 <div>
+                    <div class="chart-container">
+                        <canvas id="snmpVulnerabilitiesChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-2">Prevalência de Community Strings padrão em dispositivos.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">O Perigo das "Community Strings"</h3>
+                    <p class="mb-4 text-gray-300">A autenticação via "Community Strings" (essencialmente, senhas em texto claro) é o principal problema. A maioria dos dispositivos vem de fábrica com padrões conhecidos:</p>
+                    <ul class="space-y-3">
+                        <li><code class="bg-yellow-900/50 text-yellow-300 p-2 rounded-md font-mono">public</code> (leitura): Permite extrair informações massivas do sistema (versão de SO, nomes de contas, tabelas de roteamento).</li>
+                         <li><code class="bg-red-900/50 text-red-300 p-2 rounded-md font-mono">private</code> (escrita): Permite que um atacante <span class="font-bold">altere a configuração</span> do dispositivo de rede.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="attacker-mentality" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">A Mentalidade do Atacante 😈</h2>
+            <div class="kensei-card">
+                 <p class="text-center text-gray-400 mb-8">Um pentester não vê apenas portas abertas. Ele vê um caminho. A combinação de SMB e SNMP é devastadora porque fornece as duas metades do mapa para um ataque bem-sucedido.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8">
+                    <div class="text-center p-6 bg-gray-800 rounded-lg">
+                        <p class="text-5xl mb-2">🗺️</p>
+                        <h3 class="text-xl font-bold text-cyan-400">SMB = O Mapa do Tesouro</h3>
+                        <p class="text-gray-400">Fornece o "QUEM": Nomes de usuários, grupos e arquivos.</p>
+                    </div>
+                    <div class="kensei-arrow text-cyan-400">+</div>
+                    <div class="text-center p-6 bg-gray-800 rounded-lg">
+                        <p class="text-5xl mb-2">🕵️</p>
+                        <h3 class="text-xl font-bold text-orange-400">SNMP = O Espião Interno</h3>
+                        <p class="text-gray-400">Fornece o "COMO": Versão do SO, hardware e configuração da rede.</p>
+                    </div>
+                     <div class="kensei-arrow text-green-400">=</div>
+                     <div class="text-center p-6 bg-gray-900 rounded-lg border-2 border-green-400">
+                        <p class="text-5xl mb-2">🎯</p>
+                        <h3 class="text-xl font-bold text-green-400">Ataque Direcionado</h3>
+                        <p class="text-gray-400">Conhecimento completo para um ataque preciso e eficaz.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="mitigation" class="kensei-card">
+             <h2 class="text-3xl font-bold text-center mb-8 text-green-400">Checklist de Mitigação 🛡️</h2>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                 <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-3xl mb-2">🔄</p>
+                    <h3 class="font-bold">Atualize Tudo</h3>
+                    <p class="text-sm text-gray-400">Aplique patches de segurança para SMB e firmware de dispositivos de rede.</p>
+                 </div>
+                 <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-3xl mb-2">🔑</p>
+                    <h3 class="font-bold">Altere Padrões</h3>
+                    <p class="text-sm text-gray-400">Nunca use community strings padrão. Crie senhas complexas e únicas.</p>
+                 </div>
+                 <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-3xl mb-2">🔒</p>
+                    <h3 class="font-bold">Princípio do Menor Privilégio</h3>
+                    <p class="text-sm text-gray-400">Configure permissões de shares SMB de forma restritiva. Ninguém deve ter acesso ao que não precisa.</p>
+                 </div>
+                 <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-3xl mb-2">🛡️</p>
+                    <h3 class="font-bold">Use SNMPv3</h3>
+                    <p class="text-sm text-gray-400">Sempre que possível, use a versão 3 do SNMP, que oferece criptografia e autenticação robusta.</p>
+                 </div>
+             </div>
+        </section>
+
+    </div>
+
+    <script>
+        function wrapLabel(label) {
+            if (typeof label !== 'string' || label.length <= 16) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).length > 16 && currentLine.length > 0) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine += (currentLine.length === 0 ? '' : ' ') + word;
+                }
+            });
+            lines.push(currentLine);
+            return lines;
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            }
+            return label;
+        };
+        
+        const smbLabels = [
+            'Acesso Anônimo (Null Session)', 
+            'Shares Mal Configurados', 
+            'Software Desatualizado (Ex: EternalBlue)'
+        ].map(wrapLabel);
+        
+        new Chart(document.getElementById('smbVulnerabilitiesChart'), {
+            type: 'bar',
+            data: {
+                labels: smbLabels,
+                datasets: [{
+                    label: 'Nível de Risco',
+                    data: [90, 75, 95],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(249, 115, 22, 0.7)',
+                        'rgba(220, 38, 38, 0.9)'
+                    ],
+                    borderColor: [
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(249, 115, 22, 1)',
+                        'rgba(220, 38, 38, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#9ca3af' },
+                        grid: { color: '#4b5563' }
+                    },
+                    x: {
+                        ticks: { color: '#9ca3af' },
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('snmpVulnerabilitiesChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Default Strings ("public", "private")', 'Strings Customizadas'],
+                datasets: [{
+                    label: 'Configuração de Dispositivos',
+                    data: [85, 15],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(52, 211, 153, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(52, 211, 153, 1)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#d1d5db'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
