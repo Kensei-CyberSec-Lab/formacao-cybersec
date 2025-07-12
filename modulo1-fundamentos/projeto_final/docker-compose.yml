@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+  workstation1:
+    image: alpine
+    container_name: workstation1
+    command: sleep infinity
+    networks:
+      corp_net:
+        ipv4_address: 192.168.10.10
+
+  workstation2:
+    image: alpine
+    container_name: workstation2
+    command: sleep infinity
+    networks:
+      corp_net:
+        ipv4_address: 192.168.10.11
+
+  guest_device:
+    image: alpine
+    container_name: guest_device
+    command: sleep infinity
+    networks:
+      guest_net:
+        ipv4_address: 192.168.20.10
+
+  printer:
+    image: alpine
+    container_name: printer
+    command: sleep infinity
+    networks:
+      corp_net:
+        ipv4_address: 192.168.10.50
+
+  fileserver:
+    image: httpd:2.4
+    container_name: fileserver
+    networks:
+      infra_net:
+        ipv4_address: 192.168.30.10
+
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    networks:
+      corp_net:
+        ipv4_address: 192.168.10.100
+    ports:
+      - "8080:80"
+
+networks:
+  corp_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24
+  guest_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
+  infra_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.30.0/24
