@@ -1,0 +1,300 @@
+version: "3.9"
+
+name: greenbone-community-edition
+
+services:
+
+  vulnerability-tests:
+    image: registry.community.greenbone.net/community/vulnerability-tests
+    environment:
+      FEED_RELEASE: "24.10"
+    volumes:
+      - vt_data_vol:/mnt
+    networks:
+      default:
+        ipv4_address: 172.18.0.10
+
+  notus-data:
+    image: registry.community.greenbone.net/community/notus-data
+    volumes:
+      - notus_data_vol:/mnt
+    networks:
+      default:
+        ipv4_address: 172.18.0.11
+
+  scap-data:
+    image: registry.community.greenbone.net/community/scap-data
+    volumes:
+      - scap_data_vol:/mnt
+    networks:
+      default:
+        ipv4_address: 172.18.0.12
+
+  cert-bund-data:
+    image: registry.community.greenbone.net/community/cert-bund-data
+    volumes:
+      - cert_data_vol:/mnt
+    networks:
+      default:
+        ipv4_address: 172.18.0.13
+
+  dfn-cert-data:
+    image: registry.community.greenbone.net/community/dfn-cert-data
+    volumes:
+      - cert_data_vol:/mnt
+    depends_on:
+      - cert-bund-data
+    networks:
+      default:
+        ipv4_address: 172.18.0.14
+
+  data-objects:
+    image: registry.community.greenbone.net/community/data-objects
+    environment:
+      FEED_RELEASE: "24.10"
+    volumes:
+      - data_objects_vol:/mnt
+    networks:
+      default:
+        ipv4_address: 172.18.0.15
+
+  report-formats:
+    image: registry.community.greenbone.net/community/report-formats
+    environment:
+      FEED_RELEASE: "24.10"
+    volumes:
+      - data_objects_vol:/mnt
+    depends_on:
+      - data-objects
+    networks:
+      default:
+        ipv4_address: 172.18.0.16
+
+  gpg-data:
+    image: registry.community.greenbone.net/community/gpg-data
+    volumes:
+      - gpg_data_vol:/mnt
+    networks:
+      default:
+        ipv4_address: 172.18.0.17
+
+  redis-server:
+    image: registry.community.greenbone.net/community/redis-server
+    restart: on-failure
+    volumes:
+      - redis_socket_vol:/run/redis/
+    networks:
+      default:
+        ipv4_address: 172.18.0.18
+
+  pg-gvm:
+    image: registry.community.greenbone.net/community/pg-gvm:stable
+    restart: on-failure
+    volumes:
+      - psql_data_vol:/var/lib/postgresql
+      - psql_socket_vol:/var/run/postgresql
+    networks:
+      default:
+        ipv4_address: 172.18.0.19
+
+  gvmd:
+    image: registry.community.greenbone.net/community/gvmd:stable
+    restart: on-failure
+    volumes:
+      - gvmd_data_vol:/var/lib/gvm
+      - scap_data_vol:/var/lib/gvm/scap-data/
+      - cert_data_vol:/var/lib/gvm/cert-data
+      - data_objects_vol:/var/lib/gvm/data-objects/gvmd
+      - vt_data_vol:/var/lib/openvas/plugins
+      - psql_data_vol:/var/lib/postgresql
+      - gvmd_socket_vol:/run/gvmd
+      - ospd_openvas_socket_vol:/run/ospd
+      - psql_socket_vol:/var/run/postgresql
+    depends_on:
+      pg-gvm:
+        condition: service_started
+      scap-data:
+        condition: service_completed_successfully
+      cert-bund-data:
+        condition: service_completed_successfully
+      dfn-cert-data:
+        condition: service_completed_successfully
+      data-objects:
+        condition: service_completed_successfully
+      report-formats:
+        condition: service_completed_successfully
+    networks:
+      default:
+        ipv4_address: 172.18.0.20
+
+  gsa:
+    image: registry.community.greenbone.net/community/gsa:stable
+    restart: on-failure
+    ports:
+      - 127.0.0.1:9392:80
+    volumes:
+      - gvmd_socket_vol:/run/gvmd
+    depends_on:
+      - gvmd
+    networks:
+      default:
+        ipv4_address: 172.18.0.21
+
+  configure-openvas:
+    image: registry.community.greenbone.net/community/openvas-scanner:stable
+    volumes:
+      - openvas_data_vol:/mnt
+      - openvas_log_data_vol:/var/log/openvas
+    command:
+      - /bin/sh
+      - -c
+      - |
+        printf "table_driven_lsc = yes\nopenvasd_server = http://openvasd:80\n" > /mnt/openvas.conf
+        sed "s/127/128/" /etc/openvas/openvas_log.conf | sed 's/gvm/openvas/' > /mnt/openvas_log.conf
+        chmod 644 /mnt/openvas.conf
+        chmod 644 /mnt/openvas_log.conf
+        touch /var/log/openvas/openvas.log
+        chmod 666 /var/log/openvas/openvas.log
+    networks:
+      default:
+        ipv4_address: 172.18.0.22
+
+  openvas:
+    image: registry.community.greenbone.net/community/openvas-scanner:stable
+    restart: on-failure
+    volumes:
+      - openvas_data_vol:/etc/openvas
+      - openvas_log_data_vol:/var/log/openvas
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cat /etc/openvas/openvas.conf
+        tail -f /var/log/openvas/openvas.log
+    depends_on:
+      configure-openvas:
+        condition: service_completed_successfully
+    networks:
+      default:
+        ipv4_address: 172.18.0.23
+
+  openvasd:
+    image: registry.community.greenbone.net/community/openvas-scanner:stable
+    restart: on-failure
+    environment:
+      OPENVASD_MODE: service_notus
+      GNUPGHOME: /etc/openvas/gnupg
+      LISTENING: 0.0.0.0:80
+    volumes:
+      - openvas_data_vol:/etc/openvas
+      - openvas_log_data_vol:/var/log/openvas
+      - gpg_data_vol:/etc/openvas/gnupg
+      - notus_data_vol:/var/lib/notus
+    networks:
+      default:
+        ipv4_address: 172.18.0.24
+
+  ospd-openvas:
+    image: registry.community.greenbone.net/community/ospd-openvas:stable
+    restart: on-failure
+    hostname: ospd-openvas.local
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=unconfined
+    command:
+      ["ospd-openvas", "-f", "--config", "/etc/gvm/ospd-openvas.conf", "--notus-feed-dir", "/var/lib/notus/advisories", "-m", "666"]
+    volumes:
+      - gpg_data_vol:/etc/openvas/gnupg
+      - vt_data_vol:/var/lib/openvas/plugins
+      - notus_data_vol:/var/lib/notus
+      - ospd_openvas_socket_vol:/run/ospd
+      - redis_socket_vol:/run/redis/
+      - openvas_data_vol:/etc/openvas/
+      - openvas_log_data_vol:/var/log/openvas
+    depends_on:
+      redis-server:
+        condition: service_started
+      gpg-data:
+        condition: service_completed_successfully
+      vulnerability-tests:
+        condition: service_completed_successfully
+      configure-openvas:
+        condition: service_completed_successfully
+    networks:
+      default:
+        ipv4_address: 172.18.0.25
+
+  gvm-tools:
+    image: registry.community.greenbone.net/community/gvm-tools
+    volumes:
+      - gvmd_socket_vol:/run/gvmd
+      - ospd_openvas_socket_vol:/run/ospd
+    depends_on:
+      - gvmd
+      - ospd-openvas
+    networks:
+      default:
+        ipv4_address: 172.18.0.26
+
+  metasploitable:
+    image: tleemcjr/metasploitable2
+    platform: linux/amd64
+    container_name: metasploitable-alvo
+    stdin_open: true
+    tty: true
+    ports:
+      - "21:21"
+      - "22:22"
+      - "23:23"
+      - "25:25"
+      - "80:80"
+      - "139:139"
+      - "445:445"
+      - "3306:3306"
+      - "5432:5432"
+      - "5900:5900"
+      - "8009:8009"
+      - "8180:8180"
+    networks:
+      default:
+        ipv4_address: 172.18.0.27
+
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: kali-atacante
+    depends_on:
+      - metasploitable
+    stdin_open: true
+    tty: true
+    command: tail -f /dev/null
+    networks:
+      default:
+        ipv4_address: 172.18.0.28
+
+volumes:
+  gpg_data_vol:
+  scap_data_vol:
+  cert_data_vol:
+  data_objects_vol:
+  gvmd_data_vol:
+  psql_data_vol:
+  vt_data_vol:
+  notus_data_vol:
+  psql_socket_vol:
+  gvmd_socket_vol:
+  ospd_openvas_socket_vol:
+  redis_socket_vol:
+  openvas_data_vol:
+  openvas_log_data_vol:
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
