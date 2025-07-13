@@ -1,14 +1,4 @@
-# Aula 12: Introdução a Scanners de Vulnerabilidade (OpenVAS)
-
-E aí, pessoal! Professor Kaze na área. 🥷
-
-Show de bola que você já montou o ambiente com OpenVAS! É uma ferramenta poderosa, padrão de mercado, e dominar ela é um passo gigante na jornada de vocês. O `docker-compose.yml` que você criou está excelente, já com o alvo (Metasploitable) e a nossa Kali na mesma rede. Perfeito para o nosso laboratório.
-
-Vamos agora criar o guia para a turma. O objetivo da aula de hoje é exatamente este: rodar nosso primeiro scan profissional, identificar vulnerabilidades e começar a pensar como um Blue Team de verdade.
-
----
-
-## 🛡️ Laboratório Prático: Scan de Vulnerabilidades com OpenVAS (Greenbone)
+## Laboratório Prático: Scan de Vulnerabilidades com OpenVAS (Greenbone)
 
 Vamos usar o OpenVAS, uma das ferramentas de análise de vulnerabilidade mais robustas do mundo, para inspecionar um sistema-alvo em busca de falhas de segurança. Tudo isso em nosso ambiente Docker controlado e seguro.
 
