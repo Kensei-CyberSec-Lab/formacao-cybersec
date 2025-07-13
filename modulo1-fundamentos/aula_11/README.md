@@ -71,7 +71,7 @@ nmap -sn -T4 172.20.0.0/24 -oG - | grep "Up"
 #### TCP Scan com Rustscan
 
 ```bash
-rustscan -a 172.20.0.2
+rustscan -a 172.20.0.3
 ```
 
 - Resultado: Portas TCP abertas, como `139`, `445`.
@@ -79,7 +79,7 @@ rustscan -a 172.20.0.2
 #### UDP Scan com Nmap
 
 ```bash
-nmap -sU -p 161 172.20.0.2
+nmap -sU -p 161 172.20.0.3
 ```
 
 - Resultado: Porta `161/udp` como `open|filtered`.
@@ -91,7 +91,7 @@ nmap -sU -p 161 172.20.0.2
 #### Enumeração do SMB
 
 ```bash
-enum4linux-ng -A 172.20.0.2
+enum4linux-ng -A 172.20.0.3
 ```
 
 - Resultado: Informações sobre usuários, grupos e compartilhamentos (shares).
@@ -99,7 +99,7 @@ enum4linux-ng -A 172.20.0.2
 #### Enumeração do SNMP
 
 ```bash
-snmpwalk -v2c -c public 172.20.0.2
+snmpwalk -v2c -c public 172.20.0.3
 ```
 
 - Resultado: Dump do sistema — hostname, rede, uptime, entre outros.
@@ -121,7 +121,7 @@ Como proceder:
 Exemplo:
 
 ```bash
-smbclient //172.20.0.2/anonymous
+smbclient //172.20.0.3/anonymous
 ```
 
 Use `ls`, `cd` e `get` para explorar o conteúdo.
