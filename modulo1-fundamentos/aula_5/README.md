@@ -6,7 +6,7 @@ e OSINT de forma segura, pensado para iniciantes da Formação CyberSec.
 ## Estrutura
 
 ```
-recon_lab_novice/
+aula_5/
 ├── docker-compose.yml
 ├── kali/
 │   └── Dockerfile
@@ -29,7 +29,7 @@ recon_lab_novice/
 
 ```bash
 git clone <este‑repo-ou-descompacte-o-zip>
-cd recon_lab_novice
+cd aula_5
 docker compose up -d --build
 ```
 
