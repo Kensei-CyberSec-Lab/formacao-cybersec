@@ -1,0 +1,27 @@
+services:
+  alvo-enum:
+    build:
+      context: ./alvo
+    container_name: alvo-enum
+    hostname: kensei-target
+    # Conecta o container à nossa rede customizada
+    networks:
+      - kensei-net
+
+  attacker-enum:
+    build:
+      context: ./attacker
+    container_name: attacker-enum
+    stdin_open: true
+    tty: true
+    # Conecta o container à nossa rede customizada
+    networks:
+      - kensei-net
+
+# AQUI ESTÁ A NOSSA CONFIGURAÇÃO DE REDE
+networks:
+  kensei-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

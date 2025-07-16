@@ -1,0 +1,8 @@
+FROM kalilinux/kali-rolling
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    nmap nikto burpsuite lynis curl net-tools inetutils-ping \
+    && apt-get clean
+
+CMD ["tail", "-f", "/dev/null"]
