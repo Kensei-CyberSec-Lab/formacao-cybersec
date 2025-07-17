@@ -1,67 +1,164 @@
-version: '3.9'
-
 services:
-  workstation1:
-    image: alpine
-    container_name: workstation1
-    command: sleep infinity
+
+  # Estações corporativas (corp_net)
+  WS_001:
+    image: ubuntu
+    container_name: WS_001
     networks:
       corp_net:
-        ipv4_address: 192.168.10.10
+        ipv4_address: 10.10.10.10
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
 
-  workstation2:
-    image: alpine
-    container_name: workstation2
-    command: sleep infinity
+  WS_002:
+    image: ubuntu
+    container_name: WS_002
     networks:
       corp_net:
-        ipv4_address: 192.168.10.11
+        ipv4_address: 10.10.10.101
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
 
-  guest_device:
-    image: alpine
-    container_name: guest_device
-    command: sleep infinity
-    networks:
-      guest_net:
-        ipv4_address: 192.168.20.10
-
-  printer:
-    image: alpine
-    container_name: printer
-    command: sleep infinity
+  WS_003:
+    image: ubuntu
+    container_name: WS_003
     networks:
       corp_net:
-        ipv4_address: 192.168.10.50
+        ipv4_address: 10.10.10.127
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
 
-  fileserver:
-    image: httpd:2.4
-    container_name: fileserver
+  WS_004:
+    image: ubuntu
+    container_name: WS_004
+    networks:
+      corp_net:
+        ipv4_address: 10.10.10.222
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+
+  # Estações pessoais (guest_net)
+  laptop-vastro:
+    image: ubuntu
+    container_name: laptop-vastro
+    networks:
+      - guest_net
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+
+  laptop-luiz:
+    image: ubuntu
+    container_name: laptop-luiz
+    networks:
+      - guest_net
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+
+  macbook-aline:
+    image: ubuntu
+    container_name: macbook-aline
+    networks:
+      - guest_net
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+
+  notebook-carlos:
+    image: ubuntu
+    container_name: notebook-carlos
+    networks:
+      - guest_net
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+
+  # Outros serviços (infraestrutura)
+  ftp-server:
+    image: stilliard/pure-ftpd
+    platform: linux/amd64
+    container_name: ftp-server
     networks:
       infra_net:
-        ipv4_address: 192.168.30.10
+        ipv4_address: 10.10.30.10
 
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
+  mysql-server:
+    image: mysql:8.0
+    container_name: mysql-server
+    environment:
+      MYSQL_ROOT_PASSWORD: root
     networks:
-      corp_net:
-        ipv4_address: 192.168.10.100
-    ports:
-      - "8080:80"
+      infra_net:
+        ipv4_address: 10.10.30.11
+
+  samba-server:
+    image: dperson/samba
+    container_name: samba-server
+    networks:
+      infra_net:
+        ipv4_address: 10.10.30.15
+
+  openldap:
+    image: osixia/openldap
+    container_name: openldap
+    networks:
+      infra_net:
+        ipv4_address: 10.10.30.17
+
+  zabbix-server:
+    image: zabbix/zabbix-appliance
+    platform: linux/amd64
+    container_name: zabbix-server
+    networks:
+      infra_net:
+        ipv4_address: 10.10.30.117
+
+  legacy-server:
+    image: ubuntu
+    container_name: legacy-server
+    networks:
+      infra_net:
+        ipv4_address: 10.10.30.227
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+
+  # Máquina de analista
+  analyst:
+    build:
+      context: ./analyst
+      dockerfile: Dockerfile
+    platform: linux/amd64  
+    container_name: analyst
+    privileged: true
+    networks:
+      - corp_net
+      - guest_net
+      - infra_net
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
 
 networks:
   corp_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.10.0/24
-  guest_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.20.0/24
+        - subnet: 10.10.10.0/24
+
   infra_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.30.0/24
+        - subnet: 10.10.30.0/24
+
+  guest_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.50.0/24
