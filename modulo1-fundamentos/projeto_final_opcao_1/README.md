@@ -28,8 +28,8 @@ A rede simulada contém:
 Pré-requisitos: Docker e Docker Compose
 
 ```bash
-git clone https://github.com/kensei-cybersec/kensei-cybersec-lab-docker.git
-cd kensei-cybersec-lab-docker
+git clone https://github.com/Kensei-CyberSec-Lab/formacao-cybersec/
+cd formacao-cybersec/modulo1-fundamentos/projeto_final_opcao_1/
 docker-compose up -d
 ```
 
