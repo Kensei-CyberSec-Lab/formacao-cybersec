@@ -26,8 +26,8 @@ Seu desafio é assumir o papel de um analista de segurança que recebeu acesso �
 ### Passos:
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/kensei-sec/kensei-cybersec-lab-docker.git
-   cd kensei-cybersec-lab-docker
+   git clone https://github.com/Kensei-CyberSec-Lab/formacao-cybersec.git
+   cd formacao-cybersec/modulo1-fundamentos/projeto_final_opcao_1
    ```
 
 2. Suba o ambiente:
@@ -46,7 +46,9 @@ Acesse com:
 docker exec -it analyst bash
 ```
 
-A `analyst` está conectada na rede `corp_net` com o IP `192.168.10.250`.
+A `analyst` está conectada na rede `corp_net` com IP Dinâmico em `10.10.10.0/24`.
+A `analyst` está conectada na rede `guest_net` com IP Dinâmico em `10.10.30.0/24`.
+A `analyst` está conectada na rede `infra_net` com IP Dinâmico em `10.10.50.0/24`.
 
 ---
 
@@ -56,14 +58,14 @@ O ambiente está segmentado em 3 redes principais:
 
 | Rede        | Subnet           | Descrição                                    |
 |-------------|------------------|----------------------------------------------|
-| `corp_net`  | 192.168.10.0/24  | Rede corporativa (estações e web server)     |
-| `guest_net` | 192.168.20.0/24  | Rede de visitantes e dispositivos pessoais   |
-| `infra_net` | 192.168.30.0/24  | Rede de infraestrutura crítica (servidores)  |
+| `corp_net`  | 10.10.10.0/24  | Rede corporativa (estações e web server)     |
+| `guest_net` | 10.10.30.0/24  | Rede de visitantes e dispositivos pessoais   |
+| `infra_net` | 10.10.50.0/24  | Rede de infraestrutura crítica (servidores)  |
 
 Você pode testar o acesso às redes e suas máquinas com:
 ```bash
-ping 192.168.10.10    # Teste uma estação corporativa
-ping 192.168.30.11    # Teste o MySQL da infraestrutura
+ping 10.10.10.10    # Teste uma estação corporativa
+ping 10.10.30.11    # Teste o MySQL da infraestrutura
 ```
 
 > Para explorar de forma mais avançada, utilize `nmap`, `rustscan`, `dig`, `telnet`, etc.
