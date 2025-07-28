@@ -1,0 +1,30 @@
+
+services:
+  juice_shop:
+    image: bkimminich/juice-shop
+    platform: linux/amd64
+    container_name: juice_shop
+    ports:
+      - "3001:3000"
+    networks:
+      - cyberlab_net
+
+  ubuntu_host:
+    build: ./ubuntu_host
+    container_name: ubuntu_host
+    command: sleep infinity
+    tty: true
+    networks:
+      - cyberlab_net
+
+  kali:
+    build: ./kali
+    container_name: kali_host
+    command: sleep infinity
+    tty: true
+    networks:
+      - cyberlab_net
+
+networks:
+  cyberlab_net:
+    driver: bridge

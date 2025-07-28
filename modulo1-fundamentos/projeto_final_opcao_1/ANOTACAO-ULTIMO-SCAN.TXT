@@ -1,0 +1,79 @@
+# NÃO APAGAR
+
+# SE VOCÊ ACHOU ISSO E ESTÁ FAZENDO O DESAFIO DO PROJETO FINAL OPÇÃO 1 SE DEU BEM ;-) ...
+
+# comandos que eu executei a ultima vez que estava aqui... deixar anotado pq pode salvar tempo da próxima vez.
+
+## Primeiro pegar info das redes
+ip a
+ip a | grep inet
+ip a | grep inet > recon-redes.txt
+
+## Testar se tem conectividade com as redes
+ping -c 3 10.10.10.1  # corp_net
+ping -c 3 10.10.30.1  # guest_net
+ping -c 3 10.10.50.1  # infra_net
+
+## 1. descobrir os hosts com Nmap ping scan
+nmap -sn -T4 10.10.10.0/24 -oG - | grep "Up"
+nmap -sn -T4 10.10.10.0/24 -oG - | awk '/Up$/{print $2}' | tee corp_net_ips.txt
+nmap -sn -T4 10.10.10.0/24 -oG - | awk '/Up$/{print $2, $3}' | tee corp_net_ips_hosts.txt
+
+nmap -sn -T4 10.10.30.0/24 -oG - | grep "Up"
+nmap -sn -T4 10.10.30.0/24 -oG - | awk '/Up$/{print $2}' | tee infra_net_ips.txt
+nmap -sn -T4 10.10.30.0/24 -oG - | awk '/Up$/{print $2, $3}' | tee infra_net_ips_hosts.txt
+
+nmap -sn -T4 10.10.50.0/24 -oG - | grep "Up"
+nmap -sn -T4 10.10.50.0/24 -oG - | awk '/Up$/{print $2}' | tee guest_net_ips.txt
+nmap -sn -T4 10.10.50.0/24 -oG - | awk '/Up$/{print $2, $3}' | tee guest_net_ips_hosts.txt
+
+## 2. Scan rápido com Rustscan para pegar as portas abertas
+rustscan -a 'corp_net_ips.txt' | grep Open > corp_net_ips_ports.txt
+rustscan -a 'infra_net_ips.txt' | grep Open > infra_net_ips_ports.txt
+rustscan -a 'guest_net_ips.txt' | grep Open > guest_net_ips_ports.txt
+
+## 3. Analisar os serviços específicos
+### FTP
+nmap -p 21 --script ftp-anon 10.10.30.10
+nmap -p 21 --script ftp-anon 10.10.30.10 > infra_net_servico_ftp-anon.txt
+
+### MySQL
+nmap -p 3306 --script mysql-info 10.10.30.11
+nmap -p 3306 --script mysql-info 10.10.30.11 > infra_net_servico_mysql-info.txt
+
+### LDAP
+nmap -p 389 --script ldap-rootdse 10.10.30.17
+nmap -p 389 --script ldap-rootdse 10.10.30.17 > infra_net_servico_ldap-rootdse.txt
+
+### SMB
+nmap -p 445 --script smb-os-discovery,smb-enum-shares 10.10.30.15
+nmap -p 445 --script smb-os-discovery,smb-enum-shares 10.10.30.15 > infra_net_servico_smb.txt
+
+### HTTP (web)
+curl -I http://10.10.30.117
+curl -I http://10.10.30.117 > infra_net_servico_webserver.txt
+curl http://10.10.30.117
+curl http://10.10.30.117 > infra_net_servico_zabbix.txt
+
+## Extras úteis
+arp -a
+arp -a > recon_ip_maps.txt
+cat /etc/resolv.conf
+
+## Organizar os resultados (manter tudo limpinho)
+mkdir -p /home/analyst/recon/{corp_net,guest_net,infra_net}
+mv *corp*.txt /home/analyst/recon/corp_net/
+mv *guest*.txt /home/analyst/recon/guest_net/
+mv *infra*.txt /home/analyst/recon/infra_net/
+mv *recon*.txt /home/analyst/recon/
+
+## Copiar depois pro host local - tem que sair do docker e rodar da maquina local
+docker cp analyst:/home/analyst/recon ./recon-backup
+
+## Inventário final (manual mesmo, preenche depois)
+# IP:
+# Hostname:
+# SO estimado:
+# Portas abertas:
+# Serviços:
+# Notas: login anônimo? dados sensíveis? falhas visíveis?
