@@ -1,0 +1,6 @@
+FROM kalilinux/kali-rolling
+
+RUN apt update && \
+    apt install -y openssh-client iputils-ping net-tools nmap curl git vim
+
+CMD ["/bin/bash"]

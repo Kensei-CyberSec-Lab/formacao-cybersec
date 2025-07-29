@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  ubuntu_lab_2:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: ubuntu_lab_2
+    tty: true
+    stdin_open: true
+    privileged: true
+    ports:
+      - "2222:22"
+    networks:
+      labnet:
+        ipv4_address: 172.20.0.10
+    volumes:
+      - ./provision.sh:/root/provision.sh
+
+  kali_lab_2:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: kali_lab_2
+    tty: true
+    stdin_open: true
+    privileged: true
+    networks:
+      labnet:
+        ipv4_address: 172.20.0.20
+
+networks:
+  labnet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24
