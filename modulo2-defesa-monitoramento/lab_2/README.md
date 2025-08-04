@@ -1,12 +1,12 @@
-# README.md – Lab 2: Desafio de Hardening de Servidor Linux
+# Lab 2 – Hardening Progressivo de Servidor Linux (Ubuntu)
 
-## Objetivo do Desafio
+## 🎯 Objetivo
 
-Aplicar hardening básico em um servidor Ubuntu exposto, simulando práticas reais de defesa e testando o acesso via Kali Linux.
+Aplicar técnicas progressivas de **hardening** em um servidor Ubuntu, simulando práticas reais de defesa, validando acessos em cada etapa a partir de uma máquina Kali Linux.
 
 ---
 
-## ✅ Etapas para Executar o Desafio
+## ✅ Etapas do Lab
 
 ### 1. Clone o projeto e acesse a pasta
 ```bash
@@ -14,9 +14,10 @@ git clone https://github.com/Kensei-CyberSec-Lab/formacao-cybersec.git
 cd formacao-cybersec/modulo2-defesa/lab_2
 ```
 
-### 2. Verifique se o `docker-compose.yml` inclui:
-- Servidor Ubuntu (`ubuntu_lab_2`) com IP `172.20.0.10`
-- Kali Linux (`kali_lab_2`) com IP `172.20.0.20`
+### 2. Verifique a configuração do `docker-compose.yml`
+
+- `ubuntu_lab_2` (IP: `172.20.0.10`)
+- `kali_lab_2` (IP: `172.20.0.20`)
 - Rede `labnet` com subnet `172.20.0.0/24`
 
 ### 3. Suba os containers
@@ -24,36 +25,67 @@ cd formacao-cybersec/modulo2-defesa/lab_2
 docker compose up -d
 ```
 
-### 4. Acesse o Kali e tente conectar por SSH ao Ubuntu
+---
+
+## 🔓 Etapa 1 – Acesso Inseguro via Root e Senha
+
+Do Kali, conecte-se ao Ubuntu usando root e senha:
 ```bash
 docker exec -it kali_lab_2 bash
 ssh root@172.20.0.10
-# senha: rootlab
+# Senha: rootlab
 ```
+
+> Isso demonstra um acesso inseguro que será bloqueado ao final.
 
 ---
 
-## 🔧 Aplique o Hardening no Ubuntu
+## 👤 Etapa 2 – Criar Usuário Não-root com Sudo
 
-Acesse o Ubuntu:
+No Ubuntu:
 ```bash
 docker exec -it ubuntu_lab_2 bash
-```
-
-### Passo 1 – Criar usuário defensor
-```bash
 adduser defensor
 usermod -aG sudo defensor
 ```
 
-### Passo 2 – Configurar autenticação por chave pública
-No Kali:
+Teste o novo usuário a partir do Kali:
 ```bash
-ssh-keygen -t rsa -b 4096
-ssh-copy-id defensor@172.20.0.10
+ssh defensor@172.20.0.10
+# Digite a senha criada
 ```
 
-### Passo 3 – Desabilitar login root e senha via SSH
+---
+
+## 🔐 Etapa 3 – Habilitar Acesso por Chave Privada
+
+### No Ubuntu (criar chave como defensor):
+```bash
+sudo -u defensor ssh-keygen -t rsa -b 4096 -f /home/defensor/.ssh/id_rsa -N ""
+sudo -u defensor bash -c "cat /home/defensor/.ssh/id_rsa.pub >> /home/defensor/.ssh/authorized_keys"
+chmod 700 /home/defensor/.ssh
+chmod 600 /home/defensor/.ssh/authorized_keys
+chown -R defensor:defensor /home/defensor/.ssh
+```
+
+### No host: transferir a chave privada para o Kali
+```bash
+docker cp ubuntu_lab_2:/home/defensor/.ssh/id_rsa ./id_rsa_defensor
+chmod 600 id_rsa_defensor
+docker cp ./id_rsa_defensor kali_lab_2:/root/.ssh/id_rsa_defensor
+```
+
+### No Kali: testar o acesso com chave
+```bash
+docker exec -it kali_lab_2 bash
+chmod 600 ~/.ssh/id_rsa_defensor
+ssh -i ~/.ssh/id_rsa_defensor defensor@172.20.0.10
+```
+
+---
+
+## 🔒 Etapa 4 – Desabilitar Root e Autenticação por Senha
+
 No Ubuntu:
 ```bash
 nano /etc/ssh/sshd_config
@@ -61,48 +93,50 @@ nano /etc/ssh/sshd_config
 PermitRootLogin no
 PasswordAuthentication no
 
-systemctl restart ssh
+# Reinicie o SSH:
+service ssh restart
 ```
 
-### Passo 4 – Ativar firewall (UFW)
+---
+
+## 🧱 Etapa 5 – Firewall, Limpeza e Permissões
+
 ```bash
 apt update && apt install -y ufw
 ufw allow OpenSSH
 ufw --force enable
-```
 
-### Passo 5 – Remover pacotes desnecessários
-```bash
 apt remove telnet -y
-```
-
-### Passo 6 – Corrigir permissões de arquivos sensíveis
-```bash
 chmod 640 /etc/shadow
 ```
 
 ---
 
-## 🔁 Valide o Resultado Final
+## 🔁 Testes Finais
 
-No Kali, tente:
+### Acesso por senha deve falhar:
 ```bash
-ssh root@172.20.0.10
-# → Deve falhar
+ssh root@172.20.0.10         # ← bloqueado
+ssh defensor@172.20.0.10     # ← bloqueado
+```
 
-ssh defensor@172.20.0.10
-# → Deve funcionar com chave
+### Acesso por chave deve funcionar:
+```bash
+ssh -i ~/.ssh/id_rsa_defensor defensor@172.20.0.10
 ```
 
 ---
 
-## 🎯 Conclusão
+## ✅ Checklist
 
-Você:
-- Criou um usuário seguro
-- Bloqueou root e senhas no SSH
-- Aplicou autenticação por chave
-- Ativou firewall
-- Reduziu a superfície de ataque
+- [x] Acesso root por senha desativado
+- [x] Usuário sudo criado
+- [x] Login por chave ativado
+- [x] Firewall (UFW) ativado
+- [x] Serviços e permissões revisadas
 
-**Servidor endurecido com sucesso. Missão cumprida.**
+---
+
+## 🏁 Missão Cumprida
+
+Você viu como um servidor sai de um estado inseguro e gradualmente se torna mais protegido. Cada etapa pode ser validada com testes reais de conexão.

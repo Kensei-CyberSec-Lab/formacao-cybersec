@@ -7,13 +7,14 @@ RUN apt update && \
     echo 'root:rootlab' | chpasswd && \
     # Ajusta o sshd_config diretamente
     sed -i 's/^#\?PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config 
+    # && \
     # Cria o usuário defensor
-    useradd -m -s /bin/bash defensor && \
-    echo 'defensor ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
-    mkdir -p /home/defensor/.ssh && \
-    chmod 700 /home/defensor/.ssh && \
-    chown -R defensor:defensor /home/defensor/.ssh
+    # useradd -m -s /bin/bash defensor && \
+    # echo 'defensor ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
+    # mkdir -p /home/defensor/.ssh && \
+    # chmod 700 /home/defensor/.ssh && \
+    # chown -R defensor:defensor /home/defensor/.ssh
 
 EXPOSE 22
 
