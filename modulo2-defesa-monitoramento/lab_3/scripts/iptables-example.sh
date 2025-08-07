@@ -45,6 +45,12 @@ allow_http() {
     iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 }
 
+# Função para adicionar logging
+add_logging() {
+    echo "📝 Adicionando logging para auditoria..."
+    iptables -A INPUT -s 192.168.100.11 -j LOG --log-prefix "BLOCKED_KALI: "
+}
+
 # Função para bloquear SSH do Kali
 block_kali_ssh() {
     echo "🚫 Bloqueando SSH do Kali Linux (192.168.100.11)..."
@@ -55,12 +61,6 @@ block_kali_ssh() {
 allow_ssh_others() {
     echo "🔓 Permitindo SSH de outros IPs..."
     iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-}
-
-# Função para adicionar logging
-add_logging() {
-    echo "📝 Adicionando logging para auditoria..."
-    iptables -A INPUT -s 192.168.100.11 -j LOG --log-prefix "BLOCKED_KALI: "
 }
 
 # Função para mostrar regras
@@ -133,9 +133,9 @@ apply_example_rules() {
     allow_established
     allow_localhost
     allow_http
+    add_logging
     block_kali_ssh
     allow_ssh_others
-    add_logging
     
     echo ""
     echo "✅ Regras de exemplo aplicadas com sucesso!"
