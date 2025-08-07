@@ -97,6 +97,12 @@ fi
 print_status "Inicializando configurações do laboratório..."
 # Iniciar SSH no container Ubuntu
 docker exec ubuntu_lab_19 service ssh start 2>/dev/null || true
+# Iniciar Apache no container Ubuntu
+docker exec ubuntu_lab_19 service apache2 start 2>/dev/null || true
+
+# Aguardar serviços iniciarem
+print_status "Aguardando serviços iniciarem..."
+sleep 3
 
 # Configurar Ubuntu GUI (se necessário)
 print_status "Configurando Ubuntu GUI..."

@@ -11,7 +11,7 @@
 # VNC: localhost:5901 (senha: kenseilab)
 
 # 3. Teste a conectividade
-docker exec -it kali_lab_19 /opt/lab-tools/test-connectivity.sh
+docker exec -it kali_lab_19 /opt/lab-tools/test-lab.sh
 
 # 4. Configure o firewall na interface gráfica
 sudo iptables -L  # Ver regras atuais
@@ -167,7 +167,7 @@ iptables -L               # Já como root
 
 # Via container Kali:
 docker exec -it kali_lab_19 bash
-/opt/lab-tools/test-connectivity.sh  # Teste de conectividade
+/opt/lab-tools/test-lab.sh  # Teste de conectividade
 ```
 
 ---

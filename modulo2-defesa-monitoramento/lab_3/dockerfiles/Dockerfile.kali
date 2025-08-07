@@ -31,8 +31,8 @@ echo "SSH para Ubuntu:"\n\
 sshpass -p "root" ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@192.168.100.10 "echo SSH OK" || echo "SSH falhou"\n\
 echo "Nmap scan:"\n\
 nmap -sS -p- 192.168.100.10\n\
-' > /opt/lab-tools/test-connectivity.sh && \
-chmod +x /opt/lab-tools/test-connectivity.sh
+' > /opt/lab-tools/test-lab.sh && \
+chmod +x /opt/lab-tools/test-lab.sh
 
 # Comando padrão
 CMD ["/bin/bash"]

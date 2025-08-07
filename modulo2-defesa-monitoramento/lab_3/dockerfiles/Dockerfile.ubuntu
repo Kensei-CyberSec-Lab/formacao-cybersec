@@ -20,6 +20,7 @@ RUN apt-get update && apt-get upgrade -y && \
     telnet \
     netcat-traditional \
     tcpdump \
+    apache2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Configurar SSH
@@ -44,8 +45,11 @@ RUN chmod +x /opt/lab-scripts/troubleshooting.sh
 # Configurar permissões
 RUN chmod 755 /opt/lab-scripts
 
-# Expor porta SSH
-EXPOSE 22
+# Criar página web de teste
+RUN echo '<html><body><h1>Firewall Lab - Ubuntu Server</h1><p>Servidor web funcionando!</p></body></html>' > /var/www/html/index.html
+
+# Expor portas SSH e HTTP
+EXPOSE 22 80
 
 # Comando padrão
 CMD ["/bin/bash"]
