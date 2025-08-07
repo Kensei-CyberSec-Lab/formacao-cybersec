@@ -100,9 +100,14 @@ docker exec ubuntu_lab_19 service ssh start 2>/dev/null || true
 
 # Configurar Ubuntu GUI (se necessário)
 print_status "Configurando Ubuntu GUI..."
-docker exec --user root ubuntu_gui bash -c "apt-get update && apt-get install -y iptables iptables-persistent sudo" 2>/dev/null || true
+docker exec --user root ubuntu_gui bash -c "apt-get update && apt-get install -y iptables iptables-persistent sudo docker.io docker-compose" 2>/dev/null || true
 docker exec --user root ubuntu_gui bash -c "useradd -m -s /bin/bash -u 1000 defaultuser 2>/dev/null || true" 2>/dev/null || true
 docker exec --user root ubuntu_gui bash -c "echo 'defaultuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers" 2>/dev/null || true
+
+# Copiar script wrapper para GUI
+print_status "Copiando script wrapper para GUI..."
+docker cp scripts/iptables-gui.sh ubuntu_gui:/usr/local/bin/iptables-gui
+docker exec --user root ubuntu_gui chmod +x /usr/local/bin/iptables-gui
 
 # Mostrar informações de acesso
 echo ""
@@ -117,16 +122,19 @@ echo ""
 echo "🔒 Configurações automáticas incluídas:"
 echo "   ✅ iptables instalado e configurado"
 echo "   ✅ sudo configurado para defaultuser"
-echo "   ✅ Script wrapper: iptables-gui"
-echo "   ✅ Script de teste: /opt/lab-scripts/test-firewall.sh"
+echo "   ✅ Script wrapper: iptables-gui (na interface gráfica)"
+echo "   ✅ Scripts de firewall disponíveis no Ubuntu container"
+echo "   ✅ Scripts de teste disponíveis no host"
 echo ""
 echo "🖥️  Acesse os terminais:"
 echo "   Kali: docker exec -it kali_lab_19 bash"
 echo "   Ubuntu: docker exec -it ubuntu_lab_19 bash"
 echo ""
 echo "💡 Dicas rápidas:"
-echo "   Na interface gráfica, use: sudo iptables -L"
-echo "   Ou use o wrapper: iptables-gui -L"
+echo "   Na interface gráfica: iptables-gui -L (listar regras)"
+echo "   Na interface gráfica: iptables-gui -A (aplicar regras)"
+echo "   No Ubuntu container: docker exec -it ubuntu_lab_19 /opt/lab-scripts/iptables-example.sh apply"
+echo "   Teste o firewall: ./scripts/test-firewall.sh all"
 echo ""
 echo "📚 Consulte o README.md para instruções detalhadas"
 echo ""

@@ -33,7 +33,13 @@ RUN mkdir -p /opt/lab-scripts
 
 # Copiar scripts de exemplo
 COPY scripts/iptables-example.sh /opt/lab-scripts/
+COPY scripts/quick-setup.sh /opt/lab-scripts/
+COPY scripts/test-firewall.sh /opt/lab-scripts/
+COPY scripts/troubleshooting.sh /opt/lab-scripts/
 RUN chmod +x /opt/lab-scripts/iptables-example.sh
+RUN chmod +x /opt/lab-scripts/quick-setup.sh
+RUN chmod +x /opt/lab-scripts/test-firewall.sh
+RUN chmod +x /opt/lab-scripts/troubleshooting.sh
 
 # Configurar permissões
 RUN chmod 755 /opt/lab-scripts
