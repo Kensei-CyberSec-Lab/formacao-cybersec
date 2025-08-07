@@ -21,6 +21,7 @@ RUN apt-get update && apt-get upgrade -y && \
     netcat-traditional \
     tcpdump \
     apache2 \
+    rsyslog \
     && rm -rf /var/lib/apt/lists/*
 
 # Configurar SSH

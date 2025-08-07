@@ -95,6 +95,8 @@ fi
 
 # Inicializar laboratório
 print_status "Inicializando configurações do laboratório..."
+# Iniciar rsyslog no container Ubuntu
+docker exec ubuntu_lab_19 service rsyslog start 2>/dev/null || true
 # Iniciar SSH no container Ubuntu
 docker exec ubuntu_lab_19 service ssh start 2>/dev/null || true
 # Iniciar Apache no container Ubuntu
