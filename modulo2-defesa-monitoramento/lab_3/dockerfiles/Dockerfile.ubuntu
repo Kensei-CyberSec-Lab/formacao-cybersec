@@ -1,0 +1,56 @@
+FROM ubuntu:22.04
+
+# Evitar prompts interativos durante a instalação
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Atualizar sistema e instalar ferramentas necessárias
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y \
+    iptables \
+    iptables-persistent \
+    net-tools \
+    nmap \
+    curl \
+    wget \
+    openssh-server \
+    sudo \
+    vim \
+    htop \
+    iputils-ping \
+    telnet \
+    netcat-traditional \
+    tcpdump \
+    apache2 \
+    rsyslog \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configurar SSH
+RUN mkdir -p /var/run/sshd && \
+    echo 'root:root' | chpasswd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+# Criar diretório para scripts
+RUN mkdir -p /opt/lab-scripts
+
+# Copiar scripts de exemplo
+COPY scripts/iptables-example.sh /opt/lab-scripts/
+COPY scripts/quick-setup.sh /opt/lab-scripts/
+COPY scripts/test-firewall.sh /opt/lab-scripts/
+COPY scripts/troubleshooting.sh /opt/lab-scripts/
+RUN chmod +x /opt/lab-scripts/iptables-example.sh
+RUN chmod +x /opt/lab-scripts/quick-setup.sh
+RUN chmod +x /opt/lab-scripts/test-firewall.sh
+RUN chmod +x /opt/lab-scripts/troubleshooting.sh
+
+# Configurar permissões
+RUN chmod 755 /opt/lab-scripts
+
+# Criar página web de teste
+RUN echo '<html><body><h1>Firewall Lab - Ubuntu Server</h1><p>Servidor web funcionando!</p></body></html>' > /var/www/html/index.html
+
+# Expor portas SSH e HTTP
+EXPOSE 22 80
+
+# Comando padrão
+CMD ["/bin/bash"]

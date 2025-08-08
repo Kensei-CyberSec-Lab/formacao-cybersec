@@ -1,0 +1,24 @@
+# Arquivos e diretórios a serem ignorados durante o build
+.git
+.gitignore
+README.md
+INICIO-RAPIDO.md
+docs/
+*.md
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Arquivos de configuração local
+.env
+.env.local

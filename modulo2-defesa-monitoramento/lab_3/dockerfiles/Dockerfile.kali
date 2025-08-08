@@ -1,0 +1,38 @@
+FROM kalilinux/kali-rolling
+
+# Evitar prompts interativos durante a instalação
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Atualizar sistema e instalar ferramentas necessárias
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y \
+    openssh-client \
+    nmap \
+    curl \
+    wget \
+    net-tools \
+    iputils-ping \
+    telnet \
+    netcat-traditional \
+    tcpdump \
+    metasploit-framework \
+    sshpass \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configurar diretório de trabalho
+RUN mkdir -p /opt/lab-tools
+
+# Criar script de teste de conectividade
+RUN echo '#!/bin/bash\n\
+echo "🧪 Testando conectividade..."\n\
+echo "Ping para Ubuntu:"\n\
+ping -c 3 192.168.100.10\n\
+echo "SSH para Ubuntu:"\n\
+sshpass -p "root" ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@192.168.100.10 "echo SSH OK" || echo "SSH falhou"\n\
+echo "Nmap scan:"\n\
+nmap -sS -p- 192.168.100.10\n\
+' > /opt/lab-tools/test-lab.sh && \
+chmod +x /opt/lab-tools/test-lab.sh
+
+# Comando padrão
+CMD ["/bin/bash"]

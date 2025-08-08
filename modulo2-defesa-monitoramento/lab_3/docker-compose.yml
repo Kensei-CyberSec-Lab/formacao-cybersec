@@ -1,0 +1,45 @@
+services:
+  kali_lab_19:
+    platform: linux/amd64
+    container_name: kali_lab_19
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.kali
+    command: sleep infinity
+    privileged: true
+    networks:
+      cybersec_lab_19:
+        ipv4_address: 192.168.100.11
+
+  ubuntu_lab_19:
+    platform: linux/amd64
+    container_name: ubuntu_lab_19
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.ubuntu
+    command: sleep infinity
+    privileged: true
+    networks:
+      cybersec_lab_19:
+        ipv4_address: 192.168.100.10
+
+  ubuntu_gui:
+    platform: linux/amd64
+    container_name: ubuntu_gui
+    image: consol/ubuntu-xfce-vnc
+    privileged: true
+    ports:
+      - "5901:5901"
+      - "6080:6901"
+    environment:
+      - VNC_PW=kenseilab
+    networks:
+      cybersec_lab_19:
+        ipv4_address: 192.168.100.12
+
+networks:
+  cybersec_lab_19:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
