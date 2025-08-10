@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # === PERFIL SURICATA-CORE ===
+  kali:
+    build: ./kali
+    container_name: kali_lab
+    tty: true
+    volumes:
+      - ./ataques.sh:/root/ataques.sh
+    networks:
+      lab_net:
+        ipv4_address: 192.168.25.11
+    profiles:
+      - suricata-core
+      - suricata-scirius
+
+  suricata:
+    image: jasonish/suricata:latest
+    container_name: suricata_lab
+    command: -i eth0 -c /etc/suricata/suricata.yaml
+    volumes:
+      - ./suricata/suricata.yaml:/etc/suricata/suricata.yaml
+      - ./suricata/rules:/etc/suricata/rules
+      - ./suricata/logs:/var/log/suricata
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    networks:
+      lab_net:
+        ipv4_address: 192.168.25.10
+    profiles:
+      - suricata-core
+      - suricata-scirius
+
+  web_victim:
+    image: nginx:alpine
+    container_name: web_victim
+    volumes:
+      - ./web_victim/html:/usr/share/nginx/html
+    ports:
+      - "8088:80"  # Exposição opcional para testes externos
+    networks:
+      lab_net:
+        ipv4_address: 192.168.25.20
+    profiles:
+      - suricata-core
+      - suricata-scirius
+
+  # === PERFIL SURICATA-SCIRIUS ===
+  postgres:
+    image: postgres:15-alpine
+    container_name: scirius_db
+    environment:
+      POSTGRES_USER: scirius
+      POSTGRES_PASSWORD: sciriuspass
+      POSTGRES_DB: scirius
+    volumes:
+      - scirius_db_data:/var/lib/postgresql/data
+    networks:
+      lab_net:
+        ipv4_address: 192.168.25.31
+    profiles:
+      - suricata-scirius
+
+  scirius:
+    build:
+      context: ./scirius
+      dockerfile: Dockerfile.arm64
+    container_name: scirius_lab
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./suricata/logs:/var/log/suricata
+    networks:
+      lab_net:
+        ipv4_address: 192.168.25.30
+    profiles:
+      - suricata-scirius
+
+  evebox:
+    image: jasonish/evebox:latest
+    container_name: evebox_lab
+    depends_on:
+      - suricata
+    ports:
+      - "5636:5636"
+    volumes:
+      - ./suricata/logs:/var/log/suricata
+    networks:
+      lab_net:
+        ipv4_address: 192.168.25.40
+    profiles:
+      - suricata-scirius
+
+networks:
+  lab_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.25.0/24
+
+volumes:
+  scirius_db_data:

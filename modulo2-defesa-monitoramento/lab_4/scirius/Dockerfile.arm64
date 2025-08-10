@@ -1,0 +1,48 @@
+# Imagem mínima com Python 3.11
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_NO_CACHE_DIR=on \
+    DEBIAN_FRONTEND=noninteractive
+
+# Dependências do sistema
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git build-essential libffi-dev libssl-dev libpq-dev \
+    libldap2-dev libsasl2-dev pkg-config \
+    ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clonar Scirius
+WORKDIR /opt
+RUN git clone --depth 1 https://github.com/StamusNetworks/scirius.git
+WORKDIR /opt/scirius
+
+# Instalar dependências Python
+RUN pip install --upgrade pip wheel setuptools
+RUN pip install -r requirements.txt gunicorn
+
+# Pasta para dados (sqlite, etc.)
+RUN mkdir -p /data
+VOLUME ["/data"]
+
+# Pasta para regras (montada pelo docker-compose)
+VOLUME ["/rules"]
+
+# Coletar arquivos estáticos (silencioso se não houver)
+RUN python manage.py collectstatic --noinput || true
+
+# Script de entrada para migrar DB e criar superuser se necessário
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENV DJANGO_SUPERUSER_USERNAME=admin \
+    DJANGO_SUPERUSER_EMAIL=admin@example.com \
+    DJANGO_SUPERUSER_PASSWORD=changeme \
+    SCIRIUS_SQLITE_PATH=/data/scirius.sqlite3 \
+    SCIRIUS_BIND=0.0.0.0:8000
+
+EXPOSE 8000
+
+ENTRYPOINT ["/entrypoint.sh"]

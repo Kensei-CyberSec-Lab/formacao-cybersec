@@ -1,0 +1,62 @@
+%YAML 1.1
+---
+# Configuração do Suricata para Lab IDS/IPS
+# Modo padrão: IDS (detecção apenas)
+# Para habilitar IPS: descomente seção nfqueue abaixo
+
+vars:
+  address-groups:
+    HOME_NET: "[192.168.25.0/24]"
+    EXTERNAL_NET: "!$HOME_NET"
+
+default-rule-path: /etc/suricata/rules
+rule-files:
+  - local.rules
+
+# Interface de captura (AF-PACKET para alta performance)
+af-packet:
+  - interface: eth0
+    cluster-id: 99
+    cluster-type: cluster_flow
+    defrag: yes
+    # Configurações para modo IPS (descomente para habilitar)
+    # use-mmap: yes
+    # tpacket-v3: yes
+
+# Configuração de saída de logs
+outputs:
+  # Log rápido para alertas
+  - fast:
+      enabled: yes
+      filename: fast.log
+      append: yes
+  
+  # Log detalhado em formato JSON (para SIEM/Scirius)
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: eve.json
+      types:
+        - alert
+        - flow
+        - http
+        - dns
+        - tls
+
+# Configuração de threading
+threading:
+  set-cpu-affinity: no
+
+# Modo de execução
+runmode: autofp
+
+# Configuração para modo IPS (descomente para habilitar)
+# - nfqueue:
+#     mode: accept
+#     repeat-mark: 1
+#     repeat-mask: 1
+#     queue-num: 0
+
+# Configurações de performance
+max-pending-packets: 1024
+default-packet-size: 1514

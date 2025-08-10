@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab IDS/IPS - Web Victim</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .endpoint { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .danger { background: #ffe6e6; border-left: 4px solid #ff0000; }
+        .info { background: #e6f3ff; border-left: 4px solid #0066cc; }
+    </style>
+</head>
+<body>
+    <h1>🚨 Lab IDS/IPS - Web Victim</h1>
+    <p>Esta página simula uma aplicação web vulnerável para testar detecções do Suricata.</p>
+    
+    <h2>📋 Endpoints de Teste</h2>
+    
+    <div class="endpoint info">
+        <h3>GET /</h3>
+        <p>Página principal (tráfego benigno)</p>
+        <code>curl http://192.168.25.20/</code>
+    </div>
+    
+    <div class="endpoint danger">
+        <h3>GET /admin</h3>
+        <p>Área administrativa (deve disparar alerta)</p>
+        <code>curl http://192.168.25.20/admin</code>
+    </div>
+    
+    <div class="endpoint danger">
+        <h3>POST /login</h3>
+        <p>Formulário de login (teste de regras customizadas)</p>
+        <code>curl -X POST http://192.168.25.20/login -d "user=admin&password=123456"</code>
+    </div>
+    
+    <div class="endpoint danger">
+        <h3>GET /search?q=&lt;script&gt;alert('xss')&lt;/script&gt;</h3>
+        <p>Parâmetro XSS (deve disparar regra XSS)</p>
+        <code>curl "http://192.168.25.20/search?q=<script>alert('xss')</script>"</code>
+    </div>
+    
+    <h2>🔍 Como Testar</h2>
+    <ol>
+        <li>Execute <code>docker exec -it kali_lab bash</code></li>
+        <li>Use os comandos curl acima para gerar tráfego</li>
+        <li>Verifique logs em <code>./suricata/logs/eve.json</code></li>
+        <li>Monitore alertas com <code>docker logs suricata_lab</code></li>
+    </ol>
+    
+    <h2>📊 Status</h2>
+    <p>✅ Servidor web rodando em 192.168.25.20:80</p>
+    <p>✅ Suricata monitorando tráfego</p>
+    <p>✅ Logs sendo gravados em ./suricata/logs/</p>
+</body>
+</html>

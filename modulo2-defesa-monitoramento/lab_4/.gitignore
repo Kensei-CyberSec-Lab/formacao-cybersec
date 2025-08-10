@@ -1,0 +1,31 @@
+# Logs do Suricata
+suricata/logs/
+logs/
+
+# Dados do banco PostgreSQL
+scirius/data/
+
+# Arquivos temporários
+*.tmp
+*.log
+*.pcap
+
+# Volumes Docker
+scirius_db_data/
+
+# Configurações locais
+.env
+.env.local
+
+# Cache e arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos de configuração IPS (opcional)
+suricata/suricata-ips.yaml

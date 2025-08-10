@@ -1,0 +1,22 @@
+# [LAB25] Regras customizadas para demonstração IDS/IPS
+
+# 1) Detecção de acesso à área administrativa
+alert http any any -> 192.168.25.20 any (msg:"[LAB25] Acesso à área administrativa detectado"; content:"/admin"; http_uri; sid:1000001; rev:1;)
+
+# 2) Detecção de XSS simples (tag script)
+alert http any any -> 192.168.25.20 any (msg:"[LAB25] Possível XSS detectado - tag script"; content:"<script>"; nocase; http_uri; sid:1000002; rev:1;)
+
+# 3) Detecção de SQL Injection padrão
+alert http any any -> 192.168.25.20 any (msg:"[LAB25] Possível SQL Injection detectado"; content:"' OR '1'='1"; nocase; http_uri; sid:1000003; rev:1;)
+
+# 4) Detecção de parâmetro password em POST
+alert http any any -> 192.168.25.20 any (msg:"[LAB25] Parâmetro password detectado em POST"; content:"password="; http_method; content:"POST"; sid:1000004; rev:1;)
+
+# 5) Detecção de User-Agent específico (para desafio extra)
+alert http any any -> 192.168.25.20 any (msg:"[LAB25] User-Agent suspeito detectado"; content:"sqlmap"; http_user_agent; sid:1000005; rev:1;)
+
+# 6) Detecção de scan de portas (SYN packets)
+alert tcp any any -> any any (flags:S; msg:"[LAB25] Possível scan de portas - SYN"; sid:1000006; rev:1;)
+
+# 7) Detecção de ICMP Echo (ping)
+alert icmp any any -> any any (itype:8; msg:"[LAB25] ICMP Echo Request (ping)"; sid:1000007; rev:1;)
