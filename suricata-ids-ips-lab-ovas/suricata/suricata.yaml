@@ -1,0 +1,52 @@
+%YAML 1.2
+---
+vars:
+  address-groups:
+    HOME_NET: "[192.168.50.0/24]"
+    EXTERNAL_NET: "!$HOME_NET"
+
+default-rule-path: /etc/suricata/rules
+rule-files:
+  - local.rules
+
+af-packet:
+  - interface: eth0
+    cluster-id: 99
+    cluster-type: cluster_flow
+    defrag: yes
+
+# IPS inline com 2 NICs (ajuste nomes conforme VM)
+af-packet-inline:
+  - interface: eth1
+    threads: auto
+    cluster-id: 100
+    cluster-type: cluster_flow
+    defrag: yes
+    copy-mode: ips
+    copy-iface: eth2
+  - interface: eth2
+    threads: auto
+    cluster-id: 101
+    cluster-type: cluster_flow
+    defrag: yes
+    copy-mode: ips
+    copy-iface: eth1
+
+outputs:
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: /var/log/suricata/eve.json
+      community-id: yes
+      types: [alert, http, dns, tls, flow, stats]
+
+app-layer:
+  protocols:
+    http: { enabled: yes }
+    tls:  { enabled: yes }
+    dns:  { enabled: yes }
+
+detect:
+  profile: medium
+  inspection-recursion-limit: 3000
+---
