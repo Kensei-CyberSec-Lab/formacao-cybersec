@@ -19,16 +19,22 @@ WORKDIR /opt
 RUN git clone --depth 1 https://github.com/StamusNetworks/scirius.git
 WORKDIR /opt/scirius
 
-# Instalar dependências Python
+# Instalar dependências Python com versões específicas para compatibilidade
 RUN pip install --upgrade pip wheel setuptools
+RUN pip install "django-csp<4.0"  # Versão compatível
 RUN pip install -r requirements.txt gunicorn
 
+# Criar diretórios necessários
+RUN mkdir -p /data /var/log/scirius /rules
+
 # Pasta para dados (sqlite, etc.)
-RUN mkdir -p /data
 VOLUME ["/data"]
 
 # Pasta para regras (montada pelo docker-compose)
 VOLUME ["/rules"]
+
+# Pasta para logs
+VOLUME ["/var/log/scirius"]
 
 # Coletar arquivos estáticos (silencioso se não houver)
 RUN python manage.py collectstatic --noinput || true
@@ -41,7 +47,8 @@ ENV DJANGO_SUPERUSER_USERNAME=admin \
     DJANGO_SUPERUSER_EMAIL=admin@example.com \
     DJANGO_SUPERUSER_PASSWORD=changeme \
     SCIRIUS_SQLITE_PATH=/data/scirius.sqlite3 \
-    SCIRIUS_BIND=0.0.0.0:8000
+    SCIRIUS_BIND=0.0.0.0:8000 \
+    DJANGO_LOG_LEVEL=INFO
 
 EXPOSE 8000
 

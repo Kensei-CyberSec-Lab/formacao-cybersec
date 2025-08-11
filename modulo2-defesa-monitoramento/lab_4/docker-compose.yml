@@ -29,6 +29,8 @@ services:
     networks:
       lab_net:
         ipv4_address: 192.168.25.10
+      web_net:
+        ipv4_address: 192.168.26.10
     profiles:
       - suricata-core
       - suricata-scirius
@@ -38,11 +40,7 @@ services:
     container_name: web_victim
     volumes:
       - ./web_victim/html:/usr/share/nginx/html
-    ports:
-      - "8088:80"  # Exposição opcional para testes externos
-    networks:
-      lab_net:
-        ipv4_address: 192.168.25.20
+    network_mode: "service:suricata"
     profiles:
       - suricata-core
       - suricata-scirius
@@ -101,6 +99,11 @@ networks:
     ipam:
       config:
         - subnet: 192.168.25.0/24
+  web_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.26.0/24
 
 volumes:
   scirius_db_data:

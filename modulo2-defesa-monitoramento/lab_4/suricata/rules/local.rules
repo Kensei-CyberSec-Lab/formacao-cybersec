@@ -15,8 +15,18 @@ alert http any any -> 192.168.25.20 any (msg:"[LAB25] Parâmetro password detect
 # 5) Detecção de User-Agent específico (para desafio extra)
 alert http any any -> 192.168.25.20 any (msg:"[LAB25] User-Agent suspeito detectado"; content:"sqlmap"; http_user_agent; sid:1000005; rev:1;)
 
-# 6) Detecção de scan de portas (SYN packets)
-alert tcp any any -> any any (flags:S; msg:"[LAB25] Possível scan de portas - SYN"; sid:1000006; rev:1;)
+# 6) Detecção de scan de portas (SYN packets) - Regra mais específica
+alert tcp 192.168.25.11 any -> 192.168.25.10 any (flags:S; msg:"[LAB25] Scan de portas detectado - SYN"; sid:1000006; rev:1;)
 
 # 7) Detecção de ICMP Echo (ping)
 alert icmp any any -> any any (itype:8; msg:"[LAB25] ICMP Echo Request (ping)"; sid:1000007; rev:1;)
+alert http any any -> 192.168.25.20 any (msg:"[TEST] Regra customizada de teste"; content:"/test"; http_uri; sid:1000008; rev:1;)
+
+# Test rule - any TCP traffic
+alert tcp any any -> any any (msg:"[TEST] TCP traffic detected"; sid:1000009; rev:1;)
+
+# 8) Regra de teste mais simples para scan de portas
+alert tcp any any -> 192.168.25.20 any (msg:"[TEST] TCP connection to web victim"; sid:1000010; rev:1;)
+
+# 9) Regra de teste muito simples - qualquer TCP
+alert tcp any any -> any any (msg:"[SIMPLE] Any TCP traffic"; sid:1000011; rev:1;)

@@ -1,0 +1,22 @@
+# Simulação de tráfego malicioso para demonstração
+# Este arquivo simula o que Suricata detectaria em um ambiente real
+
+# Tráfego 1: Acesso à área administrativa
+GET /admin HTTP/1.1
+Host: 192.168.25.20
+User-Agent: Mozilla/5.0 (Kali Linux)
+
+# Tráfego 2: Tentativa de SQL Injection
+GET /?q=' OR '1'='1 HTTP/1.1
+Host: 192.168.25.20
+User-Agent: sqlmap/1.0
+
+# Tráfego 3: Tentativa de XSS
+GET /?q=<script>alert('xss')</script> HTTP/1.1
+Host: 192.168.25.20
+User-Agent: Mozilla/5.0
+
+# Tráfego 4: Scan de portas (SYN packets)
+TCP SYN -> 192.168.25.20:80
+TCP SYN -> 192.168.25.20:443
+TCP SYN -> 192.168.25.20:22

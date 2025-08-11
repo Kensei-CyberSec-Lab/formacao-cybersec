@@ -3,9 +3,17 @@ set -e
 
 cd /opt/scirius
 
+# Criar diretório de logs se não existir
+mkdir -p /var/log/scirius
+
 # Usa SQLite por padrão, apontando para /data/scirius.sqlite3
 # Se desejar usar outro DB, configure via variáveis do Django antes de buildar.
 export DJANGO_SETTINGS_MODULE=scirius.settings
+
+# Desabilitar configurações de logging problemáticas
+export DJANGO_LOG_LEVEL=INFO
+export SCIRIUS_ELASTICSEARCH_HOST=""
+export SCIRIUS_ELASTICSEARCH_PORT=""
 
 # Migrar DB
 python manage.py migrate --noinput
