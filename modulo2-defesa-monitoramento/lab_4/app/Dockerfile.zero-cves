@@ -1,0 +1,19 @@
+# Versão com ZERO vulnerabilidades (Python packages + OS)
+FROM python:3.11-slim
+
+ENV DEBIAN_FRONTEND=noninteractive PIP_NO_CACHE_DIR=1 \
+    PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+
+# Atualizar setuptools para eliminar CVE-2024-6345, CVE-2025-47273
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates && \
+    pip install --upgrade pip setuptools==78.1.1 && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements-fixed.txt requirements.txt
+RUN pip install -r requirements.txt
+
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "app.py"]

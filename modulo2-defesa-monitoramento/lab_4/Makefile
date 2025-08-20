@@ -15,6 +15,9 @@ scan:
 patch:
 	bash scripts/patch.sh
 
+python-fix:
+	bash scripts/python-fix.sh
+
 rebuild: down build up
 
 logs:
