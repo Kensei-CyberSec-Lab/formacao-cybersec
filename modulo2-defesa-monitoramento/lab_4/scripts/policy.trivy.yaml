@@ -1,0 +1,4 @@
+# Política simples: falhar em CRITICAL/HIGH na varredura de imagem
+severity: CRITICAL,HIGH
+ignoreUnfixed: true
+exitCode: 1

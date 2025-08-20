@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.bullseye
+    image: lab27_app:local
+    container_name: lab27_app
+    ports:
+      - "5001:5000"
+    command: ["python", "app.py"]
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
