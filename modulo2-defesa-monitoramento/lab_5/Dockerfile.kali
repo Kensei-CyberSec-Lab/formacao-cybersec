@@ -1,0 +1,44 @@
+FROM kalilinux/kali-rolling
+
+# Atualizar pacotes e instalar dependências
+RUN apt-get update && apt-get install -y \
+    wget \
+    apt-transport-https \
+    gnupg \
+    lsb-release \
+    curl \
+    jq \
+    python3 \
+    python3-pip \
+    pandoc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar bibliotecas Python para geração de relatórios
+RUN pip3 install --no-cache-dir --break-system-packages \
+    jinja2 \
+    markdown \
+    plotly \
+    pandas
+
+# Instalar Trivy
+RUN wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | tee /usr/share/keyrings/trivy.gpg > /dev/null \
+    && echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | tee -a /etc/apt/sources.list.d/trivy.list \
+    && apt-get update \
+    && apt-get install -y trivy \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar scripts de relatório
+COPY scripts/ /root/scripts/
+RUN chmod +x /root/scripts/*.sh /root/scripts/*.py
+
+# Criar diretório para relatórios
+RUN mkdir -p /root/reports
+
+# Adicionar scripts ao PATH
+ENV PATH="/root/scripts:${PATH}"
+
+# Definir diretório de trabalho
+WORKDIR /root
+
+# Manter container rodando
+CMD ["tail", "-f", "/dev/null"]

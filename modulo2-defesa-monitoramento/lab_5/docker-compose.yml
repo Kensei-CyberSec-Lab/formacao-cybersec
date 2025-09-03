@@ -1,0 +1,29 @@
+services:
+  juice_shop:
+    image: bkimminich/juice-shop
+    container_name: juice_shop
+    ports:
+      - "3000:3000"
+    networks:
+      lab31_net:
+        ipv4_address: 172.31.0.10
+
+  kali_lab_31:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: kali_lab_31
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./reports:/root/reports
+    networks:
+      lab31_net:
+        ipv4_address: 172.31.0.11
+
+networks:
+  lab31_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24
