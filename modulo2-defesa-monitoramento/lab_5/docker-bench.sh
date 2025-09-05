@@ -197,3 +197,4 @@ echo ""
 
 echo -e "${BLUE}📖 Para ver o relatório completo:${NC}"
 echo "   cat $REPORT_FILE"
+

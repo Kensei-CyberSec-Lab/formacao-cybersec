@@ -1,0 +1,38 @@
+version: "3.9"
+
+networks:
+  nist_ir_net:
+    driver: bridge
+
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: juice_shop
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - nist_ir_net
+
+  waf:
+    image: owasp/modsecurity-crs:nginx
+    container_name: waf_proxy
+    user: "0:0"   # << permite o entrypoint gravar em /etc/nginx/*
+    volumes:
+      - ./nginx/conf.d/juice.conf:/etc/nginx/conf.d/juice.conf:ro
+      - ./modsecurity/modsecurity-override.conf:/etc/nginx/templates/modsecurity.d/modsecurity-override.conf.template:ro
+    ports: ["8080:80"]
+    networks:
+      - nist_ir_net
+    restart: unless-stopped
+
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: kali_attacker
+    tty: true
+    command: ["/bin/bash"]
+    networks:
+      - nist_ir_net
+
+volumes:
+  waf_logs:
