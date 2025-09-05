@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModSecurity WAF - Relatório de Segurança</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid #3498db;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            font-size: 1em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .blocked { border-left-color: #e74c3c; }
+        .detected { border-left-color: #f39c12; }
+        .rules { border-left-color: #27ae60; }
+        .attacks { border-left-color: #8e44ad; }
+        .charts-section {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .chart-container {
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .chart-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .logs-section {
+            padding: 30px;
+        }
+        .filter-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .filter-input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .filter-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .filter-button:hover {
+            background: #2980b9;
+        }
+        .log-entry {
+            background: #f8f9fa;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .log-header {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .log-header:hover {
+            background: #2c3e50;
+        }
+        .log-details {
+            display: none;
+            padding: 20px;
+            background: white;
+        }
+        .log-details.show {
+            display: block;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-blocked {
+            background: #e74c3c;
+            color: white;
+        }
+        .status-detected {
+            background: #f39c12;
+            color: white;
+        }
+        .rule-tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            margin: 2px;
+        }
+        .timestamp {
+            font-family: monospace;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ ModSecurity WAF</h1>
+            <p>Relatório de Análise de Segurança - Lab NIST IR</p>
+            <p class="timestamp">Gerado em: 05/09/2025 às 17:47:00</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card blocked">
+                <div class="stat-number">78</div>
+                <div class="stat-label">Ataques Bloqueados</div>
+            </div>
+            <div class="stat-card detected">
+                <div class="stat-number">156</div>
+                <div class="stat-label">Ataques Detectados</div>
+            </div>
+            <div class="stat-card rules">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Regras Ativadas</div>
+            </div>
+            <div class="stat-card attacks">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Tipos de Ataque</div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-row">
+                <div class="chart-container">
+                    <h3 class="chart-title">Top 10 Regras Ativadas</h3>
+                    <canvas id="rulesChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Tipos de Ataque</h3>
+                    <canvas id="attacksChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 class="chart-title">Timeline de Eventos</h3>
+                <canvas id="timelineChart"></canvas>
+            </div>
+        </div>
+
+        <div class="logs-section">
+            <h3 class="chart-title">Logs Detalhados</h3>
+            
+            <div class="filter-controls">
+                <input type="text" id="filterRule" class="filter-input" placeholder="Filtrar por Rule ID (ex: 942100)">
+                <input type="text" id="filterIP" class="filter-input" placeholder="Filtrar por IP">
+                <select id="filterStatus" class="filter-input">
+                    <option value="">Todos os Status</option>
+                    <option value="403">Apenas Bloqueados (403)</option>
+                    <option value="200">Apenas Detectados (200)</option>
+                </select>
+                <button class="filter-button" onclick="applyFilters()">Aplicar Filtros</button>
+                <button class="filter-button" onclick="clearFilters()">Limpar</button>
+            </div>
+
+            <div id="logEntries">
+                <div class="log-entry" data-ip="172.20.0.4" data-status="403" data-rules="942100,949110">
+                    <div class="log-header" onclick="toggleLogDetails(0)">
+                        <div>
+                            <strong>Fri Sep 5 15:03:28 2025</strong> - 172.20.0.4 → /rest/products/search?q=1' UNION SELECT 1,2,3--
+                        </div>
+                        <div>
+                            <span class="status-badge status-blocked">BLOQUEADO</span>
+                        </div>
+                    </div>
+                    <div class="log-details" id="logDetails0">
+                        <p><strong>URL:</strong> /rest/products/search?q=1' UNION SELECT 1,2,3--</p>
+                        <p><strong>Código HTTP:</strong> 403</p>
+                        <p><strong>IP Cliente:</strong> 172.20.0.4</p>
+                        <p><strong>Regras Ativadas:</strong> 
+                            <span class="rule-tag">942100</span>
+                            <span class="rule-tag">949110</span>
+                        </p>
+                        <h4>Mensagens de Segurança:</h4>
+                        <ul>
+                            <li><strong>[942100]</strong> SQL Injection Attack Detected via libinjection (Severidade: 2)</li>
+                            <li><strong>[949110]</strong> Inbound Anomaly Score Exceeded (Total Score: 10) (Severidade: 0)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="log-entry" data-ip="172.20.0.4" data-status="403" data-rules="941100,942100">
+                    <div class="log-header" onclick="toggleLogDetails(1)">
+                        <div>
+                            <strong>Fri Sep 5 15:03:25 2025</strong> - 172.20.0.4 → /rest/products/search?q=<script>alert('xss')</script>
+                        </div>
+                        <div>
+                            <span class="status-badge status-blocked">BLOQUEADO</span>
+                        </div>
+                    </div>
+                    <div class="log-details" id="logDetails1">
+                        <p><strong>URL:</strong> /rest/products/search?q=<script>alert('xss')</script></p>
+                        <p><strong>Código HTTP:</strong> 403</p>
+                        <p><strong>IP Cliente:</strong> 172.20.0.4</p>
+                        <p><strong>Regras Ativadas:</strong> 
+                            <span class="rule-tag">941100</span>
+                            <span class="rule-tag">942100</span>
+                        </p>
+                        <h4>Mensagens de Segurança:</h4>
+                        <ul>
+                            <li><strong>[941100]</strong> XSS Attack Detected via libinjection (Severidade: 2)</li>
+                            <li><strong>[942100]</strong> SQL Injection Attack Detected via libinjection (Severidade: 2)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="log-entry" data-ip="192.168.1.100" data-status="200" data-rules="913100">
+                    <div class="log-header" onclick="toggleLogDetails(2)">
+                        <div>
+                            <strong>Fri Sep 5 15:02:15 2025</strong> - 192.168.1.100 → /rest/products/search?q=test
+                        </div>
+                        <div>
+                            <span class="status-badge status-detected">DETECTADO</span>
+                        </div>
+                    </div>
+                    <div class="log-details" id="logDetails2">
+                        <p><strong>URL:</strong> /rest/products/search?q=test</p>
+                        <p><strong>Código HTTP:</strong> 200</p>
+                        <p><strong>IP Cliente:</strong> 192.168.1.100</p>
+                        <p><strong>Regras Ativadas:</strong> 
+                            <span class="rule-tag">913100</span>
+                        </p>
+                        <h4>Mensagens de Segurança:</h4>
+                        <ul>
+                            <li><strong>[913100]</strong> Found User-Agent associated with security scanner (Severidade: 2)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados para os gráficos (exemplo)
+        const rulesData = {
+            "942100": 87,
+            "942140": 23,
+            "942190": 45,
+            "941100": 12,
+            "949110": 156,
+            "913100": 34,
+            "920420": 67,
+            "942270": 8,
+            "930100": 15,
+            "932160": 6
+        };
+
+        const attacksData = {
+            "SQL Injection": 156,
+            "XSS": 23,
+            "Scanner Detection": 34,
+            "Path Traversal": 12,
+            "Command Injection": 9
+        };
+
+        const timelineData = {
+            "14:00": 12,
+            "15:00": 45,
+            "16:00": 67,
+            "17:00": 89,
+            "18:00": 23,
+            "19:00": 15,
+            "20:00": 8
+        };
+
+        // Gráfico de Regras
+        const rulesCtx = document.getElementById('rulesChart').getContext('2d');
+        new Chart(rulesCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(rulesData),
+                datasets: [{
+                    label: 'Ativações',
+                    data: Object.values(rulesData),
+                    backgroundColor: 'rgba(52, 152, 219, 0.8)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Gráfico de Tipos de Ataque
+        const attacksCtx = document.getElementById('attacksChart').getContext('2d');
+        new Chart(attacksCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(attacksData),
+                datasets: [{
+                    data: Object.values(attacksData),
+                    backgroundColor: [
+                        '#e74c3c', '#f39c12', '#27ae60', '#8e44ad', '#3498db'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // Gráfico de Timeline
+        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+        new Chart(timelineCtx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(timelineData),
+                datasets: [{
+                    label: 'Eventos por Hora',
+                    data: Object.values(timelineData),
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Funções JavaScript
+        function toggleLogDetails(index) {
+            const details = document.getElementById('logDetails' + index);
+            details.classList.toggle('show');
+        }
+
+        function applyFilters() {
+            const ruleFilter = document.getElementById('filterRule').value.toLowerCase();
+            const ipFilter = document.getElementById('filterIP').value.toLowerCase();
+            const statusFilter = document.getElementById('filterStatus').value;
+            
+            const logEntries = document.querySelectorAll('.log-entry');
+            
+            logEntries.forEach(entry => {
+                const ip = entry.dataset.ip.toLowerCase();
+                const status = entry.dataset.status;
+                const rules = entry.dataset.rules.toLowerCase();
+                
+                let show = true;
+                
+                if (ruleFilter && !rules.includes(ruleFilter)) show = false;
+                if (ipFilter && !ip.includes(ipFilter)) show = false;
+                if (statusFilter && status !== statusFilter) show = false;
+                
+                entry.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        function clearFilters() {
+            document.getElementById('filterRule').value = '';
+            document.getElementById('filterIP').value = '';
+            document.getElementById('filterStatus').value = '';
+            
+            document.querySelectorAll('.log-entry').forEach(entry => {
+                entry.style.display = 'block';
+            });
+        }
+
+        // Auto-aplicar filtros quando digitar
+        document.getElementById('filterRule').addEventListener('input', applyFilters);
+        document.getElementById('filterIP').addEventListener('input', applyFilters);
+        document.getElementById('filterStatus').addEventListener('change', applyFilters);
+    </script>
+</body>
+</html>

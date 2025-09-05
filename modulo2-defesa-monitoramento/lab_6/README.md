@@ -57,7 +57,23 @@ docker logs --tail 10 waf_proxy | grep "403 Forbidden"
 - Valide o serviço e colete evidências
 - Faça o mini-relatório conforme o README original
 
-## 6) Limpeza
+## 6) Relatório Visual (Opcional)
+Gere um relatório HTML interativo com gráficos e filtros:
+```bash
+# Gerar relatório dos logs atuais
+python3 generate_report.py
+
+# Ou visualizar relatório de demonstração
+open demo_report.html
+```
+
+O relatório inclui:
+- 📊 **Dashboard com métricas** (ataques bloqueados vs detectados)
+- 📈 **Gráficos interativos** (regras mais ativadas, tipos de ataque, timeline)
+- 🔍 **Logs detalhados com filtros** (por IP, regra, status)
+- 🎯 **Análise de tendências** e estatísticas de segurança
+
+## 7) Limpeza
 ```bash
 docker compose down -v
 ```
