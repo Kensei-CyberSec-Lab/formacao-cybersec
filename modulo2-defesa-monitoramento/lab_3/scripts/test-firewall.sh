@@ -43,16 +43,16 @@ test_basic_connectivity() {
     echo "================================"
     
     # Teste ping do Kali para Ubuntu
-    print_status "INFO" "Testando ping do Kali (192.168.100.11) para Ubuntu (192.168.100.10)..."
-    if docker exec kali_lab_19 ping -c 3 192.168.100.10 > /dev/null 2>&1; then
+    print_status "INFO" "Testando ping do Kali (10.3.0.11) para Ubuntu (10.3.0.10)..."
+    if docker exec firewall_lab3_kali ping -c 3 10.3.0.10 > /dev/null 2>&1; then
         print_status "PASS" "Ping do Kali para Ubuntu: FUNCIONANDO"
     else
         print_status "FAIL" "Ping do Kali para Ubuntu: FALHOU"
     fi
     
     # Teste ping do Ubuntu para Kali
-    print_status "INFO" "Testando ping do Ubuntu (192.168.100.10) para Kali (192.168.100.11)..."
-    if docker exec ubuntu_lab_19 ping -c 3 192.168.100.11 > /dev/null 2>&1; then
+    print_status "INFO" "Testando ping do Ubuntu (10.3.0.10) para Kali (10.3.0.11)..."
+    if docker exec firewall_lab3_ubuntu ping -c 3 10.3.0.11 > /dev/null 2>&1; then
         print_status "PASS" "Ping do Ubuntu para Kali: FUNCIONANDO"
     else
         print_status "FAIL" "Ping do Ubuntu para Kali: FALHOU"
@@ -69,7 +69,7 @@ test_ssh_access() {
     print_status "INFO" "Testando SSH do Kali para Ubuntu..."
     
     # Tentar SSH e capturar resultado
-    local ssh_result=$(docker exec kali_lab_19 timeout 5 ssh -o ConnectTimeout=3 -o StrictHostKeyChecking=no root@192.168.100.10 "echo 'SSH_SUCCESS'" 2>&1)
+    local ssh_result=$(docker exec firewall_lab3_kali timeout 5 ssh -o ConnectTimeout=3 -o StrictHostKeyChecking=no root@10.3.0.10 "echo 'SSH_SUCCESS'" 2>&1)
     
     if echo "$ssh_result" | grep -q "SSH_SUCCESS"; then
         print_status "WARN" "SSH do Kali para Ubuntu: FUNCIONANDO (verifique se o firewall está ativo)"
@@ -87,7 +87,7 @@ check_firewall_rules() {
     echo "=============================================="
     
     # Verificar se há regras configuradas
-    local rules_count=$(docker exec ubuntu_lab_19 iptables -L INPUT | wc -l)
+    local rules_count=$(docker exec firewall_lab3_ubuntu iptables -L INPUT | wc -l)
     
     if [ "$rules_count" -gt 3 ]; then
         print_status "PASS" "Regras de firewall configuradas ($((rules_count-3)) regras customizadas)"
@@ -95,13 +95,13 @@ check_firewall_rules() {
         # Mostrar regras principais
         echo ""
         print_status "INFO" "Regras de INPUT configuradas:"
-        docker exec ubuntu_lab_19 iptables -L INPUT --line-numbers
+        docker exec firewall_lab3_ubuntu iptables -L INPUT --line-numbers
     else
         print_status "WARN" "Poucas regras de firewall encontradas (apenas políticas padrão)"
     fi
     
     # Verificar política padrão
-    local default_policy=$(docker exec ubuntu_lab_19 iptables -L INPUT | head -1 | awk '{print $4}')
+    local default_policy=$(docker exec firewall_lab3_ubuntu iptables -L INPUT | head -1 | awk '{print $4}')
     if [ "$default_policy" = "DROP" ]; then
         print_status "PASS" "Política padrão INPUT: DROP (seguro)"
     else
@@ -117,7 +117,7 @@ test_specific_ports() {
     
     # Verificar porta 22 (SSH)
     print_status "INFO" "Verificando porta 22 (SSH) no Ubuntu..."
-    if docker exec ubuntu_lab_19 netstat -tuln | grep -q ":22 "; then
+    if docker exec firewall_lab3_ubuntu netstat -tuln | grep -q ":22 "; then
         print_status "PASS" "Porta 22 (SSH): ABERTA"
     else
         print_status "FAIL" "Porta 22 (SSH): FECHADA"
@@ -125,7 +125,7 @@ test_specific_ports() {
     
     # Verificar porta 80 (HTTP)
     print_status "INFO" "Verificando porta 80 (HTTP) no Ubuntu..."
-    if docker exec ubuntu_lab_19 netstat -tuln | grep -q ":80 "; then
+    if docker exec firewall_lab3_ubuntu netstat -tuln | grep -q ":80 "; then
         print_status "PASS" "Porta 80 (HTTP): ABERTA"
     else
         print_status "INFO" "Porta 80 (HTTP): FECHADA (normal se não houver servidor web)"
@@ -139,7 +139,7 @@ check_firewall_logs() {
     echo "==============================="
     
     # Verificar se há logs de firewall
-    local log_count=$(docker exec ubuntu_lab_19 grep -c "BLOCKED_KALI" /var/log/syslog 2>/dev/null || echo "0")
+    local log_count=$(docker exec firewall_lab3_ubuntu grep -c "BLOCKED_KALI" /var/log/syslog 2>/dev/null || echo "0")
     
     if [ "$log_count" -gt 0 ]; then
         print_status "PASS" "Logs de firewall encontrados ($log_count entradas)"
@@ -147,7 +147,7 @@ check_firewall_logs() {
         # Mostrar últimos logs
         echo ""
         print_status "INFO" "Últimos logs de firewall:"
-        docker exec ubuntu_lab_19 grep "BLOCKED_KALI" /var/log/syslog | tail -3
+        docker exec firewall_lab3_ubuntu grep "BLOCKED_KALI" /var/log/syslog | tail -3
     else
         print_status "INFO" "Nenhum log de firewall encontrado (normal se não houve tentativas de acesso)"
     fi
@@ -162,7 +162,7 @@ test_nmap_scan() {
     print_status "INFO" "Executando scan de portas do Kali para Ubuntu..."
     
     # Executar nmap e capturar resultado
-    local nmap_output=$(docker exec kali_lab_19 nmap -sS -p 22,80,443 192.168.100.10 2>/dev/null)
+    local nmap_output=$(docker exec firewall_lab3_kali nmap -sS -p 22,80,443 10.3.0.10 2>/dev/null)
     
     echo "$nmap_output"
     

@@ -7,11 +7,11 @@
 ./scripts/setup-lab.sh
 
 # 2. Acesse a interface gráfica
-# Navegador: http://localhost:6080
-# VNC: localhost:5901 (senha: kenseilab)
+# Navegador: http://localhost:6083
+# VNC: localhost:5903 (senha: kenseilab)
 
 # 3. Teste a conectividade
-docker exec -it kali_lab_19 /opt/lab-tools/test-lab.sh
+docker exec -it firewall_lab3_kali /opt/lab-tools/test-lab.sh
 
 # 4. Configure o firewall na interface gráfica
 sudo iptables -L  # Ver regras atuais
@@ -41,11 +41,11 @@ Você é o **administrador de rede** de uma empresa e precisa proteger um servid
 
 ## 🏗️ Arquitetura do Laboratório
 
-| Container     | Papel                        | IP                  | Função                    |
-|---------------|------------------------------|---------------------|---------------------------|
-| `kali_lab_19` | 🎯 **Máquina Atacante**      | 192.168.100.11      | Simula um atacante        |
-| `ubuntu_lab_19` | 🛡️ **Servidor Alvo**        | 192.168.100.10      | Servidor a ser protegido  |
-| `ubuntu_gui`  | 🖥️ **Interface Gráfica**     | 192.168.100.12      | Estação de trabalho       |
+| Container            | Papel                        | IP            | Função                    |
+|----------------------|------------------------------|---------------|---------------------------|
+| `firewall_lab3_kali` | 🎯 **Máquina Atacante**      | 10.3.0.11     | Simula um atacante        |
+| `firewall_lab3_ubuntu` | 🛡️ **Servidor Alvo**        | 10.3.0.10     | Servidor a ser protegido  |
+| `firewall_lab3_gui`  | 🖥️ **Interface Gráfica**     | 10.3.0.12     | Estação de trabalho       |
 
 ### Topologia de Rede:
 ```
@@ -53,7 +53,7 @@ Você é o **administrador de rede** de uma empresa e precisa proteger um servid
 │   Kali Linux    │    │   Ubuntu CLI    │    │   Ubuntu GUI    │
 │  (Atacante)     │    │   (Alvo)        │    │  (Estação)      │
 │                 │    │                 │    │                 │
-│ 192.168.100.11  │◄──►│ 192.168.100.10  │◄──►│ 192.168.100.12  │
+│   10.3.0.11     │◄──►│   10.3.0.10     │◄──►│   10.3.0.12     │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
@@ -76,10 +76,10 @@ docker ps
 
 **Resultado esperado:**
 ```
-CONTAINER ID   IMAGE                    COMMAND           CREATED         STATUS         PORTS                    NAMES
-abc123...      kalilinux/kali-rolling   "sleep infinity"  2 minutes ago   Up 2 minutes                            kali_lab_19
-def456...      ubuntu:22.04             "sleep infinity"  2 minutes ago   Up 2 minutes                            ubuntu_lab_19
-ghi789...      consol/ubuntu-xfce-vnc   "/startup.sh"     2 minutes ago   Up 2 minutes   0.0.0.0:6080->6901/tcp   ubuntu_gui
+CONTAINER ID   IMAGE                    COMMAND           CREATED         STATUS         PORTS                          NAMES
+abc123...      kalilinux/kali-rolling   "sleep infinity"  2 minutes ago   Up 2 minutes                                  firewall_lab3_kali
+def456...      ubuntu:22.04             "sleep infinity"  2 minutes ago   Up 2 minutes                                  firewall_lab3_ubuntu
+ghi789...      consol/ubuntu-xfce-vnc   "/startup.sh"     2 minutes ago   Up 2 minutes   0.0.0.0:5903->5901/tcp,6083->6901/tcp   firewall_lab3_gui
 ```
 
 ### 2. Acessando a Interface Gráfica
@@ -88,14 +88,14 @@ Você tem duas opções para acessar o Ubuntu com interface gráfica:
 
 #### Opção A: Via Navegador (Recomendado)
 1. Abra seu navegador
-2. Acesse: `http://localhost:6080`
+2. Acesse: `http://localhost:6083`
 3. Use as credenciais:
    - **Usuário:** `root`
    - **Senha:** `kenseilab`
 
 #### Opção B: Via VNC Viewer
 1. Instale um cliente VNC (como VNC Viewer)
-2. Conecte em: `localhost:5901`
+2. Conecte em: `localhost:5903`
 3. Use a senha: `kenseilab`
 
 ### 3. Preparando o Ambiente de Trabalho
@@ -109,11 +109,11 @@ sudo iptables -L          # Ver regras
 # /opt/lab-scripts/test-firewall.sh  # Teste completo
 
 # Via container Ubuntu:
-docker exec -it ubuntu_lab_19 bash
+docker exec -it firewall_lab3_ubuntu bash
 iptables -L               # Já como root
 
 # Via container Kali:
-docker exec -it kali_lab_19 bash
+docker exec -it firewall_lab3_kali bash
 /opt/lab-tools/test-lab.sh  # Teste de conectividade
 ```
 
@@ -129,7 +129,7 @@ Primeiro, vamos testar a conectividade **antes** de aplicar as regras de firewal
 
 ```bash
 # Acesse o terminal do Kali (já configurado)
-docker exec -it kali_lab_19 bash
+docker exec -it firewall_lab3_kali bash
 
 # ✅ TUDO JÁ ESTÁ INSTALADO E CONFIGURADO!
 # - SSH client: ✅ Instalado
@@ -137,10 +137,10 @@ docker exec -it kali_lab_19 bash
 # - Ferramentas de rede: ✅ Instaladas
 
 # Teste conectividade com o Ubuntu
-ping -c 3 192.168.100.10
+ping -c 3 10.3.0.10
 
 # Teste SSH (deve funcionar inicialmente)
-ssh root@192.168.100.10
+ssh root@10.3.0.10
 # Digite 'yes' para aceitar a chave
 # Digite 'exit' para sair
 
@@ -152,10 +152,10 @@ ssh root@192.168.100.10
 
 ```bash
 # No Kali, escaneie as portas do Ubuntu
-nmap -sS -p- 192.168.100.10
+nmap -sS -p- 10.3.0.10
 
 # Teste HTTP (se houver serviço web)
-curl http://192.168.100.10
+curl http://10.3.0.10
 ```
 
 ### Fase 2: Configurando as Regras de Firewall
@@ -166,7 +166,7 @@ Agora vamos configurar o firewall no Ubuntu para protegê-lo:
 
 ```bash
 # Acesse o terminal do Ubuntu (já configurado)
-docker exec -it ubuntu_lab_19 bash
+docker exec -it firewall_lab3_ubuntu bash
 
 # ✅ TUDO JÁ ESTÁ INSTALADO E CONFIGURADO!
 # - iptables: ✅ Instalado
@@ -203,14 +203,14 @@ iptables -A INPUT -i lo -j ACCEPT
 # 5. Permitir HTTP (porta 80) - tráfego legítimo
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 
-# 6. BLOQUEAR SSH do Kali (192.168.100.11) - ataque malicioso
-iptables -A INPUT -s 192.168.100.11 -p tcp --dport 22 -j DROP
+# 6. BLOQUEAR SSH do Kali (10.3.0.11) - ataque malicioso
+iptables -A INPUT -s 10.3.0.11 -p tcp --dport 22 -j DROP
 
 # 7. Permitir SSH de outros IPs (opcional - para administração)
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
 # 8. Adicionar logging para auditoria
-iptables -A INPUT -s 192.168.100.11 -j LOG --log-prefix "BLOCKED_KALI: "
+iptables -A INPUT -s 10.3.0.11 -j LOG --log-prefix "BLOCKED_KALI: "
 ```
 
 #### 2.3 Verificando as Regras Aplicadas
@@ -234,7 +234,7 @@ Agora vamos testar se as regras estão funcionando:
 
 ```bash
 # No Kali, tente conectar via SSH novamente
-ssh root@192.168.100.10
+ssh root@10.3.0.10
 # Deve ser BLOQUEADO!
 ```
 
@@ -242,13 +242,13 @@ ssh root@192.168.100.10
 
 ```bash
 # No Kali, teste ping (deve funcionar)
-ping -c 3 192.168.100.10
+ping -c 3 10.3.0.10
 
 # Teste HTTP (deve funcionar se houver serviço)
-curl http://192.168.100.10
+curl http://10.3.0.10
 
 # Escaneie portas novamente
-nmap -sS -p- 192.168.100.10
+nmap -sS -p- 10.3.0.10
 ```
 
 # Parar todos os containers

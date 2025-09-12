@@ -1,5 +1,3 @@
-version: "3.9"
-
 name: greenbone-community-edition
 
 services:
@@ -10,43 +8,48 @@ services:
       FEED_RELEASE: "24.10"
     volumes:
       - vt_data_vol:/mnt
+    restart: on-failure
     networks:
       default:
-        ipv4_address: 172.18.0.10
+        ipv4_address: 172.20.0.10
 
   notus-data:
     image: registry.community.greenbone.net/community/notus-data
     volumes:
       - notus_data_vol:/mnt
+    restart: on-failure
     networks:
       default:
-        ipv4_address: 172.18.0.11
+        ipv4_address: 172.20.0.11
 
   scap-data:
     image: registry.community.greenbone.net/community/scap-data
     volumes:
       - scap_data_vol:/mnt
+    restart: on-failure
     networks:
       default:
-        ipv4_address: 172.18.0.12
+        ipv4_address: 172.20.0.12
 
   cert-bund-data:
     image: registry.community.greenbone.net/community/cert-bund-data
     volumes:
       - cert_data_vol:/mnt
+    restart: on-failure
     networks:
       default:
-        ipv4_address: 172.18.0.13
+        ipv4_address: 172.20.0.13
 
   dfn-cert-data:
     image: registry.community.greenbone.net/community/dfn-cert-data
     volumes:
       - cert_data_vol:/mnt
+    restart: on-failure
     depends_on:
       - cert-bund-data
     networks:
       default:
-        ipv4_address: 172.18.0.14
+        ipv4_address: 172.20.0.14
 
   data-objects:
     image: registry.community.greenbone.net/community/data-objects
@@ -54,9 +57,10 @@ services:
       FEED_RELEASE: "24.10"
     volumes:
       - data_objects_vol:/mnt
+    restart: on-failure
     networks:
       default:
-        ipv4_address: 172.18.0.15
+        ipv4_address: 172.20.0.15
 
   report-formats:
     image: registry.community.greenbone.net/community/report-formats
@@ -64,19 +68,21 @@ services:
       FEED_RELEASE: "24.10"
     volumes:
       - data_objects_vol:/mnt
+    restart: on-failure
     depends_on:
       - data-objects
     networks:
       default:
-        ipv4_address: 172.18.0.16
+        ipv4_address: 172.20.0.16
 
   gpg-data:
     image: registry.community.greenbone.net/community/gpg-data
     volumes:
       - gpg_data_vol:/mnt
+    restart: on-failure
     networks:
       default:
-        ipv4_address: 172.18.0.17
+        ipv4_address: 172.20.0.17
 
   redis-server:
     image: registry.community.greenbone.net/community/redis-server
@@ -85,7 +91,7 @@ services:
       - redis_socket_vol:/run/redis/
     networks:
       default:
-        ipv4_address: 172.18.0.18
+        ipv4_address: 172.20.0.18
 
   pg-gvm:
     image: registry.community.greenbone.net/community/pg-gvm:stable
@@ -95,7 +101,7 @@ services:
       - psql_socket_vol:/var/run/postgresql
     networks:
       default:
-        ipv4_address: 172.18.0.19
+        ipv4_address: 172.20.0.19
 
   gvmd:
     image: registry.community.greenbone.net/community/gvmd:stable
@@ -125,7 +131,7 @@ services:
         condition: service_completed_successfully
     networks:
       default:
-        ipv4_address: 172.18.0.20
+        ipv4_address: 172.20.0.20
 
   gsa:
     image: registry.community.greenbone.net/community/gsa:stable
@@ -138,7 +144,7 @@ services:
       - gvmd
     networks:
       default:
-        ipv4_address: 172.18.0.21
+        ipv4_address: 172.20.0.21
 
   configure-openvas:
     image: registry.community.greenbone.net/community/openvas-scanner:stable
@@ -157,7 +163,7 @@ services:
         chmod 666 /var/log/openvas/openvas.log
     networks:
       default:
-        ipv4_address: 172.18.0.22
+        ipv4_address: 172.20.0.22
 
   openvas:
     image: registry.community.greenbone.net/community/openvas-scanner:stable
@@ -176,7 +182,7 @@ services:
         condition: service_completed_successfully
     networks:
       default:
-        ipv4_address: 172.18.0.23
+        ipv4_address: 172.20.0.23
 
   openvasd:
     image: registry.community.greenbone.net/community/openvas-scanner:stable
@@ -192,7 +198,7 @@ services:
       - notus_data_vol:/var/lib/notus
     networks:
       default:
-        ipv4_address: 172.18.0.24
+        ipv4_address: 172.20.0.24
 
   ospd-openvas:
     image: registry.community.greenbone.net/community/ospd-openvas:stable
@@ -225,7 +231,7 @@ services:
         condition: service_completed_successfully
     networks:
       default:
-        ipv4_address: 172.18.0.25
+        ipv4_address: 172.20.0.25
 
   gvm-tools:
     image: registry.community.greenbone.net/community/gvm-tools
@@ -237,7 +243,7 @@ services:
       - ospd-openvas
     networks:
       default:
-        ipv4_address: 172.18.0.26
+        ipv4_address: 172.20.0.26
 
   metasploitable:
     image: tleemcjr/metasploitable2
@@ -245,6 +251,7 @@ services:
     container_name: metasploitable-alvo
     stdin_open: true
     tty: true
+    restart: on-failure
     ports:
       - "21:21"
       - "22:22"
@@ -260,7 +267,7 @@ services:
       - "8180:8180"
     networks:
       default:
-        ipv4_address: 172.18.0.27
+        ipv4_address: 172.20.0.27
 
   kali:
     build:
@@ -271,10 +278,11 @@ services:
       - metasploitable
     stdin_open: true
     tty: true
+    restart: on-failure
     command: tail -f /dev/null
     networks:
       default:
-        ipv4_address: 172.18.0.28
+        ipv4_address: 172.20.0.28
 
 volumes:
   gpg_data_vol:
@@ -297,4 +305,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.18.0.0/24
+        - subnet: 172.20.0.0/24
