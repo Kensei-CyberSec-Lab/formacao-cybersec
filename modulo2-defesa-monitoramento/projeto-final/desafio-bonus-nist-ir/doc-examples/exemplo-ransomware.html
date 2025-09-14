@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Cenário Ransomware - NIST IR</title>
+    <link rel="stylesheet" href="css/professional.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>🔐 Exemplo Cenário Ransomware</h1>
+            <p class="subtitle">Caso Prático de Resposta a Incidente</p>
+            <span class="badge">Exemplo Detalhado</span>
+        </div>
+    </header>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html" class="btn btn-outline btn-sm">← Voltar ao Índice</a>
+            <div class="nav-controls">
+                <button class="btn btn-outline btn-sm btn-print">🖨️ Imprimir</button>
+                <button class="btn btn-primary btn-sm btn-export-pdf">📄 PDF</button>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="main-content">
+<h1 data-number="1"
+id="exemplo-plano-de-resposta---ataque-ransomware"><span
+class="header-section-number">1</span> 🔐 Exemplo: Plano de Resposta -
+Ataque Ransomware</h1>
+<blockquote>
+<p><strong>Este é um exemplo de como desenvolver o plano para o Cenário
+A</strong><br />
+<strong>Use como referência para criar seu próprio plano
+completo</strong></p>
+</blockquote>
+<hr />
+<h2 data-number="1.1" id="cenário-a-ataque-de-ransomware"><span
+class="header-section-number">1.1</span> 🎯 Cenário A: Ataque de
+Ransomware</h2>
+<h3 data-number="1.1.1" id="situação"><span
+class="header-section-number">1.1.1</span>
+<strong>Situação</strong></h3>
+<p>Segunda-feira, 08:30h. A empresa TechCorp (500 funcionários, setor
+tecnologia) teve vários sistemas criptografados durante a madrugada.
+Funcionários reportam arquivos inacessíveis e notas de resgate
+aparecendo em suas telas.</p>
+<h3 data-number="1.1.2" id="indicadores-detectados"><span
+class="header-section-number">1.1.2</span> <strong>Indicadores
+Detectados</strong></h3>
+<ul>
+<li>✅ Arquivos com extensão <code>.locked</code></li>
+<li>✅ Nota de resgate: <code>README_FOR_DECRYPT.txt</code></li>
+<li>✅ Servidores de arquivo inacessíveis</li>
+<li>✅ Logs mostram login RDP suspeito às 02:30h</li>
+<li>✅ Processo <code>encrypt.exe</code> detectado no EDR</li>
+</ul>
+<hr />
+<h2 data-number="1.2" id="fase-2-detecção-e-análise---exemplo"><span
+class="header-section-number">1.2</span> 🔍 FASE 2: DETECÇÃO E ANÁLISE -
+EXEMPLO</h2>
+<h3 data-number="1.2.1" id="validação-inicial-15-min"><span
+class="header-section-number">1.2.1</span> <strong>2.1 Validação Inicial
+(&lt; 15 min)</strong></h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar sistemas afetados</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> fileserver01.techcorp.local</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> database01.techcorp.local</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar processos suspeitos</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-Process</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.ProcessName <span class="at">-like</span> <span class="st">&quot;*encrypt*&quot;</span>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar arquivos criptografados</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ChildItem</span> <span class="at">-Path</span> <span class="st">&quot;C:</span><span class="dt">\\</span><span class="st">&quot;</span> <span class="at">-Recurse</span> <span class="at">-Filter</span> <span class="st">&quot;*.locked&quot;</span> <span class="kw">|</span> <span class="ex">Select-Object</span> FullName</span></code></pre></div>
+<h3 data-number="1.2.2" id="classificação-do-incidente"><span
+class="header-section-number">1.2.2</span> <strong>2.2 Classificação do
+Incidente</strong></h3>
+<ul>
+<li><strong>Severidade:</strong> 🔴 <strong>CRÍTICA</strong></li>
+<li><strong>Impacto:</strong> Disponibilidade (sistemas
+indisponíveis)</li>
+<li><strong>Categoria:</strong> Malware - Ransomware</li>
+<li><strong>Urgência:</strong> 🚨 <strong>IMEDIATA</strong></li>
+</ul>
+<h3 data-number="1.2.3" id="escalação-ativada"><span
+class="header-section-number">1.2.3</span> <strong>2.3 Escalação
+Ativada</strong></h3>
+<ul>
+<li>⏰ <strong>08:35h</strong> - Coordenador CSIRT ativado</li>
+<li>⏰ <strong>08:45h</strong> - Equipe completa mobilizada</li>
+<li>⏰ <strong>09:00h</strong> - CEO e diretoria notificados</li>
+</ul>
+<hr />
+<h2 data-number="1.3" id="fase-3-contenção---exemplo"><span
+class="header-section-number">1.3</span> ⚡ FASE 3: CONTENÇÃO -
+EXEMPLO</h2>
+<h3 data-number="1.3.1" id="contenção-imediata-1-hora"><span
+class="header-section-number">1.3.1</span> <strong>3.1 Contenção
+Imediata (&lt; 1 hora)</strong></h3>
+<h4 data-number="1.3.1.1" id="isolamento-de-rede"><span
+class="header-section-number">1.3.1.1</span> <strong>Isolamento de
+Rede</strong></h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolar sistemas comprometidos</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-s</span> 192.168.1.0/24 <span class="at">-j</span> DROP</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> OUTPUT <span class="at">-d</span> 192.168.1.0/24 <span class="at">-j</span> DROP</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Desabilitar conexões RDP</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">netsh</span> advfirewall firewall set rule group=<span class="st">&quot;remote desktop&quot;</span> new enable=No</span></code></pre></div>
+<h4 data-number="1.3.1.2" id="preservação-de-evidências"><span
+class="header-section-number">1.3.1.2</span> <strong>Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar memória RAM</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">winpmem_mini_x64.exe</span> physmem.raw</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs críticos</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl System C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ystem.evtx</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl Security C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ecurity.evtx</span></code></pre></div>
+<h4 data-number="1.3.1.3" id="checklist-de-contenção-executado"><span
+class="header-section-number">1.3.1.3</span> <strong>Checklist de
+Contenção Executado</strong></h4>
+<ul>
+<li>✅ <strong>09:15h</strong> - Sistemas afetados isolados da rede</li>
+<li>✅ <strong>09:20h</strong> - RDP desabilitado em toda a rede</li>
+<li>✅ <strong>09:25h</strong> - Backup de logs realizado</li>
+<li>✅ <strong>09:30h</strong> - Snapshots de VMs comprometidas</li>
+<li>✅ <strong>09:35h</strong> - Comunicação inicial às equipes</li>
+</ul>
+<h3 data-number="1.3.2" id="identificação-do-ransomware"><span
+class="header-section-number">1.3.2</span> <strong>3.2 Identificação do
+Ransomware</strong></h3>
+<h4 data-number="1.3.2.1" id="análise-da-nota-de-resgate"><span
+class="header-section-number">1.3.2.1</span> <strong>Análise da Nota de
+Resgate</strong></h4>
+<pre><code>=== SEUS ARQUIVOS FORAM CRIPTOGRAFADOS ===
+
+Olá TechCorp!
+
+Todos os seus arquivos importantes foram criptografados com algoritmo militar AES-256.
+Você tem 72 horas para pagar o resgate de 10 Bitcoins (~$300,000 USD).
+
+Para recuperar seus arquivos:
+1. Baixe o navegador TOR
+2. Acesse: http://[endereço-onion].onion
+3. Use o ID: TECHCORP-2024-8847
+
+NÃO tente descriptografar por conta própria!
+NÃO contate autoridades!
+NÃO desligue os computadores!
+
+Tempo restante: 71:42:15</code></pre>
+<h4 data-number="1.3.2.2" id="identificação-da-família"><span
+class="header-section-number">1.3.2.2</span> <strong>Identificação da
+Família</strong></h4>
+<ul>
+<li><strong>Ransomware:</strong> LockBit 3.0 (baseado na nota e
+extensão)</li>
+<li><strong>Método:</strong> RDP brute force + exploração de
+vulnerabilidade</li>
+<li><strong>Criptografia:</strong> AES-256 + RSA-2048 (não
+descriptografável)</li>
+</ul>
+<hr />
+<h2 data-number="1.4"
+id="fase-3-erradicação-e-recuperação---exemplo"><span
+class="header-section-number">1.4</span> 🛡️ FASE 3: ERRADICAÇÃO E
+RECUPERAÇÃO - EXEMPLO</h2>
+<h3 data-number="1.4.1" id="erradicação-4-horas"><span
+class="header-section-number">1.4.1</span> <strong>3.3 Erradicação (&lt;
+4 horas)</strong></h3>
+<h4 data-number="1.4.1.1" id="remoção-do-malware"><span
+class="header-section-number">1.4.1.1</span> <strong>Remoção do
+Malware</strong></h4>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar persistência</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">reg</span> query <span class="st">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remover arquivos maliciosos</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ChildItem</span> <span class="at">-Path</span> <span class="st">&quot;C:</span><span class="dt">\\</span><span class="st">&quot;</span> <span class="at">-Recurse</span> <span class="at">-Filter</span> <span class="st">&quot;encrypt.exe&quot;</span> <span class="kw">|</span> <span class="ex">Remove-Item</span> <span class="at">-Force</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpar tarefas agendadas</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ScheduledTask</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.TaskName <span class="at">-like</span> <span class="st">&quot;*encrypt*&quot;</span>} <span class="kw">|</span> <span class="ex">Unregister-ScheduledTask</span></span></code></pre></div>
+<h4 data-number="1.4.1.2" id="correção-de-vulnerabilidades"><span
+class="header-section-number">1.4.1.2</span> <strong>Correção de
+Vulnerabilidades</strong></h4>
+<ul>
+<li>✅ <strong>11:00h</strong> - Patch do Windows Server aplicado</li>
+<li>✅ <strong>11:30h</strong> - RDP configurado com 2FA
+obrigatório</li>
+<li>✅ <strong>12:00h</strong> - Senhas de admin alteradas</li>
+<li>✅ <strong>12:30h</strong> - Firewall reconfigurado</li>
+</ul>
+<h3 data-number="1.4.2" id="recuperação-8-horas"><span
+class="header-section-number">1.4.2</span> <strong>3.4 Recuperação (&lt;
+8 horas)</strong></h3>
+<h4 data-number="1.4.2.1" id="restauração-via-backup"><span
+class="header-section-number">1.4.2.1</span> <strong>Restauração via
+Backup</strong></h4>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar integridade dos backups</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> check backup-server:/techcorp/2024-03-15 /mnt/restore/</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restaurar sistemas críticos (Prioridade 1)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">restore-vm</span> fileserver01 <span class="at">--snapshot</span> <span class="st">&quot;2024-03-15-23:00&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">restore-vm</span> database01 <span class="at">--snapshot</span> <span class="st">&quot;2024-03-15-23:00&quot;</span></span></code></pre></div>
+<h4 data-number="1.4.2.2" id="timeline-de-recuperação"><span
+class="header-section-number">1.4.2.2</span> <strong>Timeline de
+Recuperação</strong></h4>
+<ul>
+<li>✅ <strong>13:00h</strong> - Servidor de arquivos restaurado</li>
+<li>✅ <strong>14:30h</strong> - Banco de dados restaurado e
+validado</li>
+<li>✅ <strong>15:00h</strong> - Workstations principais
+restauradas</li>
+<li>✅ <strong>16:00h</strong> - Rede corporativa reestabelecida</li>
+<li>✅ <strong>17:00h</strong> - Operações normais retomadas</li>
+</ul>
+<h3 data-number="1.4.3" id="validação-da-recuperação"><span
+class="header-section-number">1.4.3</span> <strong>3.5 Validação da
+Recuperação</strong></h3>
+<ul>
+<li>✅ Todos os sistemas funcionando normalmente</li>
+<li>✅ Performance dentro dos parâmetros</li>
+<li>✅ Dados íntegros (última verificação às 23:00h do dia
+anterior)</li>
+<li>✅ Usuários conseguem acessar sistemas</li>
+<li>✅ Malware erradicado (confirmed por scan completo)</li>
+</ul>
+<hr />
+<h2 data-number="1.5"
+id="fase-4-atividades-pós-incidente---exemplo"><span
+class="header-section-number">1.5</span> 📊 FASE 4: ATIVIDADES
+PÓS-INCIDENTE - EXEMPLO</h2>
+<h3 data-number="1.5.1" id="métricas-finais"><span
+class="header-section-number">1.5.1</span> <strong>4.1 Métricas
+Finais</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Valor Alcançado</th>
+<th>Meta</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MTTD</strong></td>
+<td>30 minutos</td>
+<td>&lt; 1 hora</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>45 minutos</td>
+<td>&lt; 1 hora</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>8,5 horas</td>
+<td>&lt; 12 horas</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Downtime</strong></td>
+<td>8,5 horas</td>
+<td>&lt; 12 horas</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.5.2" id="impacto-financeiro"><span
+class="header-section-number">1.5.2</span> <strong>4.2 Impacto
+Financeiro</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Receita Perdida</strong></td>
+<td>R$ 85.000 (8,5h parado)</td>
+</tr>
+<tr>
+<td><strong>Custos de Resposta</strong></td>
+<td>R$ 15.000 (equipe + consultores)</td>
+</tr>
+<tr>
+<td><strong>Custos de Recuperação</strong></td>
+<td>R$ 5.000 (infraestrutura)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td>R$ 105.000</td>
+</tr>
+<tr>
+<td><strong>Resgate NÃO PAGO</strong></td>
+<td>R$ 1.500.000 ECONOMIZADOS</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.5.3" id="lições-aprendidas"><span
+class="header-section-number">1.5.3</span> <strong>4.3 Lições
+Aprendidas</strong></h3>
+<h4 data-number="1.5.3.1" id="o-que-funcionou-bem"><span
+class="header-section-number">1.5.3.1</span> <strong>✅ O que funcionou
+bem:</strong></h4>
+<ul>
+<li>Detecção rápida via EDR</li>
+<li>Equipe CSIRT bem treinada</li>
+<li>Backups íntegros e atualizados</li>
+<li>Procedimentos de isolamento eficazes</li>
+<li>Comunicação clara e transparente</li>
+</ul>
+<h4 data-number="1.5.3.2" id="o-que-precisa-melhorar"><span
+class="header-section-number">1.5.3.2</span> <strong>⚠️ O que precisa
+melhorar:</strong></h4>
+<ul>
+<li>RDP exposto sem 2FA</li>
+<li>Patches de segurança atrasados</li>
+<li>Monitoramento 24/7 limitado</li>
+<li>Treinamento de usuários insuficiente</li>
+<li>Testes de restauração pouco frequentes</li>
+</ul>
+<h4 data-number="1.5.3.3" id="recomendações-implementadas"><span
+class="header-section-number">1.5.3.3</span> <strong>🔧 Recomendações
+Implementadas:</strong></h4>
+<ol type="1">
+<li><strong>Prevenção:</strong>
+<ul>
+<li>✅ 2FA obrigatório em todos os acessos remotos</li>
+<li>✅ Gestão de patches automatizada</li>
+<li>✅ VPN corporativa para acesso remoto</li>
+</ul></li>
+<li><strong>Detecção:</strong>
+<ul>
+<li>✅ SOC 24/7 terceirizado contratado</li>
+<li>✅ Alertas de ransomware no SIEM</li>
+<li>✅ Monitoramento de comportamento anômalo</li>
+</ul></li>
+<li><strong>Resposta:</strong>
+<ul>
+<li>✅ Playbook de ransomware atualizado</li>
+<li>✅ Treinamento trimestral da equipe</li>
+<li>✅ Simulados mensais de resposta</li>
+</ul></li>
+</ol>
+<h3 data-number="1.5.4" id="comunicação-pós-incidente"><span
+class="header-section-number">1.5.4</span> <strong>4.4 Comunicação
+Pós-Incidente</strong></h3>
+<h4 data-number="1.5.4.1" id="comunicação-interna-1730h"><span
+class="header-section-number">1.5.4.1</span> <strong>Comunicação Interna
+(17:30h)</strong></h4>
+<pre><code>ASSUNTO: Resolução do Incidente de Segurança - Operações Normalizadas
+
+Prezados colaboradores,
+
+Informamos que o incidente de segurança detectado na manhã de hoje foi 
+completamente resolvido. Todos os sistemas estão funcionando normalmente
+e nenhum dado foi perdido.
+
+Medidas adicionais de segurança foram implementadas e continuamos 
+monitorando ativamente nossa infraestrutura.
+
+Agradecemos a paciência de todos durante este período.
+
+Atenciosamente,
+Equipe de TI e Segurança</code></pre>
+<h4 data-number="1.5.4.2" id="relatório-executivo-1800h"><span
+class="header-section-number">1.5.4.2</span> <strong>Relatório Executivo
+(18:00h)</strong></h4>
+<p>Enviado para CEO, diretoria e board com: - Resumo executivo do
+incidente - Impacto financeiro e operacional - Medidas implementadas -
+Próximos passos</p>
+<hr />
+<h2 data-number="1.6" id="análise-forense-detalhada"><span
+class="header-section-number">1.6</span> 🔍 Análise Forense
+Detalhada</h2>
+<h3 data-number="1.6.1" id="vetor-de-ataque-identificado"><span
+class="header-section-number">1.6.1</span> <strong>Vetor de Ataque
+Identificado</strong></h3>
+<ol type="1">
+<li><strong>02:15h</strong> - Ataque de força bruta em RDP (IP:
+185.220.101.45)</li>
+<li><strong>02:28h</strong> - Login bem-sucedido (user:
+backup_admin)</li>
+<li><strong>02:30h</strong> - Download do ransomware via PowerShell</li>
+<li><strong>02:35h</strong> - Execução inicial em fileserver01</li>
+<li><strong>02:45h</strong> - Propagação lateral via SMB</li>
+<li><strong>03:00h</strong> - Início da criptografia de arquivos</li>
+</ol>
+<h3 data-number="1.6.2" id="iocs-indicators-of-compromise"><span
+class="header-section-number">1.6.2</span> <strong>IOCs (Indicators of
+Compromise)</strong></h3>
+<pre><code># IPs maliciosos
+185.220.101.45 (origem do ataque)
+194.169.175.22 (C&amp;C server)
+
+# Hashes SHA256
+encrypt.exe: 8f14e45fceea167a5a36dedd4bea2543ef31d4b3e3c9b17a8b8c9e3f5d2a1b4c
+launcher.ps1: 2c4a3b5e7f9d1a8c6e4b2f5a9c7e1d3f5b8a4c6e9f2d5a7c1e4b8f6a3d9c5e2
+
+# Domínios
+techcorp-decrypt[.]onion
+backup-urgent[.]com
+
+# Artifacts
+README_FOR_DECRYPT.txt
+.locked (extension)</code></pre>
+<hr />
+<h2 data-number="1.7" id="checklist-completo-de-resposta"><span
+class="header-section-number">1.7</span> 📋 Checklist Completo de
+Resposta</h2>
+<h3 data-number="1.7.1" id="detecção-e-análise"><span
+class="header-section-number">1.7.1</span> <strong>✅ Detecção e
+Análise</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Incidente validado e
+classificado</label></li>
+<li><label><input type="checkbox" checked="" />Equipe CSIRT
+ativada</label></li>
+<li><label><input type="checkbox" checked="" />Evidências iniciais
+coletadas</label></li>
+<li><label><input type="checkbox" checked="" />Escopo preliminar
+definido</label></li>
+</ul>
+<h3 data-number="1.7.2" id="contenção"><span
+class="header-section-number">1.7.2</span> <strong>✅
+Contenção</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Sistemas comprometidos
+isolados</label></li>
+<li><label><input type="checkbox" checked="" />Propagação
+interrompida</label></li>
+<li><label><input type="checkbox" checked="" />Evidências
+preservadas</label></li>
+<li><label><input type="checkbox" checked="" />Stakeholders
+notificados</label></li>
+</ul>
+<h3 data-number="1.7.3" id="erradicação"><span
+class="header-section-number">1.7.3</span> <strong>✅
+Erradicação</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Malware
+removido</label></li>
+<li><label><input type="checkbox" checked="" />Vulnerabilidades
+corrigidas</label></li>
+<li><label><input type="checkbox" checked="" />Credenciais comprometidas
+alteradas</label></li>
+<li><label><input type="checkbox" checked="" />Sistemas
+endurecidos</label></li>
+</ul>
+<h3 data-number="1.7.4" id="recuperação"><span
+class="header-section-number">1.7.4</span> <strong>✅
+Recuperação</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Sistemas restaurados a
+partir de backups</label></li>
+<li><label><input type="checkbox" checked="" />Funcionalidade
+validada</label></li>
+<li><label><input type="checkbox" checked="" />Monitoramento
+intensificado</label></li>
+<li><label><input type="checkbox" checked="" />Operações
+normalizadas</label></li>
+</ul>
+<h3 data-number="1.7.5" id="pós-incidente"><span
+class="header-section-number">1.7.5</span> <strong>✅
+Pós-Incidente</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Relatório de incidente
+criado</label></li>
+<li><label><input type="checkbox" checked="" />Lições aprendidas
+documentadas</label></li>
+<li><label><input type="checkbox" checked="" />Melhorias
+implementadas</label></li>
+<li><label><input type="checkbox" checked="" />Comunicação
+finalizada</label></li>
+</ul>
+<hr />
+<p><strong>🎯 Este exemplo demonstra um plano de resposta completo e
+realista. Use-o como base para desenvolver seu próprio plano, adaptando
+para o cenário específico escolhido!</strong></p>
+        </div>
+    </main>
+    <script src="js/interactive.js"></script>
+</body>
+</html>

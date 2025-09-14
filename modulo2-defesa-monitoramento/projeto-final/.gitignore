@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+*.tmp
+*.env
+__pycache__/
+*.pcap
+*.svg
+*.drawio
+*.mermaid
+dist/
+build/

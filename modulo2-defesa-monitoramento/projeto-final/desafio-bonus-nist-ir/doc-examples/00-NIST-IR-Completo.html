@@ -1,0 +1,3410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>NIST IR - Guia Completo</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown-light.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">NIST IR - Guia Completo</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#desafio-bônus-plano-de-resposta-a-incidentes-nist"
+id="toc-desafio-bônus-plano-de-resposta-a-incidentes-nist"><span
+class="toc-section-number">1</span> Desafio Bônus: Plano de Resposta a
+Incidentes NIST</a>
+<ul>
+<li><a href="#guia-completo-e-templates"
+id="toc-guia-completo-e-templates"><span
+class="toc-section-number">1.1</span> Guia Completo e Templates</a></li>
+</ul></li>
+<li><a href="#desafio-bônus-plano-de-resposta-a-incidentes-nist-1"
+id="toc-desafio-bônus-plano-de-resposta-a-incidentes-nist-1"><span
+class="toc-section-number">2</span> 🚨 Desafio Bônus: Plano de Resposta
+a Incidentes NIST</a>
+<ul>
+<li><a href="#objetivo-do-desafio" id="toc-objetivo-do-desafio"><span
+class="toc-section-number">2.1</span> 🎯 Objetivo do Desafio</a></li>
+<li><a href="#framework-nist-sp-800-61-rev.-2"
+id="toc-framework-nist-sp-800-61-rev.-2"><span
+class="toc-section-number">2.2</span> 📚 Framework NIST SP 800-61
+Rev. 2</a>
+<ul>
+<li><a href="#preparation-preparação"
+id="toc-preparation-preparação"><span
+class="toc-section-number">2.2.1</span> 1. 🛠️ <strong>Preparation
+(Preparação)</strong></a></li>
+<li><a href="#detection-analysis-detecção-e-análise"
+id="toc-detection-analysis-detecção-e-análise"><span
+class="toc-section-number">2.2.2</span> 2. 🔍 <strong>Detection &amp;
+Analysis (Detecção e Análise)</strong></a></li>
+<li><a
+href="#containment-eradication-recovery-contenção-erradicação-e-recuperação"
+id="toc-containment-eradication-recovery-contenção-erradicação-e-recuperação"><span
+class="toc-section-number">2.2.3</span> 3. ⚡ <strong>Containment,
+Eradication &amp; Recovery (Contenção, Erradicação e
+Recuperação)</strong></a></li>
+<li><a href="#post-incident-activity-atividades-pós-incidente"
+id="toc-post-incident-activity-atividades-pós-incidente"><span
+class="toc-section-number">2.2.4</span> 4. 📝 <strong>Post-Incident
+Activity (Atividades Pós-Incidente)</strong></a></li>
+</ul></li>
+<li><a href="#cenários-do-desafio" id="toc-cenários-do-desafio"><span
+class="toc-section-number">2.3</span> 🎮 Cenários do Desafio</a>
+<ul>
+<li><a href="#cenário-a-ataque-de-ransomware"
+id="toc-cenário-a-ataque-de-ransomware"><span
+class="toc-section-number">2.3.1</span> 📊 <strong>Cenário A: Ataque de
+Ransomware</strong></a></li>
+<li><a href="#cenário-b-violação-de-dados-data-breach"
+id="toc-cenário-b-violação-de-dados-data-breach"><span
+class="toc-section-number">2.3.2</span> 🌐 <strong>Cenário B: Violação
+de Dados (Data Breach)</strong></a></li>
+<li><a href="#cenário-c-comprometimento-de-conta-privilegiada"
+id="toc-cenário-c-comprometimento-de-conta-privilegiada"><span
+class="toc-section-number">2.3.3</span> 🔒 <strong>Cenário C:
+Comprometimento de Conta Privilegiada</strong></a></li>
+</ul></li>
+<li><a href="#entregáveis" id="toc-entregáveis"><span
+class="toc-section-number">2.4</span> 📋 Entregáveis</a>
+<ul>
+<li><a href="#plano-de-resposta-a-incidentes-plano-ir-nist.md"
+id="toc-plano-de-resposta-a-incidentes-plano-ir-nist.md"><span
+class="toc-section-number">2.4.1</span> 1. 📖 <strong>Plano de Resposta
+a Incidentes</strong> (<code>plano-ir-nist.md</code>)</a></li>
+<li><a href="#procedimentos-de-comunicação-comunicacao.md"
+id="toc-procedimentos-de-comunicação-comunicacao.md"><span
+class="toc-section-number">2.4.2</span> 2. 📞 <strong>Procedimentos de
+Comunicação</strong> (<code>comunicacao.md</code>)</a></li>
+<li><a href="#playbooks-técnicos-playbooks"
+id="toc-playbooks-técnicos-playbooks"><span
+class="toc-section-number">2.4.3</span> 3. 🔧 <strong>Playbooks
+Técnicos</strong> (<code>playbooks/</code>)</a></li>
+<li><a href="#formulários-e-checklists-forms"
+id="toc-formulários-e-checklists-forms"><span
+class="toc-section-number">2.4.4</span> 4. 📊 <strong>Formulários e
+Checklists</strong> (<code>forms/</code>)</a></li>
+<li><a href="#matriz-de-classificação-classificacao.md"
+id="toc-matriz-de-classificação-classificacao.md"><span
+class="toc-section-number">2.4.5</span> 5. 🎯 <strong>Matriz de
+Classificação</strong> (<code>classificacao.md</code>)</a></li>
+</ul></li>
+<li><a href="#estrutura-de-pastas-sugerida"
+id="toc-estrutura-de-pastas-sugerida"><span
+class="toc-section-number">2.5</span> 📐 Estrutura de Pastas
+Sugerida</a></li>
+<li><a href="#critérios-de-avaliação"
+id="toc-critérios-de-avaliação"><span
+class="toc-section-number">2.6</span> ✅ Critérios de Avaliação</a>
+<ul>
+<li><a href="#excelente-90-100-pontos"
+id="toc-excelente-90-100-pontos"><span
+class="toc-section-number">2.6.1</span> 🏆 <strong>Excelente (90-100
+pontos)</strong></a></li>
+<li><a href="#bom-70-89-pontos" id="toc-bom-70-89-pontos"><span
+class="toc-section-number">2.6.2</span> 🥈 <strong>Bom (70-89
+pontos)</strong></a></li>
+<li><a href="#satisfatório-50-69-pontos"
+id="toc-satisfatório-50-69-pontos"><span
+class="toc-section-number">2.6.3</span> 🥉 <strong>Satisfatório (50-69
+pontos)</strong></a></li>
+<li><a href="#insuficiente-50-pontos"
+id="toc-insuficiente-50-pontos"><span
+class="toc-section-number">2.6.4</span> ❌ <strong>Insuficiente (&lt;50
+pontos)</strong></a></li>
+</ul></li>
+<li><a href="#dicas-para-desenvolvimento"
+id="toc-dicas-para-desenvolvimento"><span
+class="toc-section-number">2.7</span> 🔍 Dicas para Desenvolvimento</a>
+<ul>
+<li><a href="#pesquise-o-cenário" id="toc-pesquise-o-cenário"><span
+class="toc-section-number">2.7.1</span> <strong>1. Pesquise o
+Cenário</strong></a></li>
+<li><a href="#seja-específico" id="toc-seja-específico"><span
+class="toc-section-number">2.7.2</span> <strong>2. Seja
+Específico</strong></a></li>
+<li><a href="#considere-o-contexto" id="toc-considere-o-contexto"><span
+class="toc-section-number">2.7.3</span> <strong>3. Considere o
+Contexto</strong></a></li>
+<li><a href="#pense-na-prática" id="toc-pense-na-prática"><span
+class="toc-section-number">2.7.4</span> <strong>4. Pense na
+Prática</strong></a></li>
+</ul></li>
+<li><a href="#recursos-de-referência"
+id="toc-recursos-de-referência"><span
+class="toc-section-number">2.8</span> 📚 Recursos de Referência</a>
+<ul>
+<li><a href="#documentos-nist" id="toc-documentos-nist"><span
+class="toc-section-number">2.8.1</span> <strong>Documentos
+NIST</strong></a></li>
+<li><a href="#frameworks-complementares"
+id="toc-frameworks-complementares"><span
+class="toc-section-number">2.8.2</span> <strong>Frameworks
+Complementares</strong></a></li>
+<li><a href="#ferramentas-úteis" id="toc-ferramentas-úteis"><span
+class="toc-section-number">2.8.3</span> <strong>Ferramentas
+Úteis</strong></a></li>
+</ul></li>
+<li><a href="#prazo-e-entrega" id="toc-prazo-e-entrega"><span
+class="toc-section-number">2.9</span> ⏰ Prazo e Entrega</a>
+<ul>
+<li><a href="#prazo-2-semanas-a-partir-da-data-de-lançamento"
+id="toc-prazo-2-semanas-a-partir-da-data-de-lançamento"><span
+class="toc-section-number">2.9.1</span> <strong>Prazo:</strong> 2
+semanas a partir da data de lançamento</a></li>
+<li><a href="#forma-de-entrega" id="toc-forma-de-entrega"><span
+class="toc-section-number">2.9.2</span> <strong>Forma de
+Entrega:</strong></a></li>
+<li><a href="#apresentação-opcional"
+id="toc-apresentação-opcional"><span
+class="toc-section-number">2.9.3</span> <strong>Apresentação
+(Opcional):</strong></a></li>
+</ul></li>
+<li><a href="#bônus-extra" id="toc-bônus-extra"><span
+class="toc-section-number">2.10</span> 🏅 Bônus Extra</a>
+<ul>
+<li><a href="#pontos-criar-diagrama-de-fluxo-do-processo-usando-mermaid"
+id="toc-pontos-criar-diagrama-de-fluxo-do-processo-usando-mermaid"><span
+class="toc-section-number">2.10.1</span> <strong>+10 pontos:</strong>
+Criar diagrama de fluxo do processo usando Mermaid</a></li>
+<li><a href="#pontos-incluir-scripts-automatizados-para-contenção"
+id="toc-pontos-incluir-scripts-automatizados-para-contenção"><span
+class="toc-section-number">2.10.2</span> <strong>+10 pontos:</strong>
+Incluir scripts automatizados para contenção</a></li>
+<li><a href="#pontos-desenvolver-dashboard-de-métricas-de-resposta"
+id="toc-pontos-desenvolver-dashboard-de-métricas-de-resposta"><span
+class="toc-section-number">2.10.3</span> <strong>+10 pontos:</strong>
+Desenvolver dashboard de métricas de resposta</a></li>
+<li><a href="#pontos-integração-com-ferramentas-siemsoar"
+id="toc-pontos-integração-com-ferramentas-siemsoar"><span
+class="toc-section-number">2.10.4</span> <strong>+5 pontos:</strong>
+Integração com ferramentas SIEM/SOAR</a></li>
+</ul></li>
+<li><a href="#dúvidas-e-suporte" id="toc-dúvidas-e-suporte"><span
+class="toc-section-number">2.11</span> 🤝 Dúvidas e Suporte</a></li>
+</ul></li>
+<li><a href="#template-plano-de-resposta-a-incidentes-nist"
+id="toc-template-plano-de-resposta-a-incidentes-nist"><span
+class="toc-section-number">3</span> 📋 Template: Plano de Resposta a
+Incidentes NIST</a>
+<ul>
+<li><a href="#informações-do-documento"
+id="toc-informações-do-documento"><span
+class="toc-section-number">3.1</span> 📊 Informações do
+Documento</a></li>
+<li><a href="#escopo-e-objetivos" id="toc-escopo-e-objetivos"><span
+class="toc-section-number">3.2</span> 🎯 Escopo e Objetivos</a>
+<ul>
+<li><a href="#escopo" id="toc-escopo"><span
+class="toc-section-number">3.2.1</span> <strong>Escopo</strong></a></li>
+<li><a href="#objetivos" id="toc-objetivos"><span
+class="toc-section-number">3.2.2</span>
+<strong>Objetivos</strong></a></li>
+</ul></li>
+<li><a href="#contexto-organizacional"
+id="toc-contexto-organizacional"><span
+class="toc-section-number">3.3</span> 🏢 Contexto Organizacional</a>
+<ul>
+<li><a href="#perfil-da-organização"
+id="toc-perfil-da-organização"><span
+class="toc-section-number">3.3.1</span> <strong>Perfil da
+Organização</strong></a></li>
+<li><a href="#infraestrutura-tecnológica"
+id="toc-infraestrutura-tecnológica"><span
+class="toc-section-number">3.3.2</span> <strong>Infraestrutura
+Tecnológica</strong></a></li>
+</ul></li>
+<li><a href="#equipe-de-resposta-a-incidentes"
+id="toc-equipe-de-resposta-a-incidentes"><span
+class="toc-section-number">3.4</span> 📞 Equipe de Resposta a
+Incidentes</a>
+<ul>
+<li><a href="#csirt---computer-security-incident-response-team"
+id="toc-csirt---computer-security-incident-response-team"><span
+class="toc-section-number">3.4.1</span> <strong>CSIRT - Computer
+Security Incident Response Team</strong></a></li>
+<li><a href="#stakeholders-externos"
+id="toc-stakeholders-externos"><span
+class="toc-section-number">3.4.2</span> <strong>Stakeholders
+Externos</strong></a></li>
+</ul></li>
+<li><a href="#fase-1-preparação" id="toc-fase-1-preparação"><span
+class="toc-section-number">3.5</span> 🔴 FASE 1: PREPARAÇÃO</a>
+<ul>
+<li><a href="#políticas-e-procedimentos"
+id="toc-políticas-e-procedimentos"><span
+class="toc-section-number">3.5.1</span> <strong>1.1 Políticas e
+Procedimentos</strong></a></li>
+<li><a href="#ferramentas-e-recursos"
+id="toc-ferramentas-e-recursos"><span
+class="toc-section-number">3.5.2</span> <strong>1.2 Ferramentas e
+Recursos</strong></a></li>
+<li><a href="#treinamento-e-conscientização"
+id="toc-treinamento-e-conscientização"><span
+class="toc-section-number">3.5.3</span> <strong>1.3 Treinamento e
+Conscientização</strong></a></li>
+<li><a href="#métricas-e-indicadores"
+id="toc-métricas-e-indicadores"><span
+class="toc-section-number">3.5.4</span> <strong>1.4 Métricas e
+Indicadores</strong></a></li>
+</ul></li>
+<li><a href="#fase-2-detecção-e-análise"
+id="toc-fase-2-detecção-e-análise"><span
+class="toc-section-number">3.6</span> 🔍 FASE 2: DETECÇÃO E ANÁLISE</a>
+<ul>
+<li><a href="#indicadores-de-comprometimento-iocs"
+id="toc-indicadores-de-comprometimento-iocs"><span
+class="toc-section-number">3.6.1</span> <strong>2.1 Indicadores de
+Comprometimento (IoCs)</strong></a></li>
+<li><a href="#fontes-de-detecção" id="toc-fontes-de-detecção"><span
+class="toc-section-number">3.6.2</span> <strong>2.2 Fontes de
+Detecção</strong></a></li>
+<li><a href="#processo-de-análise-inicial"
+id="toc-processo-de-análise-inicial"><span
+class="toc-section-number">3.6.3</span> <strong>2.3 Processo de Análise
+Inicial</strong></a></li>
+<li><a href="#escalação-e-ativação" id="toc-escalação-e-ativação"><span
+class="toc-section-number">3.6.4</span> <strong>2.4 Escalação e
+Ativação</strong></a></li>
+</ul></li>
+<li><a href="#fase-3-contenção-erradicação-e-recuperação"
+id="toc-fase-3-contenção-erradicação-e-recuperação"><span
+class="toc-section-number">3.7</span> ⚡ FASE 3: CONTENÇÃO, ERRADICAÇÃO
+E RECUPERAÇÃO</a>
+<ul>
+<li><a href="#contenção-imediata-1-hora"
+id="toc-contenção-imediata-1-hora"><span
+class="toc-section-number">3.7.1</span> <strong>3.1 Contenção Imediata
+(&lt; 1 hora)</strong></a></li>
+<li><a href="#coleta-de-evidências-forenses"
+id="toc-coleta-de-evidências-forenses"><span
+class="toc-section-number">3.7.2</span> <strong>3.2 Coleta de Evidências
+Forenses</strong></a></li>
+<li><a href="#erradicação-4-horas" id="toc-erradicação-4-horas"><span
+class="toc-section-number">3.7.3</span> <strong>3.3 Erradicação (&lt; 4
+horas)</strong></a></li>
+<li><a href="#recuperação-8-horas" id="toc-recuperação-8-horas"><span
+class="toc-section-number">3.7.4</span> <strong>3.4 Recuperação (&lt; 8
+horas)</strong></a></li>
+</ul></li>
+<li><a href="#fase-4-atividades-pós-incidente"
+id="toc-fase-4-atividades-pós-incidente"><span
+class="toc-section-number">3.8</span> 📝 FASE 4: ATIVIDADES
+PÓS-INCIDENTE</a>
+<ul>
+<li><a href="#relatório-de-incidente"
+id="toc-relatório-de-incidente"><span
+class="toc-section-number">3.8.1</span> <strong>4.1 Relatório de
+Incidente</strong></a></li>
+<li><a href="#lições-aprendidas" id="toc-lições-aprendidas"><span
+class="toc-section-number">3.8.2</span> <strong>4.2 Lições
+Aprendidas</strong></a></li>
+<li><a href="#plano-de-ação" id="toc-plano-de-ação"><span
+class="toc-section-number">3.8.3</span> <strong>4.3 Plano de
+Ação</strong></a></li>
+<li><a href="#métricas-do-incidente"
+id="toc-métricas-do-incidente"><span
+class="toc-section-number">3.8.4</span> <strong>4.4 Métricas do
+Incidente</strong></a></li>
+</ul></li>
+<li><a href="#comunicação" id="toc-comunicação"><span
+class="toc-section-number">3.9</span> 📞 Comunicação</a>
+<ul>
+<li><a href="#comunicação-interna" id="toc-comunicação-interna"><span
+class="toc-section-number">3.9.1</span> <strong>Comunicação
+Interna</strong></a></li>
+<li><a href="#comunicação-externa" id="toc-comunicação-externa"><span
+class="toc-section-number">3.9.2</span> <strong>Comunicação
+Externa</strong></a></li>
+<li><a href="#templates-de-comunicação"
+id="toc-templates-de-comunicação"><span
+class="toc-section-number">3.9.3</span> <strong>Templates de
+Comunicação</strong></a></li>
+</ul></li>
+<li><a href="#considerações-legais-e-regulatórias"
+id="toc-considerações-legais-e-regulatórias"><span
+class="toc-section-number">3.10</span> ⚖️ Considerações Legais e
+Regulatórias</a>
+<ul>
+<li><a href="#lgpd-lei-geral-de-proteção-de-dados"
+id="toc-lgpd-lei-geral-de-proteção-de-dados"><span
+class="toc-section-number">3.10.1</span> <strong>LGPD (Lei Geral de
+Proteção de Dados)</strong></a></li>
+<li><a href="#outras-regulamentações"
+id="toc-outras-regulamentações"><span
+class="toc-section-number">3.10.2</span> <strong>Outras
+Regulamentações</strong></a></li>
+</ul></li>
+<li><a href="#anexos" id="toc-anexos"><span
+class="toc-section-number">3.11</span> 📚 Anexos</a>
+<ul>
+<li><a href="#a.-procedimentos-técnicos-detalhados"
+id="toc-a.-procedimentos-técnicos-detalhados"><span
+class="toc-section-number">3.11.1</span> <strong>A. Procedimentos
+Técnicos Detalhados</strong></a></li>
+<li><a href="#b.-formulários-e-checklists"
+id="toc-b.-formulários-e-checklists"><span
+class="toc-section-number">3.11.2</span> <strong>B. Formulários e
+Checklists</strong></a></li>
+<li><a href="#c.-contatos-de-emergência"
+id="toc-c.-contatos-de-emergência"><span
+class="toc-section-number">3.11.3</span> <strong>C. Contatos de
+Emergência</strong></a></li>
+<li><a href="#d.-ferramentas-e-recursos"
+id="toc-d.-ferramentas-e-recursos"><span
+class="toc-section-number">3.11.4</span> <strong>D. Ferramentas e
+Recursos</strong></a></li>
+</ul></li>
+<li><a href="#controle-de-versões" id="toc-controle-de-versões"><span
+class="toc-section-number">3.12</span> 📝 Controle de Versões</a></li>
+</ul></li>
+<li><a href="#exemplo-plano-de-resposta---ataque-ransomware"
+id="toc-exemplo-plano-de-resposta---ataque-ransomware"><span
+class="toc-section-number">4</span> 🔐 Exemplo: Plano de Resposta -
+Ataque Ransomware</a>
+<ul>
+<li><a href="#cenário-a-ataque-de-ransomware-1"
+id="toc-cenário-a-ataque-de-ransomware-1"><span
+class="toc-section-number">4.1</span> 🎯 Cenário A: Ataque de
+Ransomware</a>
+<ul>
+<li><a href="#situação" id="toc-situação"><span
+class="toc-section-number">4.1.1</span>
+<strong>Situação</strong></a></li>
+<li><a href="#indicadores-detectados"
+id="toc-indicadores-detectados"><span
+class="toc-section-number">4.1.2</span> <strong>Indicadores
+Detectados</strong></a></li>
+</ul></li>
+<li><a href="#fase-2-detecção-e-análise---exemplo"
+id="toc-fase-2-detecção-e-análise---exemplo"><span
+class="toc-section-number">4.2</span> 🔍 FASE 2: DETECÇÃO E ANÁLISE -
+EXEMPLO</a>
+<ul>
+<li><a href="#validação-inicial-15-min"
+id="toc-validação-inicial-15-min"><span
+class="toc-section-number">4.2.1</span> <strong>2.1 Validação Inicial
+(&lt; 15 min)</strong></a></li>
+<li><a href="#classificação-do-incidente"
+id="toc-classificação-do-incidente"><span
+class="toc-section-number">4.2.2</span> <strong>2.2 Classificação do
+Incidente</strong></a></li>
+<li><a href="#escalação-ativada" id="toc-escalação-ativada"><span
+class="toc-section-number">4.2.3</span> <strong>2.3 Escalação
+Ativada</strong></a></li>
+</ul></li>
+<li><a href="#fase-3-contenção---exemplo"
+id="toc-fase-3-contenção---exemplo"><span
+class="toc-section-number">4.3</span> ⚡ FASE 3: CONTENÇÃO - EXEMPLO</a>
+<ul>
+<li><a href="#contenção-imediata-1-hora-1"
+id="toc-contenção-imediata-1-hora-1"><span
+class="toc-section-number">4.3.1</span> <strong>3.1 Contenção Imediata
+(&lt; 1 hora)</strong></a></li>
+<li><a href="#identificação-do-ransomware"
+id="toc-identificação-do-ransomware"><span
+class="toc-section-number">4.3.2</span> <strong>3.2 Identificação do
+Ransomware</strong></a></li>
+</ul></li>
+<li><a href="#fase-3-erradicação-e-recuperação---exemplo"
+id="toc-fase-3-erradicação-e-recuperação---exemplo"><span
+class="toc-section-number">4.4</span> 🛡️ FASE 3: ERRADICAÇÃO E
+RECUPERAÇÃO - EXEMPLO</a>
+<ul>
+<li><a href="#erradicação-4-horas-1"
+id="toc-erradicação-4-horas-1"><span
+class="toc-section-number">4.4.1</span> <strong>3.3 Erradicação (&lt; 4
+horas)</strong></a></li>
+<li><a href="#recuperação-8-horas-1"
+id="toc-recuperação-8-horas-1"><span
+class="toc-section-number">4.4.2</span> <strong>3.4 Recuperação (&lt; 8
+horas)</strong></a></li>
+<li><a href="#validação-da-recuperação-1"
+id="toc-validação-da-recuperação-1"><span
+class="toc-section-number">4.4.3</span> <strong>3.5 Validação da
+Recuperação</strong></a></li>
+</ul></li>
+<li><a href="#fase-4-atividades-pós-incidente---exemplo"
+id="toc-fase-4-atividades-pós-incidente---exemplo"><span
+class="toc-section-number">4.5</span> 📊 FASE 4: ATIVIDADES
+PÓS-INCIDENTE - EXEMPLO</a>
+<ul>
+<li><a href="#métricas-finais" id="toc-métricas-finais"><span
+class="toc-section-number">4.5.1</span> <strong>4.1 Métricas
+Finais</strong></a></li>
+<li><a href="#impacto-financeiro" id="toc-impacto-financeiro"><span
+class="toc-section-number">4.5.2</span> <strong>4.2 Impacto
+Financeiro</strong></a></li>
+<li><a href="#lições-aprendidas-1" id="toc-lições-aprendidas-1"><span
+class="toc-section-number">4.5.3</span> <strong>4.3 Lições
+Aprendidas</strong></a></li>
+<li><a href="#comunicação-pós-incidente"
+id="toc-comunicação-pós-incidente"><span
+class="toc-section-number">4.5.4</span> <strong>4.4 Comunicação
+Pós-Incidente</strong></a></li>
+</ul></li>
+<li><a href="#análise-forense-detalhada"
+id="toc-análise-forense-detalhada"><span
+class="toc-section-number">4.6</span> 🔍 Análise Forense Detalhada</a>
+<ul>
+<li><a href="#vetor-de-ataque-identificado"
+id="toc-vetor-de-ataque-identificado"><span
+class="toc-section-number">4.6.1</span> <strong>Vetor de Ataque
+Identificado</strong></a></li>
+<li><a href="#iocs-indicators-of-compromise"
+id="toc-iocs-indicators-of-compromise"><span
+class="toc-section-number">4.6.2</span> <strong>IOCs (Indicators of
+Compromise)</strong></a></li>
+</ul></li>
+<li><a href="#checklist-completo-de-resposta"
+id="toc-checklist-completo-de-resposta"><span
+class="toc-section-number">4.7</span> 📋 Checklist Completo de
+Resposta</a>
+<ul>
+<li><a href="#detecção-e-análise" id="toc-detecção-e-análise"><span
+class="toc-section-number">4.7.1</span> <strong>✅ Detecção e
+Análise</strong></a></li>
+<li><a href="#contenção" id="toc-contenção"><span
+class="toc-section-number">4.7.2</span> <strong>✅
+Contenção</strong></a></li>
+<li><a href="#erradicação" id="toc-erradicação"><span
+class="toc-section-number">4.7.3</span> <strong>✅
+Erradicação</strong></a></li>
+<li><a href="#recuperação" id="toc-recuperação"><span
+class="toc-section-number">4.7.4</span> <strong>✅
+Recuperação</strong></a></li>
+<li><a href="#pós-incidente" id="toc-pós-incidente"><span
+class="toc-section-number">4.7.5</span> <strong>✅
+Pós-Incidente</strong></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#matriz-de-classificação-de-incidentes---nist"
+id="toc-matriz-de-classificação-de-incidentes---nist"><span
+class="toc-section-number">5</span> 📊 Matriz de Classificação de
+Incidentes - NIST</a>
+<ul>
+<li><a href="#categorias-de-incidentes"
+id="toc-categorias-de-incidentes"><span
+class="toc-section-number">5.1</span> 🎯 Categorias de Incidentes</a>
+<ul>
+<li><a href="#malware" id="toc-malware"><span
+class="toc-section-number">5.1.1</span> <strong>1. 🦠
+Malware</strong></a></li>
+<li><a href="#phishingsocial-engineering"
+id="toc-phishingsocial-engineering"><span
+class="toc-section-number">5.1.2</span> <strong>2. 🎣 Phishing/Social
+Engineering</strong></a></li>
+<li><a href="#ddos-distributed-denial-of-service"
+id="toc-ddos-distributed-denial-of-service"><span
+class="toc-section-number">5.1.3</span> <strong>3. 💥 DDoS (Distributed
+Denial of Service)</strong></a></li>
+<li><a href="#data-breachexfiltração"
+id="toc-data-breachexfiltração"><span
+class="toc-section-number">5.1.4</span> <strong>4. 🗃️ Data
+Breach/Exfiltração</strong></a></li>
+<li><a href="#comprometimento-de-conta"
+id="toc-comprometimento-de-conta"><span
+class="toc-section-number">5.1.5</span> <strong>5. 🔐 Comprometimento de
+Conta</strong></a></li>
+<li><a href="#defacementalteração" id="toc-defacementalteração"><span
+class="toc-section-number">5.1.6</span> <strong>6. 🌐
+Defacement/Alteração</strong></a></li>
+<li><a href="#apt-advanced-persistent-threat"
+id="toc-apt-advanced-persistent-threat"><span
+class="toc-section-number">5.1.7</span> <strong>7. 🕵️ APT (Advanced
+Persistent Threat)</strong></a></li>
+<li><a href="#insider-threat" id="toc-insider-threat"><span
+class="toc-section-number">5.1.8</span> <strong>8. 👤 Insider
+Threat</strong></a></li>
+</ul></li>
+<li><a href="#níveis-de-severidade" id="toc-níveis-de-severidade"><span
+class="toc-section-number">5.2</span> 🚨 Níveis de Severidade</a>
+<ul>
+<li><a href="#crítico" id="toc-crítico"><span
+class="toc-section-number">5.2.1</span> <strong>🔴
+CRÍTICO</strong></a></li>
+<li><a href="#alto" id="toc-alto"><span
+class="toc-section-number">5.2.2</span> <strong>🟠
+ALTO</strong></a></li>
+<li><a href="#médio" id="toc-médio"><span
+class="toc-section-number">5.2.3</span> <strong>🟡
+MÉDIO</strong></a></li>
+<li><a href="#baixo" id="toc-baixo"><span
+class="toc-section-number">5.2.4</span> <strong>🟢
+BAIXO</strong></a></li>
+</ul></li>
+<li><a href="#matriz-de-impacto-cia"
+id="toc-matriz-de-impacto-cia"><span
+class="toc-section-number">5.3</span> 📈 Matriz de Impacto CIA</a>
+<ul>
+<li><a href="#confidencialidade" id="toc-confidencialidade"><span
+class="toc-section-number">5.3.1</span>
+<strong>Confidencialidade</strong></a></li>
+<li><a href="#integridade" id="toc-integridade"><span
+class="toc-section-number">5.3.2</span>
+<strong>Integridade</strong></a></li>
+<li><a href="#disponibilidade" id="toc-disponibilidade"><span
+class="toc-section-number">5.3.3</span>
+<strong>Disponibilidade</strong></a></li>
+</ul></li>
+<li><a href="#matriz-de-urgência" id="toc-matriz-de-urgência"><span
+class="toc-section-number">5.4</span> ⚡ Matriz de Urgência</a>
+<ul>
+<li><a href="#imediata-30-min" id="toc-imediata-30-min"><span
+class="toc-section-number">5.4.1</span> <strong>🚨 IMEDIATA (&lt; 30
+min)</strong></a></li>
+<li><a href="#alta-1-hora" id="toc-alta-1-hora"><span
+class="toc-section-number">5.4.2</span> <strong>🔥 ALTA (&lt; 1
+hora)</strong></a></li>
+<li><a href="#normal-4-horas" id="toc-normal-4-horas"><span
+class="toc-section-number">5.4.3</span> <strong>⚠️ NORMAL (&lt; 4
+horas)</strong></a></li>
+<li><a href="#baixa-8-horas" id="toc-baixa-8-horas"><span
+class="toc-section-number">5.4.4</span> <strong>📋 BAIXA (&lt; 8
+horas)</strong></a></li>
+</ul></li>
+<li><a href="#matriz-de-priorização"
+id="toc-matriz-de-priorização"><span
+class="toc-section-number">5.5</span> 🎯 Matriz de Priorização</a>
+<ul>
+<li><a href="#definição-das-prioridades"
+id="toc-definição-das-prioridades"><span
+class="toc-section-number">5.5.1</span> <strong>Definição das
+Prioridades:</strong></a></li>
+</ul></li>
+<li><a href="#exemplos-de-classificação"
+id="toc-exemplos-de-classificação"><span
+class="toc-section-number">5.6</span> 📊 Exemplos de Classificação</a>
+<ul>
+<li><a href="#exemplo-1-ransomware" id="toc-exemplo-1-ransomware"><span
+class="toc-section-number">5.6.1</span> <strong>Exemplo 1:
+Ransomware</strong></a></li>
+<li><a href="#exemplo-2-phishing-bem-sucedido"
+id="toc-exemplo-2-phishing-bem-sucedido"><span
+class="toc-section-number">5.6.2</span> <strong>Exemplo 2: Phishing
+bem-sucedido</strong></a></li>
+<li><a href="#exemplo-3-defacement-de-site"
+id="toc-exemplo-3-defacement-de-site"><span
+class="toc-section-number">5.6.3</span> <strong>Exemplo 3: Defacement de
+site</strong></a></li>
+<li><a href="#exemplo-4-tentativa-de-ddos-bloqueada"
+id="toc-exemplo-4-tentativa-de-ddos-bloqueada"><span
+class="toc-section-number">5.6.4</span> <strong>Exemplo 4: Tentativa de
+DDoS bloqueada</strong></a></li>
+</ul></li>
+<li><a href="#processo-de-reclassificação"
+id="toc-processo-de-reclassificação"><span
+class="toc-section-number">5.7</span> 🔄 Processo de Reclassificação</a>
+<ul>
+<li><a href="#quando-reclassificar" id="toc-quando-reclassificar"><span
+class="toc-section-number">5.7.1</span> <strong>Quando
+Reclassificar:</strong></a></li>
+<li><a href="#critérios-para-upgrade"
+id="toc-critérios-para-upgrade"><span
+class="toc-section-number">5.7.2</span> <strong>Critérios para
+Upgrade:</strong></a></li>
+<li><a href="#critérios-para-downgrade"
+id="toc-critérios-para-downgrade"><span
+class="toc-section-number">5.7.3</span> <strong>Critérios para
+Downgrade:</strong></a></li>
+</ul></li>
+<li><a href="#formulário-de-classificação"
+id="toc-formulário-de-classificação"><span
+class="toc-section-number">5.8</span> 📝 Formulário de
+Classificação</a></li>
+</ul></li>
+<li><a href="#playbook-contenção-de-incidentes"
+id="toc-playbook-contenção-de-incidentes"><span
+class="toc-section-number">6</span> ⚡ Playbook: Contenção de
+Incidentes</a>
+<ul>
+<li><a href="#objetivos-da-contenção"
+id="toc-objetivos-da-contenção"><span
+class="toc-section-number">6.1</span> 🎯 Objetivos da Contenção</a></li>
+<li><a href="#contenção-de-malwareransomware"
+id="toc-contenção-de-malwareransomware"><span
+class="toc-section-number">6.2</span> 🦠 Contenção de
+Malware/Ransomware</a>
+<ul>
+<li><a href="#ações-imediatas-30-min"
+id="toc-ações-imediatas-30-min"><span
+class="toc-section-number">6.2.1</span> <strong>⚡ Ações Imediatas (&lt;
+30 min)</strong></a></li>
+<li><a href="#checklist-de-contenção---malware"
+id="toc-checklist-de-contenção---malware"><span
+class="toc-section-number">6.2.2</span> <strong>📋 Checklist de
+Contenção - Malware</strong></a></li>
+</ul></li>
+<li><a href="#contenção-de-phishingcompromisso-de-email"
+id="toc-contenção-de-phishingcompromisso-de-email"><span
+class="toc-section-number">6.3</span> 🎣 Contenção de
+Phishing/Compromisso de Email</a>
+<ul>
+<li><a href="#ações-imediatas-30-min-1"
+id="toc-ações-imediatas-30-min-1"><span
+class="toc-section-number">6.3.1</span> <strong>⚡ Ações Imediatas (&lt;
+30 min)</strong></a></li>
+<li><a href="#checklist-de-contenção---phishing"
+id="toc-checklist-de-contenção---phishing"><span
+class="toc-section-number">6.3.2</span> <strong>📋 Checklist de
+Contenção - Phishing</strong></a></li>
+</ul></li>
+<li><a href="#contenção-de-ddos" id="toc-contenção-de-ddos"><span
+class="toc-section-number">6.4</span> 💥 Contenção de DDoS</a>
+<ul>
+<li><a href="#ações-imediatas-30-min-2"
+id="toc-ações-imediatas-30-min-2"><span
+class="toc-section-number">6.4.1</span> <strong>⚡ Ações Imediatas (&lt;
+30 min)</strong></a></li>
+<li><a href="#checklist-de-contenção---ddos"
+id="toc-checklist-de-contenção---ddos"><span
+class="toc-section-number">6.4.2</span> <strong>📋 Checklist de
+Contenção - DDoS</strong></a></li>
+</ul></li>
+<li><a href="#contenção-de-data-breach"
+id="toc-contenção-de-data-breach"><span
+class="toc-section-number">6.5</span> 🗃️ Contenção de Data Breach</a>
+<ul>
+<li><a href="#ações-imediatas-30-min-3"
+id="toc-ações-imediatas-30-min-3"><span
+class="toc-section-number">6.5.1</span> <strong>⚡ Ações Imediatas (&lt;
+30 min)</strong></a></li>
+<li><a href="#checklist-de-contenção---data-breach"
+id="toc-checklist-de-contenção---data-breach"><span
+class="toc-section-number">6.5.2</span> <strong>📋 Checklist de
+Contenção - Data Breach</strong></a></li>
+</ul></li>
+<li><a href="#contenção-de-compromisso-de-conta"
+id="toc-contenção-de-compromisso-de-conta"><span
+class="toc-section-number">6.6</span> 🔐 Contenção de Compromisso de
+Conta</a>
+<ul>
+<li><a href="#ações-imediatas-30-min-4"
+id="toc-ações-imediatas-30-min-4"><span
+class="toc-section-number">6.6.1</span> <strong>⚡ Ações Imediatas (&lt;
+30 min)</strong></a></li>
+<li><a href="#checklist-de-contenção---compromisso-de-conta"
+id="toc-checklist-de-contenção---compromisso-de-conta"><span
+class="toc-section-number">6.6.2</span> <strong>📋 Checklist de
+Contenção - Compromisso de Conta</strong></a></li>
+</ul></li>
+<li><a href="#contenção-de-defacement"
+id="toc-contenção-de-defacement"><span
+class="toc-section-number">6.7</span> 🌐 Contenção de Defacement</a>
+<ul>
+<li><a href="#ações-imediatas-30-min-5"
+id="toc-ações-imediatas-30-min-5"><span
+class="toc-section-number">6.7.1</span> <strong>⚡ Ações Imediatas (&lt;
+30 min)</strong></a></li>
+<li><a href="#checklist-de-contenção---defacement"
+id="toc-checklist-de-contenção---defacement"><span
+class="toc-section-number">6.7.2</span> <strong>📋 Checklist de
+Contenção - Defacement</strong></a></li>
+</ul></li>
+<li><a href="#contenção-de-aptameaça-persistente"
+id="toc-contenção-de-aptameaça-persistente"><span
+class="toc-section-number">6.8</span> 🕵️ Contenção de APT/Ameaça
+Persistente</a>
+<ul>
+<li><a href="#ações-imediatas-30-min-6"
+id="toc-ações-imediatas-30-min-6"><span
+class="toc-section-number">6.8.1</span> <strong>⚡ Ações Imediatas (&lt;
+30 min)</strong></a></li>
+<li><a href="#checklist-de-contenção---apt"
+id="toc-checklist-de-contenção---apt"><span
+class="toc-section-number">6.8.2</span> <strong>📋 Checklist de
+Contenção - APT</strong></a></li>
+</ul></li>
+<li><a href="#comunicação-durante-contenção"
+id="toc-comunicação-durante-contenção"><span
+class="toc-section-number">6.9</span> 📞 Comunicação Durante
+Contenção</a>
+<ul>
+<li><a href="#template-de-comunicação-interna"
+id="toc-template-de-comunicação-interna"><span
+class="toc-section-number">6.9.1</span> <strong>Template de Comunicação
+Interna</strong></a></li>
+<li><a href="#escalação-de-contenção"
+id="toc-escalação-de-contenção"><span
+class="toc-section-number">6.9.2</span> <strong>Escalação de
+Contenção</strong></a></li>
+</ul></li>
+<li><a href="#métricas-de-contenção"
+id="toc-métricas-de-contenção"><span
+class="toc-section-number">6.10</span> 📊 Métricas de Contenção</a>
+<ul>
+<li><a href="#kpis-principais" id="toc-kpis-principais"><span
+class="toc-section-number">6.10.1</span> <strong>KPIs
+Principais</strong></a></li>
+<li><a href="#registro-de-métricas" id="toc-registro-de-métricas"><span
+class="toc-section-number">6.10.2</span> <strong>Registro de
+Métricas</strong></a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="1"
+id="desafio-bônus-plano-de-resposta-a-incidentes-nist"><span
+class="header-section-number">1</span> Desafio Bônus: Plano de Resposta
+a Incidentes NIST</h1>
+<h2 data-number="1.1" id="guia-completo-e-templates"><span
+class="header-section-number">1.1</span> Guia Completo e Templates</h2>
+<hr />
+<p><strong>Documento:</strong> Desafio Bônus - Resposta a Incidentes
+NIST<br />
+<strong>Versão:</strong> 1.0<br />
+<strong>Data:</strong> $(date ‘+%d/%m/%Y’)<br />
+<strong>Autor:</strong> Formação Cybersec - Módulo 2</p>
+<hr />
+<h1 data-number="2"
+id="desafio-bônus-plano-de-resposta-a-incidentes-nist-1"><span
+class="header-section-number">2</span> 🚨 Desafio Bônus: Plano de
+Resposta a Incidentes NIST</h1>
+<h2 data-number="2.1" id="objetivo-do-desafio"><span
+class="header-section-number">2.1</span> 🎯 Objetivo do Desafio</h2>
+<p>Criar um <strong>Plano de Resposta a Incidentes (IRP)</strong>
+completo seguindo o framework <strong>NIST SP 800-61 Rev. 2</strong>,
+baseado em cenários reais de segurança cibernética.</p>
+<h2 data-number="2.2" id="framework-nist-sp-800-61-rev.-2"><span
+class="header-section-number">2.2</span> 📚 Framework NIST SP 800-61
+Rev. 2</h2>
+<p>O NIST define <strong>4 fases principais</strong> para resposta a
+incidentes:</p>
+<h3 data-number="2.2.1" id="preparation-preparação"><span
+class="header-section-number">2.2.1</span> 1. 🛠️ <strong>Preparation
+(Preparação)</strong></h3>
+<ul>
+<li>Estabelecer capacidades de resposta</li>
+<li>Treinar equipes</li>
+<li>Criar políticas e procedimentos</li>
+</ul>
+<h3 data-number="2.2.2" id="detection-analysis-detecção-e-análise"><span
+class="header-section-number">2.2.2</span> 2. 🔍 <strong>Detection &amp;
+Analysis (Detecção e Análise)</strong></h3>
+<ul>
+<li>Identificar indicadores de comprometimento</li>
+<li>Analisar e validar incidentes</li>
+<li>Categorizar e priorizar</li>
+</ul>
+<h3 data-number="2.2.3"
+id="containment-eradication-recovery-contenção-erradicação-e-recuperação"><span
+class="header-section-number">2.2.3</span> 3. ⚡ <strong>Containment,
+Eradication &amp; Recovery (Contenção, Erradicação e
+Recuperação)</strong></h3>
+<ul>
+<li>Conter o incidente</li>
+<li>Eliminar a causa raiz</li>
+<li>Recuperar sistemas e serviços</li>
+</ul>
+<h3 data-number="2.2.4"
+id="post-incident-activity-atividades-pós-incidente"><span
+class="header-section-number">2.2.4</span> 4. 📝 <strong>Post-Incident
+Activity (Atividades Pós-Incidente)</strong></h3>
+<ul>
+<li>Lições aprendidas</li>
+<li>Melhorias no processo</li>
+<li>Documentação</li>
+</ul>
+<hr />
+<h2 data-number="2.3" id="cenários-do-desafio"><span
+class="header-section-number">2.3</span> 🎮 Cenários do Desafio</h2>
+<p>Escolha <strong>UM</strong> dos cenários abaixo e desenvolva um plano
+de resposta completo:</p>
+<h3 data-number="2.3.1" id="cenário-a-ataque-de-ransomware"><span
+class="header-section-number">2.3.1</span> 📊 <strong>Cenário A: Ataque
+de Ransomware</strong></h3>
+<p>Uma empresa de médio porte teve seus sistemas criptografados por
+ransomware. Vários servidores estão inacessíveis e há uma nota de
+resgate exigindo pagamento em Bitcoin.</p>
+<p><strong>Indicadores:</strong> - Arquivos com extensão
+<code>.encrypted</code> - Nota de resgate em desktops - Sistemas
+críticos indisponíveis - Logs mostram acesso suspeito via RDP</p>
+<h3 data-number="2.3.2"
+id="cenário-b-violação-de-dados-data-breach"><span
+class="header-section-number">2.3.2</span> 🌐 <strong>Cenário B:
+Violação de Dados (Data Breach)</strong></h3>
+<p>Um e-commerce descobriu que dados de clientes (CPF, cartões de
+crédito, endereços) foram expostos através de uma vulnerabilidade SQL
+Injection não corrigida.</p>
+<p><strong>Indicadores:</strong> - Tráfego anômalo no banco de dados -
+Logs de WAF com ataques SQLi - Dados de clientes encontrados em fóruns
+da dark web - Reclamações de clientes sobre uso fraudulento de
+cartões</p>
+<h3 data-number="2.3.3"
+id="cenário-c-comprometimento-de-conta-privilegiada"><span
+class="header-section-number">2.3.3</span> 🔒 <strong>Cenário C:
+Comprometimento de Conta Privilegiada</strong></h3>
+<p>A conta de administrador de domínio foi comprometida. O atacante tem
+acesso total ao Active Directory e está realizando movimentação lateral
+na rede.</p>
+<p><strong>Indicadores:</strong> - Logins de admin fora do horário
+comercial - Criação de contas de usuário não autorizadas - Acesso a
+sistemas críticos não relacionados às funções do admin - Alterações não
+autorizadas em grupos de segurança</p>
+<hr />
+<h2 data-number="2.4" id="entregáveis"><span
+class="header-section-number">2.4</span> 📋 Entregáveis</h2>
+<p>Crie os seguintes documentos para o cenário escolhido:</p>
+<h3 data-number="2.4.1"
+id="plano-de-resposta-a-incidentes-plano-ir-nist.md"><span
+class="header-section-number">2.4.1</span> 1. 📖 <strong>Plano de
+Resposta a Incidentes</strong> (<code>plano-ir-nist.md</code>)</h3>
+<p>Documento principal seguindo as 4 fases do NIST</p>
+<h3 data-number="2.4.2"
+id="procedimentos-de-comunicação-comunicacao.md"><span
+class="header-section-number">2.4.2</span> 2. 📞 <strong>Procedimentos
+de Comunicação</strong> (<code>comunicacao.md</code>)</h3>
+<ul>
+<li>Matriz de comunicação (quem avisar, quando, como)</li>
+<li>Templates de comunicação interna e externa</li>
+<li>Procedimentos para autoridades e mídia</li>
+</ul>
+<h3 data-number="2.4.3" id="playbooks-técnicos-playbooks"><span
+class="header-section-number">2.4.3</span> 3. 🔧 <strong>Playbooks
+Técnicos</strong> (<code>playbooks/</code>)</h3>
+<p>Procedimentos passo-a-passo para: - Contenção imediata - Coleta de
+evidências - Análise forense - Recuperação de sistemas</p>
+<h3 data-number="2.4.4" id="formulários-e-checklists-forms"><span
+class="header-section-number">2.4.4</span> 4. 📊 <strong>Formulários e
+Checklists</strong> (<code>forms/</code>)</h3>
+<ul>
+<li>Formulário de relato de incidente</li>
+<li>Checklist de contenção</li>
+<li>Log de ações realizadas</li>
+<li>Relatório de lições aprendidas</li>
+</ul>
+<h3 data-number="2.4.5"
+id="matriz-de-classificação-classificacao.md"><span
+class="header-section-number">2.4.5</span> 5. 🎯 <strong>Matriz de
+Classificação</strong> (<code>classificacao.md</code>)</h3>
+<p>Sistema para classificar incidentes por: - Severidade (Crítico, Alto,
+Médio, Baixo) - Impacto (Confidencialidade, Integridade,
+Disponibilidade) - Tempo de resposta (SLA)</p>
+<hr />
+<h2 data-number="2.5" id="estrutura-de-pastas-sugerida"><span
+class="header-section-number">2.5</span> 📐 Estrutura de Pastas
+Sugerida</h2>
+<pre><code>cenario-[A|B|C]/
+├── plano-ir-nist.md
+├── comunicacao.md
+├── classificacao.md
+├── playbooks/
+│   ├── contencao.md
+│   ├── evidencias.md
+│   ├── analise-forense.md
+│   └── recuperacao.md
+├── forms/
+│   ├── relato-incidente.md
+│   ├── checklist-contencao.md
+│   ├── log-acoes.md
+│   └── licoes-aprendidas.md
+└── templates/
+    ├── comunicacao-interna.md
+    ├── comunicacao-externa.md
+    └── relatorio-executivo.md</code></pre>
+<hr />
+<h2 data-number="2.6" id="critérios-de-avaliação"><span
+class="header-section-number">2.6</span> ✅ Critérios de Avaliação</h2>
+<h3 data-number="2.6.1" id="excelente-90-100-pontos"><span
+class="header-section-number">2.6.1</span> 🏆 <strong>Excelente (90-100
+pontos)</strong></h3>
+<ul>
+<li>Plano completo cobrindo todas as 4 fases do NIST</li>
+<li>Procedimentos detalhados e executáveis</li>
+<li>Matriz de comunicação bem definida</li>
+<li>Templates profissionais</li>
+<li>Considerações legais e regulatórias</li>
+<li>Timeline realista e bem estruturada</li>
+</ul>
+<h3 data-number="2.6.2" id="bom-70-89-pontos"><span
+class="header-section-number">2.6.2</span> 🥈 <strong>Bom (70-89
+pontos)</strong></h3>
+<ul>
+<li>Plano cobrindo as principais fases do NIST</li>
+<li>Procedimentos adequados mas não totalmente detalhados</li>
+<li>Comunicação básica definida</li>
+<li>Templates funcionais</li>
+<li>Algumas considerações legais</li>
+</ul>
+<h3 data-number="2.6.3" id="satisfatório-50-69-pontos"><span
+class="header-section-number">2.6.3</span> 🥉 <strong>Satisfatório
+(50-69 pontos)</strong></h3>
+<ul>
+<li>Plano básico seguindo estrutura NIST</li>
+<li>Procedimentos genéricos</li>
+<li>Comunicação superficial</li>
+<li>Templates simples</li>
+</ul>
+<h3 data-number="2.6.4" id="insuficiente-50-pontos"><span
+class="header-section-number">2.6.4</span> ❌ <strong>Insuficiente
+(&lt;50 pontos)</strong></h3>
+<ul>
+<li>Plano incompleto ou não segue NIST</li>
+<li>Procedimentos vagos ou irrealistas</li>
+<li>Falta de estrutura organizacional</li>
+</ul>
+<hr />
+<h2 data-number="2.7" id="dicas-para-desenvolvimento"><span
+class="header-section-number">2.7</span> 🔍 Dicas para
+Desenvolvimento</h2>
+<h3 data-number="2.7.1" id="pesquise-o-cenário"><span
+class="header-section-number">2.7.1</span> <strong>1. Pesquise o
+Cenário</strong></h3>
+<ul>
+<li>Estude casos reais similares</li>
+<li>Entenda as técnicas dos atacantes</li>
+<li>Identifique vulnerabilidades exploradas</li>
+</ul>
+<h3 data-number="2.7.2" id="seja-específico"><span
+class="header-section-number">2.7.2</span> <strong>2. Seja
+Específico</strong></h3>
+<ul>
+<li>Use comandos técnicos reais</li>
+<li>Defina tempos específicos (ex: “contenção em 30 minutos”)</li>
+<li>Identifique ferramentas e responsáveis</li>
+</ul>
+<h3 data-number="2.7.3" id="considere-o-contexto"><span
+class="header-section-number">2.7.3</span> <strong>3. Considere o
+Contexto</strong></h3>
+<ul>
+<li>Tamanho da organização</li>
+<li>Setor de atuação (financeiro, saúde, varejo)</li>
+<li>Regulamentações aplicáveis (LGPD, PCI-DSS, etc.)</li>
+</ul>
+<h3 data-number="2.7.4" id="pense-na-prática"><span
+class="header-section-number">2.7.4</span> <strong>4. Pense na
+Prática</strong></h3>
+<ul>
+<li>Como seria executado às 2h da manhã?</li>
+<li>E se o responsável estiver de férias?</li>
+<li>Como comunicar sem causar pânico?</li>
+</ul>
+<hr />
+<h2 data-number="2.8" id="recursos-de-referência"><span
+class="header-section-number">2.8</span> 📚 Recursos de Referência</h2>
+<h3 data-number="2.8.1" id="documentos-nist"><span
+class="header-section-number">2.8.1</span> <strong>Documentos
+NIST</strong></h3>
+<ul>
+<li><a
+href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf">NIST
+SP 800-61 Rev. 2</a></li>
+<li><a href="https://www.nist.gov/cyberframework">NIST Cybersecurity
+Framework</a></li>
+</ul>
+<h3 data-number="2.8.2" id="frameworks-complementares"><span
+class="header-section-number">2.8.2</span> <strong>Frameworks
+Complementares</strong></h3>
+<ul>
+<li><a
+href="https://www.sans.org/reading-room/whitepapers/incident/incident-handlers-handbook-33901">SANS
+Incident Response Process</a></li>
+<li><a href="https://attack.mitre.org/">MITRE ATT&amp;CK
+Framework</a></li>
+<li><a href="https://owasp.org/www-community/Incident_Response">OWASP
+Incident Response</a></li>
+</ul>
+<h3 data-number="2.8.3" id="ferramentas-úteis"><span
+class="header-section-number">2.8.3</span> <strong>Ferramentas
+Úteis</strong></h3>
+<ul>
+<li><strong>Análise:</strong> Volatility, Autopsy, Wireshark</li>
+<li><strong>Contenção:</strong> iptables, PowerShell, Group Policy</li>
+<li><strong>Comunicação:</strong> Slack, Microsoft Teams, PagerDuty</li>
+<li><strong>Documentação:</strong> Mermaid (diagramas), Markdown</li>
+</ul>
+<hr />
+<h2 data-number="2.9" id="prazo-e-entrega"><span
+class="header-section-number">2.9</span> ⏰ Prazo e Entrega</h2>
+<h3 data-number="2.9.1"
+id="prazo-2-semanas-a-partir-da-data-de-lançamento"><span
+class="header-section-number">2.9.1</span> <strong>Prazo:</strong> 2
+semanas a partir da data de lançamento</h3>
+<h3 data-number="2.9.2" id="forma-de-entrega"><span
+class="header-section-number">2.9.2</span> <strong>Forma de
+Entrega:</strong></h3>
+<ol type="1">
+<li>Criar pasta com o nome do cenário escolhido</li>
+<li>Organizar arquivos conforme estrutura sugerida</li>
+<li>Incluir arquivo <code>README.md</code> explicando suas escolhas</li>
+<li>Adicionar ao repositório do curso</li>
+</ol>
+<h3 data-number="2.9.3" id="apresentação-opcional"><span
+class="header-section-number">2.9.3</span> <strong>Apresentação
+(Opcional):</strong></h3>
+<ul>
+<li>Apresentação de 15 minutos do plano desenvolvido</li>
+<li>Simulação de uma fase do processo de resposta</li>
+<li>Q&amp;A com discussão de melhorias</li>
+</ul>
+<hr />
+<h2 data-number="2.10" id="bônus-extra"><span
+class="header-section-number">2.10</span> 🏅 Bônus Extra</h2>
+<h3 data-number="2.10.1"
+id="pontos-criar-diagrama-de-fluxo-do-processo-usando-mermaid"><span
+class="header-section-number">2.10.1</span> <strong>+10 pontos:</strong>
+Criar diagrama de fluxo do processo usando Mermaid</h3>
+<h3 data-number="2.10.2"
+id="pontos-incluir-scripts-automatizados-para-contenção"><span
+class="header-section-number">2.10.2</span> <strong>+10 pontos:</strong>
+Incluir scripts automatizados para contenção</h3>
+<h3 data-number="2.10.3"
+id="pontos-desenvolver-dashboard-de-métricas-de-resposta"><span
+class="header-section-number">2.10.3</span> <strong>+10 pontos:</strong>
+Desenvolver dashboard de métricas de resposta</h3>
+<h3 data-number="2.10.4"
+id="pontos-integração-com-ferramentas-siemsoar"><span
+class="header-section-number">2.10.4</span> <strong>+5 pontos:</strong>
+Integração com ferramentas SIEM/SOAR</h3>
+<hr />
+<h2 data-number="2.11" id="dúvidas-e-suporte"><span
+class="header-section-number">2.11</span> 🤝 Dúvidas e Suporte</h2>
+<ul>
+<li>Consulte a documentação NIST SP 800-61 Rev. 2</li>
+<li>Analise casos reais de resposta a incidentes</li>
+<li>Discuta com colegas (colaboração é incentivada!)</li>
+<li>Pergunte ao instrutor em caso de dúvidas específicas</li>
+</ul>
+<hr />
+<p><strong>🚀 Este desafio simula situações reais que profissionais de
+segurança enfrentam diariamente. Desenvolva um plano que você usaria em
+uma situação real!</strong></p>
+<h1 data-number="3"
+id="template-plano-de-resposta-a-incidentes-nist"><span
+class="header-section-number">3</span> 📋 Template: Plano de Resposta a
+Incidentes NIST</h1>
+<blockquote>
+<p><strong>Cenário:</strong> [Substitua pelo cenário escolhido: A, B ou
+C]<br />
+<strong>Data:</strong> [Data de criação do plano]<br />
+<strong>Versão:</strong> 1.0<br />
+<strong>Responsável:</strong> [Seu nome]</p>
+</blockquote>
+<hr />
+<h2 data-number="3.1" id="informações-do-documento"><span
+class="header-section-number">3.1</span> 📊 Informações do
+Documento</h2>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Título</strong></td>
+<td>Plano de Resposta a Incidentes - [Cenário]</td>
+</tr>
+<tr>
+<td><strong>Classificação</strong></td>
+<td>[Interno/Confidencial/Restrito]</td>
+</tr>
+<tr>
+<td><strong>Aprovação</strong></td>
+<td>[Nome do aprovador]</td>
+</tr>
+<tr>
+<td><strong>Próxima Revisão</strong></td>
+<td>[Data]</td>
+</tr>
+<tr>
+<td><strong>Distribuição</strong></td>
+<td>CSIRT, TI, Segurança, Jurídico</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="3.2" id="escopo-e-objetivos"><span
+class="header-section-number">3.2</span> 🎯 Escopo e Objetivos</h2>
+<h3 data-number="3.2.1" id="escopo"><span
+class="header-section-number">3.2.1</span> <strong>Escopo</strong></h3>
+<p>Este plano abrange a resposta a [tipo de incidente] em [tipo de
+organização], incluindo: - [ ] Sistemas críticos afetados - [ ] Dados
+envolvidos - [ ] Stakeholders impactados - [ ] Processos de negócio</p>
+<h3 data-number="3.2.2" id="objetivos"><span
+class="header-section-number">3.2.2</span>
+<strong>Objetivos</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Minimizar impacto
+operacional</label></li>
+<li><label><input type="checkbox" />Preservar evidências para
+investigação</label></li>
+<li><label><input type="checkbox" />Cumprir obrigações legais e
+regulatórias</label></li>
+<li><label><input type="checkbox" />Restaurar operações normais
+rapidamente</label></li>
+<li><label><input type="checkbox" />Prevenir recorrência do
+incidente</label></li>
+</ul>
+<hr />
+<h2 data-number="3.3" id="contexto-organizacional"><span
+class="header-section-number">3.3</span> 🏢 Contexto Organizacional</h2>
+<h3 data-number="3.3.1" id="perfil-da-organização"><span
+class="header-section-number">3.3.1</span> <strong>Perfil da
+Organização</strong></h3>
+<ul>
+<li><strong>Setor:</strong> [Ex: Financeiro, Saúde, E-commerce]</li>
+<li><strong>Porte:</strong> [Ex: 500 funcionários, 10 filiais]</li>
+<li><strong>Receita:</strong> [Ex: R$ 100M anuais]</li>
+<li><strong>Dados Críticos:</strong> [Ex: PII, PHI, Cartões de
+crédito]</li>
+</ul>
+<h3 data-number="3.3.2" id="infraestrutura-tecnológica"><span
+class="header-section-number">3.3.2</span> <strong>Infraestrutura
+Tecnológica</strong></h3>
+<ul>
+<li><strong>Sistemas Críticos:</strong> [Liste os principais]</li>
+<li><strong>Fornecedores:</strong> [Cloud providers, terceirizados]</li>
+<li><strong>Compliance:</strong> [LGPD, PCI-DSS, ISO 27001]</li>
+</ul>
+<hr />
+<h2 data-number="3.4" id="equipe-de-resposta-a-incidentes"><span
+class="header-section-number">3.4</span> 📞 Equipe de Resposta a
+Incidentes</h2>
+<h3 data-number="3.4.1"
+id="csirt---computer-security-incident-response-team"><span
+class="header-section-number">3.4.1</span> <strong>CSIRT - Computer
+Security Incident Response Team</strong></h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 15%" />
+<col style="width: 25%" />
+<col style="width: 17%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>Função</th>
+<th>Nome</th>
+<th>Telefone</th>
+<th>Email</th>
+<th>Backup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Coordenador CSIRT</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Líder Técnico</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Analista Forense</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Especialista em Redes</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Representante Jurídico</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Comunicação</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="3.4.2" id="stakeholders-externos"><span
+class="header-section-number">3.4.2</span> <strong>Stakeholders
+Externos</strong></h3>
+<ul>
+<li><strong>Autoridades:</strong> Polícia Civil/Federal, ANPD</li>
+<li><strong>Fornecedores:</strong> [Cloud providers, consultores]</li>
+<li><strong>Clientes:</strong> [Representantes de clientes
+importantes]</li>
+<li><strong>Mídia:</strong> [Assessoria de imprensa]</li>
+</ul>
+<hr />
+<h2 data-number="3.5" id="fase-1-preparação"><span
+class="header-section-number">3.5</span> 🔴 FASE 1: PREPARAÇÃO</h2>
+<h3 data-number="3.5.1" id="políticas-e-procedimentos"><span
+class="header-section-number">3.5.1</span> <strong>1.1 Políticas e
+Procedimentos</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Política de Segurança da Informação
+aprovada</label></li>
+<li><label><input type="checkbox" />Procedimentos de backup e
+recuperação testados</label></li>
+<li><label><input type="checkbox" />Plano de Continuidade de Negócios
+atualizado</label></li>
+<li><label><input type="checkbox" />Contratos com fornecedores incluem
+cláusulas de segurança</label></li>
+</ul>
+<h3 data-number="3.5.2" id="ferramentas-e-recursos"><span
+class="header-section-number">3.5.2</span> <strong>1.2 Ferramentas e
+Recursos</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>SIEM:</strong> [Ex: Splunk,
+QRadar, ELK Stack]</label></li>
+<li><label><input type="checkbox" /><strong>Análise Forense:</strong>
+[Ex: Volatility, Autopsy, FTK]</label></li>
+<li><label><input type="checkbox" /><strong>Comunicação:</strong> [Ex:
+Slack, Teams, PagerDuty]</label></li>
+<li><label><input type="checkbox" /><strong>Monitoramento:</strong> [Ex:
+Nagios, Zabbix, Datadog]</label></li>
+</ul>
+<h3 data-number="3.5.3" id="treinamento-e-conscientização"><span
+class="header-section-number">3.5.3</span> <strong>1.3 Treinamento e
+Conscientização</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Equipe CSIRT treinada
+trimestralmente</label></li>
+<li><label><input type="checkbox" />Simulados de resposta a incidentes
+semestrais</label></li>
+<li><label><input type="checkbox" />Funcionários treinados em
+identificação de ameaças</label></li>
+<li><label><input type="checkbox" />Procedimentos de escalação
+conhecidos por todos</label></li>
+</ul>
+<h3 data-number="3.5.4" id="métricas-e-indicadores"><span
+class="header-section-number">3.5.4</span> <strong>1.4 Métricas e
+Indicadores</strong></h3>
+<ul>
+<li><strong>MTTD (Mean Time to Detection):</strong> [Ex: &lt; 30
+minutos]</li>
+<li><strong>MTTR (Mean Time to Response):</strong> [Ex: &lt; 1
+hora]</li>
+<li><strong>MTTR (Mean Time to Recovery):</strong> [Ex: &lt; 4
+horas]</li>
+<li><strong>RTO (Recovery Time Objective):</strong> [Ex: &lt; 8
+horas]</li>
+</ul>
+<hr />
+<h2 data-number="3.6" id="fase-2-detecção-e-análise"><span
+class="header-section-number">3.6</span> 🔍 FASE 2: DETECÇÃO E
+ANÁLISE</h2>
+<h3 data-number="3.6.1" id="indicadores-de-comprometimento-iocs"><span
+class="header-section-number">3.6.1</span> <strong>2.1 Indicadores de
+Comprometimento (IoCs)</strong></h3>
+<h4 data-number="3.6.1.1"
+id="cenário-específico-detalhe-os-iocs-do-seu-cenário"><span
+class="header-section-number">3.6.1.1</span> <strong>Cenário Específico:
+[Detalhe os IoCs do seu cenário]</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Indicador 1 - Ex: Arquivos
+.encrypted]</label></li>
+<li><label><input type="checkbox" />[Indicador 2 - Ex: Conexões para IPs
+maliciosos]</label></li>
+<li><label><input type="checkbox" />[Indicador 3 - Ex: Processos
+suspeitos]</label></li>
+<li><label><input type="checkbox" />[Indicador 4 - Ex: Tráfego
+anômalo]</label></li>
+</ul>
+<h3 data-number="3.6.2" id="fontes-de-detecção"><span
+class="header-section-number">3.6.2</span> <strong>2.2 Fontes de
+Detecção</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Logs de Sistema:</strong>
+Windows Event Logs, Syslog</label></li>
+<li><label><input type="checkbox" /><strong>Logs de Rede:</strong>
+Firewall, IPS/IDS, DNS</label></li>
+<li><label><input type="checkbox" /><strong>Logs de Aplicação:</strong>
+Web servers, Databases</label></li>
+<li><label><input type="checkbox" /><strong>Usuários:</strong> Relatos
+de funcionários/clientes</label></li>
+<li><label><input type="checkbox" /><strong>Terceiros:</strong> Threat
+intelligence, fornecedores</label></li>
+</ul>
+<h3 data-number="3.6.3" id="processo-de-análise-inicial"><span
+class="header-section-number">3.6.3</span> <strong>2.3 Processo de
+Análise Inicial</strong></h3>
+<h4 data-number="3.6.3.1"
+id="passo-1-validação-do-incidente-15-min"><span
+class="header-section-number">3.6.3.1</span> <strong>Passo 1: Validação
+do Incidente (&lt; 15 min)</strong></h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comandos para verificação inicial</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[Adicione</span> comandos específicos do cenário]</span></code></pre></div>
+<h4 data-number="3.6.3.2" id="passo-2-classificação-30-min"><span
+class="header-section-number">3.6.3.2</span> <strong>Passo 2:
+Classificação (&lt; 30 min)</strong></h4>
+<ul>
+<li><strong>Severidade:</strong> [Crítico/Alto/Médio/Baixo]</li>
+<li><strong>Impacto:</strong>
+[Confidencialidade/Integridade/Disponibilidade]</li>
+<li><strong>Categoria:</strong> [Malware/Phishing/DDoS/Data
+Breach/etc]</li>
+<li><strong>Urgência:</strong> [Imediata/Alta/Normal/Baixa]</li>
+</ul>
+<h4 data-number="3.6.3.3"
+id="passo-3-coleta-de-evidências-iniciais"><span
+class="header-section-number">3.6.3.3</span> <strong>Passo 3: Coleta de
+Evidências Iniciais</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Screenshots de alertas/sistemas
+afetados</label></li>
+<li><label><input type="checkbox" />Logs relevantes
+preservados</label></li>
+<li><label><input type="checkbox" />Memória RAM capturada (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Tráfego de rede
+capturado</label></li>
+<li><label><input type="checkbox" />Depoimentos iniciais
+coletados</label></li>
+</ul>
+<h3 data-number="3.6.4" id="escalação-e-ativação"><span
+class="header-section-number">3.6.4</span> <strong>2.4 Escalação e
+Ativação</strong></h3>
+<h4 data-number="3.6.4.1" id="critérios-de-escalação"><span
+class="header-section-number">3.6.4.1</span> <strong>Critérios de
+Escalação</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Impacto em sistemas
+críticos</label></li>
+<li><label><input type="checkbox" />Exposição de dados
+sensíveis</label></li>
+<li><label><input type="checkbox" />Paralisação de
+operações</label></li>
+<li><label><input type="checkbox" />Repercussão midiática
+potencial</label></li>
+<li><label><input type="checkbox" />Valor financeiro envolvido &gt; R$
+[valor]</label></li>
+</ul>
+<h4 data-number="3.6.4.2" id="processo-de-ativação-do-csirt"><span
+class="header-section-number">3.6.4.2</span> <strong>Processo de
+Ativação do CSIRT</strong></h4>
+<ol type="1">
+<li><strong>Detecção inicial</strong> → Analista de plantão</li>
+<li><strong>Validação</strong> → Líder técnico (&lt; 15 min)</li>
+<li><strong>Escalação</strong> → Coordenador CSIRT (&lt; 30 min)</li>
+<li><strong>Ativação completa</strong> → Toda a equipe (&lt; 1
+hora)</li>
+</ol>
+<hr />
+<h2 data-number="3.7"
+id="fase-3-contenção-erradicação-e-recuperação"><span
+class="header-section-number">3.7</span> ⚡ FASE 3: CONTENÇÃO,
+ERRADICAÇÃO E RECUPERAÇÃO</h2>
+<h3 data-number="3.7.1" id="contenção-imediata-1-hora"><span
+class="header-section-number">3.7.1</span> <strong>3.1 Contenção
+Imediata (&lt; 1 hora)</strong></h3>
+<h4 data-number="3.7.1.1" id="objetivos-1"><span
+class="header-section-number">3.7.1.1</span>
+<strong>Objetivos</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Parar a propagação do
+incidente</label></li>
+<li><label><input type="checkbox" />Preservar evidências</label></li>
+<li><label><input type="checkbox" />Manter sistemas críticos
+funcionando</label></li>
+<li><label><input type="checkbox" />Minimizar impacto nos
+negócios</label></li>
+</ul>
+<h4 data-number="3.7.1.2"
+id="ações-de-contenção---cenário-específico"><span
+class="header-section-number">3.7.1.2</span> <strong>Ações de Contenção
+- [Cenário Específico]</strong></h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comandos de contenção específicos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[Adicione</span> comandos específicos do seu cenário]</span></code></pre></div>
+<p><strong>Checklist de Contenção:</strong> - [ ] [Ação específica 1] -
+[ ] [Ação específica 2] - [ ] [Ação específica 3] - [ ] [Ação específica
+4] - [ ] Comunicação às partes interessadas - [ ] Documentação das ações
+realizadas</p>
+<h3 data-number="3.7.2" id="coleta-de-evidências-forenses"><span
+class="header-section-number">3.7.2</span> <strong>3.2 Coleta de
+Evidências Forenses</strong></h3>
+<h4 data-number="3.7.2.1" id="ordem-de-volatilidade-rfc-3227"><span
+class="header-section-number">3.7.2.1</span> <strong>Ordem de
+Volatilidade (RFC 3227)</strong></h4>
+<ol type="1">
+<li><strong>Memória RAM</strong> → Mais volátil</li>
+<li><strong>Estado do sistema</strong> → Processos, conexões</li>
+<li><strong>Disco rígido</strong> → Arquivos, logs</li>
+<li><strong>Logs remotos</strong> → SIEM, syslog</li>
+<li><strong>Configurações</strong> → Menos volátil</li>
+</ol>
+<h4 data-number="3.7.2.2" id="procedimentos-de-coleta"><span
+class="header-section-number">3.7.2.2</span> <strong>Procedimentos de
+Coleta</strong></h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de comandos forenses</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[Adicione</span> comandos específicos de coleta]</span></code></pre></div>
+<h3 data-number="3.7.3" id="erradicação-4-horas"><span
+class="header-section-number">3.7.3</span> <strong>3.3 Erradicação (&lt;
+4 horas)</strong></h3>
+<h4 data-number="3.7.3.1" id="identificação-da-causa-raiz"><span
+class="header-section-number">3.7.3.1</span> <strong>Identificação da
+Causa Raiz</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Vetor de ataque
+identificado</label></li>
+<li><label><input type="checkbox" />Vulnerabilidade explorada
+mapeada</label></li>
+<li><label><input type="checkbox" />Timeline de comprometimento
+estabelecida</label></li>
+<li><label><input type="checkbox" />Extensão do comprometimento
+avaliada</label></li>
+</ul>
+<h4 data-number="3.7.3.2" id="ações-de-erradicação"><span
+class="header-section-number">3.7.3.2</span> <strong>Ações de
+Erradicação</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Ação específica 1 - Ex: Remoção de
+malware]</label></li>
+<li><label><input type="checkbox" />[Ação específica 2 - Ex: Correção de
+vulnerabilidade]</label></li>
+<li><label><input type="checkbox" />[Ação específica 3 - Ex: Revogação
+de credenciais]</label></li>
+<li><label><input type="checkbox" />[Ação específica 4 - Ex: Atualização
+de sistemas]</label></li>
+</ul>
+<h3 data-number="3.7.4" id="recuperação-8-horas"><span
+class="header-section-number">3.7.4</span> <strong>3.4 Recuperação (&lt;
+8 horas)</strong></h3>
+<h4 data-number="3.7.4.1" id="plano-de-recuperação"><span
+class="header-section-number">3.7.4.1</span> <strong>Plano de
+Recuperação</strong></h4>
+<ol type="1">
+<li><strong>Sistemas Críticos</strong> (Prioridade 1)
+<ul class="task-list">
+<li><label><input type="checkbox" />[Sistema crítico 1]</label></li>
+<li><label><input type="checkbox" />[Sistema crítico 2]</label></li>
+</ul></li>
+<li><strong>Sistemas Importantes</strong> (Prioridade 2)
+<ul class="task-list">
+<li><label><input type="checkbox" />[Sistema importante 1]</label></li>
+<li><label><input type="checkbox" />[Sistema importante 2]</label></li>
+</ul></li>
+<li><strong>Sistemas Auxiliares</strong> (Prioridade 3)
+<ul class="task-list">
+<li><label><input type="checkbox" />[Sistema auxiliar 1]</label></li>
+<li><label><input type="checkbox" />[Sistema auxiliar 2]</label></li>
+</ul></li>
+</ol>
+<h4 data-number="3.7.4.2" id="validação-da-recuperação"><span
+class="header-section-number">3.7.4.2</span> <strong>Validação da
+Recuperação</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Funcionalidade
+restaurada</label></li>
+<li><label><input type="checkbox" />Performance normal</label></li>
+<li><label><input type="checkbox" />Conectividade
+verificada</label></li>
+<li><label><input type="checkbox" />Dados íntegros</label></li>
+<li><label><input type="checkbox" />Usuários conseguem
+acessar</label></li>
+</ul>
+<hr />
+<h2 data-number="3.8" id="fase-4-atividades-pós-incidente"><span
+class="header-section-number">3.8</span> 📝 FASE 4: ATIVIDADES
+PÓS-INCIDENTE</h2>
+<h3 data-number="3.8.1" id="relatório-de-incidente"><span
+class="header-section-number">3.8.1</span> <strong>4.1 Relatório de
+Incidente</strong></h3>
+<h4 data-number="3.8.1.1" id="resumo-executivo"><span
+class="header-section-number">3.8.1.1</span> <strong>Resumo
+Executivo</strong></h4>
+<ul>
+<li><strong>Tipo de Incidente:</strong> [Descrição breve]</li>
+<li><strong>Data/Hora:</strong> [Início e fim do incidente]</li>
+<li><strong>Duração:</strong> [Tempo total]</li>
+<li><strong>Sistemas Afetados:</strong> [Lista dos sistemas]</li>
+<li><strong>Impacto:</strong> [Descrição do impacto]</li>
+<li><strong>Custo Estimado:</strong> [Valor financeiro]</li>
+</ul>
+<h4 data-number="3.8.1.2" id="timeline-detalhada"><span
+class="header-section-number">3.8.1.2</span> <strong>Timeline
+Detalhada</strong></h4>
+<table>
+<thead>
+<tr>
+<th>Timestamp</th>
+<th>Evento</th>
+<th>Responsável</th>
+<th>Evidência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[HH:MM]</td>
+<td>[Descrição do evento]</td>
+<td>[Nome]</td>
+<td>[Link/referência]</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="3.8.2" id="lições-aprendidas"><span
+class="header-section-number">3.8.2</span> <strong>4.2 Lições
+Aprendidas</strong></h3>
+<h4 data-number="3.8.2.1" id="o-que-funcionou-bem"><span
+class="header-section-number">3.8.2.1</span> <strong>O que funcionou
+bem?</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Aspecto positivo 1]</label></li>
+<li><label><input type="checkbox" />[Aspecto positivo 2]</label></li>
+<li><label><input type="checkbox" />[Aspecto positivo 3]</label></li>
+</ul>
+<h4 data-number="3.8.2.2" id="o-que-precisa-melhorar"><span
+class="header-section-number">3.8.2.2</span> <strong>O que precisa
+melhorar?</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Ponto de melhoria 1]</label></li>
+<li><label><input type="checkbox" />[Ponto de melhoria 2]</label></li>
+<li><label><input type="checkbox" />[Ponto de melhoria 3]</label></li>
+</ul>
+<h4 data-number="3.8.2.3" id="recomendações"><span
+class="header-section-number">3.8.2.3</span>
+<strong>Recomendações</strong></h4>
+<ol type="1">
+<li><strong>Prevenção:</strong>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Recomendação preventiva
+1]</label></li>
+<li><label><input type="checkbox" />[Recomendação preventiva
+2]</label></li>
+</ul></li>
+<li><strong>Detecção:</strong>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Melhoria na detecção
+1]</label></li>
+<li><label><input type="checkbox" />[Melhoria na detecção
+2]</label></li>
+</ul></li>
+<li><strong>Resposta:</strong>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Melhoria na resposta
+1]</label></li>
+<li><label><input type="checkbox" />[Melhoria na resposta
+2]</label></li>
+</ul></li>
+</ol>
+<h3 data-number="3.8.3" id="plano-de-ação"><span
+class="header-section-number">3.8.3</span> <strong>4.3 Plano de
+Ação</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Ação</th>
+<th>Responsável</th>
+<th>Prazo</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[Ação 1]</td>
+<td>[Nome]</td>
+<td>[Data]</td>
+<td>[Pendente/Em andamento/Concluído]</td>
+</tr>
+<tr>
+<td>[Ação 2]</td>
+<td>[Nome]</td>
+<td>[Data]</td>
+<td>[Pendente/Em andamento/Concluído]</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="3.8.4" id="métricas-do-incidente"><span
+class="header-section-number">3.8.4</span> <strong>4.4 Métricas do
+Incidente</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Valor</th>
+<th>Meta</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MTTD</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+<tr>
+<td><strong>Downtime</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="3.9" id="comunicação"><span
+class="header-section-number">3.9</span> 📞 Comunicação</h2>
+<h3 data-number="3.9.1" id="comunicação-interna"><span
+class="header-section-number">3.9.1</span> <strong>Comunicação
+Interna</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />CEO/Diretoria
+notificada</label></li>
+<li><label><input type="checkbox" />TI notificado</label></li>
+<li><label><input type="checkbox" />RH notificado (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Jurídico notificado</label></li>
+<li><label><input type="checkbox" />Auditoria notificada</label></li>
+</ul>
+<h3 data-number="3.9.2" id="comunicação-externa"><span
+class="header-section-number">3.9.2</span> <strong>Comunicação
+Externa</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Autoridades notificadas (se
+requerido)</label></li>
+<li><label><input type="checkbox" />Clientes notificados (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Fornecedores notificados (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Seguradoras notificadas</label></li>
+<li><label><input type="checkbox" />Mídia (se necessário)</label></li>
+</ul>
+<h3 data-number="3.9.3" id="templates-de-comunicação"><span
+class="header-section-number">3.9.3</span> <strong>Templates de
+Comunicação</strong></h3>
+<ul>
+<li>[Link para template de comunicação interna]</li>
+<li>[Link para template de comunicação externa]</li>
+<li>[Link para template de notificação regulatória]</li>
+</ul>
+<hr />
+<h2 data-number="3.10" id="considerações-legais-e-regulatórias"><span
+class="header-section-number">3.10</span> ⚖️ Considerações Legais e
+Regulatórias</h2>
+<h3 data-number="3.10.1" id="lgpd-lei-geral-de-proteção-de-dados"><span
+class="header-section-number">3.10.1</span> <strong>LGPD (Lei Geral de
+Proteção de Dados)</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Incidente envolve dados
+pessoais?</label></li>
+<li><label><input type="checkbox" />Notificação à ANPD necessária? (72
+horas)</label></li>
+<li><label><input type="checkbox" />Notificação aos titulares
+necessária?</label></li>
+<li><label><input type="checkbox" />Registro no relatório de
+impacto</label></li>
+</ul>
+<h3 data-number="3.10.2" id="outras-regulamentações"><span
+class="header-section-number">3.10.2</span> <strong>Outras
+Regulamentações</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Regulamentação específica do
+setor]</label></li>
+<li><label><input type="checkbox" />[Padrão de compliance
+aplicável]</label></li>
+<li><label><input type="checkbox" />[Certificação que pode ser
+impactada]</label></li>
+</ul>
+<hr />
+<h2 data-number="3.11" id="anexos"><span
+class="header-section-number">3.11</span> 📚 Anexos</h2>
+<h3 data-number="3.11.1" id="a.-procedimentos-técnicos-detalhados"><span
+class="header-section-number">3.11.1</span> <strong>A. Procedimentos
+Técnicos Detalhados</strong></h3>
+<ul>
+<li>[Link para playbook de contenção]</li>
+<li>[Link para playbook de análise forense]</li>
+<li>[Link para playbook de recuperação]</li>
+</ul>
+<h3 data-number="3.11.2" id="b.-formulários-e-checklists"><span
+class="header-section-number">3.11.2</span> <strong>B. Formulários e
+Checklists</strong></h3>
+<ul>
+<li>[Link para formulário de relato de incidente]</li>
+<li>[Link para checklist de contenção]</li>
+<li>[Link para log de ações]</li>
+</ul>
+<h3 data-number="3.11.3" id="c.-contatos-de-emergência"><span
+class="header-section-number">3.11.3</span> <strong>C. Contatos de
+Emergência</strong></h3>
+<ul>
+<li>[Lista completa de contatos]</li>
+<li>[Procedimentos de escalação 24/7]</li>
+</ul>
+<h3 data-number="3.11.4" id="d.-ferramentas-e-recursos"><span
+class="header-section-number">3.11.4</span> <strong>D. Ferramentas e
+Recursos</strong></h3>
+<ul>
+<li>[Lista de ferramentas disponíveis]</li>
+<li>[Credenciais de acesso (referência segura)]</li>
+<li>[Documentação técnica]</li>
+</ul>
+<hr />
+<h2 data-number="3.12" id="controle-de-versões"><span
+class="header-section-number">3.12</span> 📝 Controle de Versões</h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Autor</th>
+<th>Alterações</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>[Data]</td>
+<td>[Nome]</td>
+<td>Versão inicial</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>🔒 Este documento contém informações sensíveis de segurança.
+Distribua apenas para pessoal autorizado.</strong></p>
+<h1 data-number="4"
+id="exemplo-plano-de-resposta---ataque-ransomware"><span
+class="header-section-number">4</span> 🔐 Exemplo: Plano de Resposta -
+Ataque Ransomware</h1>
+<blockquote>
+<p><strong>Este é um exemplo de como desenvolver o plano para o Cenário
+A</strong><br />
+<strong>Use como referência para criar seu próprio plano
+completo</strong></p>
+</blockquote>
+<hr />
+<h2 data-number="4.1" id="cenário-a-ataque-de-ransomware-1"><span
+class="header-section-number">4.1</span> 🎯 Cenário A: Ataque de
+Ransomware</h2>
+<h3 data-number="4.1.1" id="situação"><span
+class="header-section-number">4.1.1</span>
+<strong>Situação</strong></h3>
+<p>Segunda-feira, 08:30h. A empresa TechCorp (500 funcionários, setor
+tecnologia) teve vários sistemas criptografados durante a madrugada.
+Funcionários reportam arquivos inacessíveis e notas de resgate
+aparecendo em suas telas.</p>
+<h3 data-number="4.1.2" id="indicadores-detectados"><span
+class="header-section-number">4.1.2</span> <strong>Indicadores
+Detectados</strong></h3>
+<ul>
+<li>✅ Arquivos com extensão <code>.locked</code></li>
+<li>✅ Nota de resgate: <code>README_FOR_DECRYPT.txt</code></li>
+<li>✅ Servidores de arquivo inacessíveis</li>
+<li>✅ Logs mostram login RDP suspeito às 02:30h</li>
+<li>✅ Processo <code>encrypt.exe</code> detectado no EDR</li>
+</ul>
+<hr />
+<h2 data-number="4.2" id="fase-2-detecção-e-análise---exemplo"><span
+class="header-section-number">4.2</span> 🔍 FASE 2: DETECÇÃO E ANÁLISE -
+EXEMPLO</h2>
+<h3 data-number="4.2.1" id="validação-inicial-15-min"><span
+class="header-section-number">4.2.1</span> <strong>2.1 Validação Inicial
+(&lt; 15 min)</strong></h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar sistemas afetados</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> fileserver01.techcorp.local</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ping</span> database01.techcorp.local</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar processos suspeitos</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-Process</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.ProcessName <span class="at">-like</span> <span class="st">&quot;*encrypt*&quot;</span>}</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar arquivos criptografados</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ChildItem</span> <span class="at">-Path</span> <span class="st">&quot;C:</span><span class="dt">\\</span><span class="st">&quot;</span> <span class="at">-Recurse</span> <span class="at">-Filter</span> <span class="st">&quot;*.locked&quot;</span> <span class="kw">|</span> <span class="ex">Select-Object</span> FullName</span></code></pre></div>
+<h3 data-number="4.2.2" id="classificação-do-incidente"><span
+class="header-section-number">4.2.2</span> <strong>2.2 Classificação do
+Incidente</strong></h3>
+<ul>
+<li><strong>Severidade:</strong> 🔴 <strong>CRÍTICA</strong></li>
+<li><strong>Impacto:</strong> Disponibilidade (sistemas
+indisponíveis)</li>
+<li><strong>Categoria:</strong> Malware - Ransomware</li>
+<li><strong>Urgência:</strong> 🚨 <strong>IMEDIATA</strong></li>
+</ul>
+<h3 data-number="4.2.3" id="escalação-ativada"><span
+class="header-section-number">4.2.3</span> <strong>2.3 Escalação
+Ativada</strong></h3>
+<ul>
+<li>⏰ <strong>08:35h</strong> - Coordenador CSIRT ativado</li>
+<li>⏰ <strong>08:45h</strong> - Equipe completa mobilizada</li>
+<li>⏰ <strong>09:00h</strong> - CEO e diretoria notificados</li>
+</ul>
+<hr />
+<h2 data-number="4.3" id="fase-3-contenção---exemplo"><span
+class="header-section-number">4.3</span> ⚡ FASE 3: CONTENÇÃO -
+EXEMPLO</h2>
+<h3 data-number="4.3.1" id="contenção-imediata-1-hora-1"><span
+class="header-section-number">4.3.1</span> <strong>3.1 Contenção
+Imediata (&lt; 1 hora)</strong></h3>
+<h4 data-number="4.3.1.1" id="isolamento-de-rede"><span
+class="header-section-number">4.3.1.1</span> <strong>Isolamento de
+Rede</strong></h4>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolar sistemas comprometidos</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-s</span> 192.168.1.0/24 <span class="at">-j</span> DROP</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> OUTPUT <span class="at">-d</span> 192.168.1.0/24 <span class="at">-j</span> DROP</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Desabilitar conexões RDP</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">netsh</span> advfirewall firewall set rule group=<span class="st">&quot;remote desktop&quot;</span> new enable=No</span></code></pre></div>
+<h4 data-number="4.3.1.2" id="preservação-de-evidências"><span
+class="header-section-number">4.3.1.2</span> <strong>Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar memória RAM</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">winpmem_mini_x64.exe</span> physmem.raw</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs críticos</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl System C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ystem.evtx</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl Security C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ecurity.evtx</span></code></pre></div>
+<h4 data-number="4.3.1.3" id="checklist-de-contenção-executado"><span
+class="header-section-number">4.3.1.3</span> <strong>Checklist de
+Contenção Executado</strong></h4>
+<ul>
+<li>✅ <strong>09:15h</strong> - Sistemas afetados isolados da rede</li>
+<li>✅ <strong>09:20h</strong> - RDP desabilitado em toda a rede</li>
+<li>✅ <strong>09:25h</strong> - Backup de logs realizado</li>
+<li>✅ <strong>09:30h</strong> - Snapshots de VMs comprometidas</li>
+<li>✅ <strong>09:35h</strong> - Comunicação inicial às equipes</li>
+</ul>
+<h3 data-number="4.3.2" id="identificação-do-ransomware"><span
+class="header-section-number">4.3.2</span> <strong>3.2 Identificação do
+Ransomware</strong></h3>
+<h4 data-number="4.3.2.1" id="análise-da-nota-de-resgate"><span
+class="header-section-number">4.3.2.1</span> <strong>Análise da Nota de
+Resgate</strong></h4>
+<pre><code>=== SEUS ARQUIVOS FORAM CRIPTOGRAFADOS ===
+
+Olá TechCorp!
+
+Todos os seus arquivos importantes foram criptografados com algoritmo militar AES-256.
+Você tem 72 horas para pagar o resgate de 10 Bitcoins (~$300,000 USD).
+
+Para recuperar seus arquivos:
+1. Baixe o navegador TOR
+2. Acesse: http://[endereço-onion].onion
+3. Use o ID: TECHCORP-2024-8847
+
+NÃO tente descriptografar por conta própria!
+NÃO contate autoridades!
+NÃO desligue os computadores!
+
+Tempo restante: 71:42:15</code></pre>
+<h4 data-number="4.3.2.2" id="identificação-da-família"><span
+class="header-section-number">4.3.2.2</span> <strong>Identificação da
+Família</strong></h4>
+<ul>
+<li><strong>Ransomware:</strong> LockBit 3.0 (baseado na nota e
+extensão)</li>
+<li><strong>Método:</strong> RDP brute force + exploração de
+vulnerabilidade</li>
+<li><strong>Criptografia:</strong> AES-256 + RSA-2048 (não
+descriptografável)</li>
+</ul>
+<hr />
+<h2 data-number="4.4"
+id="fase-3-erradicação-e-recuperação---exemplo"><span
+class="header-section-number">4.4</span> 🛡️ FASE 3: ERRADICAÇÃO E
+RECUPERAÇÃO - EXEMPLO</h2>
+<h3 data-number="4.4.1" id="erradicação-4-horas-1"><span
+class="header-section-number">4.4.1</span> <strong>3.3 Erradicação (&lt;
+4 horas)</strong></h3>
+<h4 data-number="4.4.1.1" id="remoção-do-malware"><span
+class="header-section-number">4.4.1.1</span> <strong>Remoção do
+Malware</strong></h4>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar persistência</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">reg</span> query <span class="st">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remover arquivos maliciosos</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ChildItem</span> <span class="at">-Path</span> <span class="st">&quot;C:</span><span class="dt">\\</span><span class="st">&quot;</span> <span class="at">-Recurse</span> <span class="at">-Filter</span> <span class="st">&quot;encrypt.exe&quot;</span> <span class="kw">|</span> <span class="ex">Remove-Item</span> <span class="at">-Force</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpar tarefas agendadas</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ScheduledTask</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.TaskName <span class="at">-like</span> <span class="st">&quot;*encrypt*&quot;</span>} <span class="kw">|</span> <span class="ex">Unregister-ScheduledTask</span></span></code></pre></div>
+<h4 data-number="4.4.1.2" id="correção-de-vulnerabilidades"><span
+class="header-section-number">4.4.1.2</span> <strong>Correção de
+Vulnerabilidades</strong></h4>
+<ul>
+<li>✅ <strong>11:00h</strong> - Patch do Windows Server aplicado</li>
+<li>✅ <strong>11:30h</strong> - RDP configurado com 2FA
+obrigatório</li>
+<li>✅ <strong>12:00h</strong> - Senhas de admin alteradas</li>
+<li>✅ <strong>12:30h</strong> - Firewall reconfigurado</li>
+</ul>
+<h3 data-number="4.4.2" id="recuperação-8-horas-1"><span
+class="header-section-number">4.4.2</span> <strong>3.4 Recuperação (&lt;
+8 horas)</strong></h3>
+<h4 data-number="4.4.2.1" id="restauração-via-backup"><span
+class="header-section-number">4.4.2.1</span> <strong>Restauração via
+Backup</strong></h4>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar integridade dos backups</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> check backup-server:/techcorp/2024-03-15 /mnt/restore/</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restaurar sistemas críticos (Prioridade 1)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">restore-vm</span> fileserver01 <span class="at">--snapshot</span> <span class="st">&quot;2024-03-15-23:00&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">restore-vm</span> database01 <span class="at">--snapshot</span> <span class="st">&quot;2024-03-15-23:00&quot;</span></span></code></pre></div>
+<h4 data-number="4.4.2.2" id="timeline-de-recuperação"><span
+class="header-section-number">4.4.2.2</span> <strong>Timeline de
+Recuperação</strong></h4>
+<ul>
+<li>✅ <strong>13:00h</strong> - Servidor de arquivos restaurado</li>
+<li>✅ <strong>14:30h</strong> - Banco de dados restaurado e
+validado</li>
+<li>✅ <strong>15:00h</strong> - Workstations principais
+restauradas</li>
+<li>✅ <strong>16:00h</strong> - Rede corporativa reestabelecida</li>
+<li>✅ <strong>17:00h</strong> - Operações normais retomadas</li>
+</ul>
+<h3 data-number="4.4.3" id="validação-da-recuperação-1"><span
+class="header-section-number">4.4.3</span> <strong>3.5 Validação da
+Recuperação</strong></h3>
+<ul>
+<li>✅ Todos os sistemas funcionando normalmente</li>
+<li>✅ Performance dentro dos parâmetros</li>
+<li>✅ Dados íntegros (última verificação às 23:00h do dia
+anterior)</li>
+<li>✅ Usuários conseguem acessar sistemas</li>
+<li>✅ Malware erradicado (confirmed por scan completo)</li>
+</ul>
+<hr />
+<h2 data-number="4.5"
+id="fase-4-atividades-pós-incidente---exemplo"><span
+class="header-section-number">4.5</span> 📊 FASE 4: ATIVIDADES
+PÓS-INCIDENTE - EXEMPLO</h2>
+<h3 data-number="4.5.1" id="métricas-finais"><span
+class="header-section-number">4.5.1</span> <strong>4.1 Métricas
+Finais</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Valor Alcançado</th>
+<th>Meta</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MTTD</strong></td>
+<td>30 minutos</td>
+<td>&lt; 1 hora</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>45 minutos</td>
+<td>&lt; 1 hora</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>8,5 horas</td>
+<td>&lt; 12 horas</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Downtime</strong></td>
+<td>8,5 horas</td>
+<td>&lt; 12 horas</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.5.2" id="impacto-financeiro"><span
+class="header-section-number">4.5.2</span> <strong>4.2 Impacto
+Financeiro</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Receita Perdida</strong></td>
+<td>R$ 85.000 (8,5h parado)</td>
+</tr>
+<tr>
+<td><strong>Custos de Resposta</strong></td>
+<td>R$ 15.000 (equipe + consultores)</td>
+</tr>
+<tr>
+<td><strong>Custos de Recuperação</strong></td>
+<td>R$ 5.000 (infraestrutura)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td>R$ 105.000</td>
+</tr>
+<tr>
+<td><strong>Resgate NÃO PAGO</strong></td>
+<td>R$ 1.500.000 ECONOMIZADOS</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.5.3" id="lições-aprendidas-1"><span
+class="header-section-number">4.5.3</span> <strong>4.3 Lições
+Aprendidas</strong></h3>
+<h4 data-number="4.5.3.1" id="o-que-funcionou-bem-1"><span
+class="header-section-number">4.5.3.1</span> <strong>✅ O que funcionou
+bem:</strong></h4>
+<ul>
+<li>Detecção rápida via EDR</li>
+<li>Equipe CSIRT bem treinada</li>
+<li>Backups íntegros e atualizados</li>
+<li>Procedimentos de isolamento eficazes</li>
+<li>Comunicação clara e transparente</li>
+</ul>
+<h4 data-number="4.5.3.2" id="o-que-precisa-melhorar-1"><span
+class="header-section-number">4.5.3.2</span> <strong>⚠️ O que precisa
+melhorar:</strong></h4>
+<ul>
+<li>RDP exposto sem 2FA</li>
+<li>Patches de segurança atrasados</li>
+<li>Monitoramento 24/7 limitado</li>
+<li>Treinamento de usuários insuficiente</li>
+<li>Testes de restauração pouco frequentes</li>
+</ul>
+<h4 data-number="4.5.3.3" id="recomendações-implementadas"><span
+class="header-section-number">4.5.3.3</span> <strong>🔧 Recomendações
+Implementadas:</strong></h4>
+<ol type="1">
+<li><strong>Prevenção:</strong>
+<ul>
+<li>✅ 2FA obrigatório em todos os acessos remotos</li>
+<li>✅ Gestão de patches automatizada</li>
+<li>✅ VPN corporativa para acesso remoto</li>
+</ul></li>
+<li><strong>Detecção:</strong>
+<ul>
+<li>✅ SOC 24/7 terceirizado contratado</li>
+<li>✅ Alertas de ransomware no SIEM</li>
+<li>✅ Monitoramento de comportamento anômalo</li>
+</ul></li>
+<li><strong>Resposta:</strong>
+<ul>
+<li>✅ Playbook de ransomware atualizado</li>
+<li>✅ Treinamento trimestral da equipe</li>
+<li>✅ Simulados mensais de resposta</li>
+</ul></li>
+</ol>
+<h3 data-number="4.5.4" id="comunicação-pós-incidente"><span
+class="header-section-number">4.5.4</span> <strong>4.4 Comunicação
+Pós-Incidente</strong></h3>
+<h4 data-number="4.5.4.1" id="comunicação-interna-1730h"><span
+class="header-section-number">4.5.4.1</span> <strong>Comunicação Interna
+(17:30h)</strong></h4>
+<pre><code>ASSUNTO: Resolução do Incidente de Segurança - Operações Normalizadas
+
+Prezados colaboradores,
+
+Informamos que o incidente de segurança detectado na manhã de hoje foi 
+completamente resolvido. Todos os sistemas estão funcionando normalmente
+e nenhum dado foi perdido.
+
+Medidas adicionais de segurança foram implementadas e continuamos 
+monitorando ativamente nossa infraestrutura.
+
+Agradecemos a paciência de todos durante este período.
+
+Atenciosamente,
+Equipe de TI e Segurança</code></pre>
+<h4 data-number="4.5.4.2" id="relatório-executivo-1800h"><span
+class="header-section-number">4.5.4.2</span> <strong>Relatório Executivo
+(18:00h)</strong></h4>
+<p>Enviado para CEO, diretoria e board com: - Resumo executivo do
+incidente - Impacto financeiro e operacional - Medidas implementadas -
+Próximos passos</p>
+<hr />
+<h2 data-number="4.6" id="análise-forense-detalhada"><span
+class="header-section-number">4.6</span> 🔍 Análise Forense
+Detalhada</h2>
+<h3 data-number="4.6.1" id="vetor-de-ataque-identificado"><span
+class="header-section-number">4.6.1</span> <strong>Vetor de Ataque
+Identificado</strong></h3>
+<ol type="1">
+<li><strong>02:15h</strong> - Ataque de força bruta em RDP (IP:
+185.220.101.45)</li>
+<li><strong>02:28h</strong> - Login bem-sucedido (user:
+backup_admin)</li>
+<li><strong>02:30h</strong> - Download do ransomware via PowerShell</li>
+<li><strong>02:35h</strong> - Execução inicial em fileserver01</li>
+<li><strong>02:45h</strong> - Propagação lateral via SMB</li>
+<li><strong>03:00h</strong> - Início da criptografia de arquivos</li>
+</ol>
+<h3 data-number="4.6.2" id="iocs-indicators-of-compromise"><span
+class="header-section-number">4.6.2</span> <strong>IOCs (Indicators of
+Compromise)</strong></h3>
+<pre><code># IPs maliciosos
+185.220.101.45 (origem do ataque)
+194.169.175.22 (C&amp;C server)
+
+# Hashes SHA256
+encrypt.exe: 8f14e45fceea167a5a36dedd4bea2543ef31d4b3e3c9b17a8b8c9e3f5d2a1b4c
+launcher.ps1: 2c4a3b5e7f9d1a8c6e4b2f5a9c7e1d3f5b8a4c6e9f2d5a7c1e4b8f6a3d9c5e2
+
+# Domínios
+techcorp-decrypt[.]onion
+backup-urgent[.]com
+
+# Artifacts
+README_FOR_DECRYPT.txt
+.locked (extension)</code></pre>
+<hr />
+<h2 data-number="4.7" id="checklist-completo-de-resposta"><span
+class="header-section-number">4.7</span> 📋 Checklist Completo de
+Resposta</h2>
+<h3 data-number="4.7.1" id="detecção-e-análise"><span
+class="header-section-number">4.7.1</span> <strong>✅ Detecção e
+Análise</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Incidente validado e
+classificado</label></li>
+<li><label><input type="checkbox" checked="" />Equipe CSIRT
+ativada</label></li>
+<li><label><input type="checkbox" checked="" />Evidências iniciais
+coletadas</label></li>
+<li><label><input type="checkbox" checked="" />Escopo preliminar
+definido</label></li>
+</ul>
+<h3 data-number="4.7.2" id="contenção"><span
+class="header-section-number">4.7.2</span> <strong>✅
+Contenção</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Sistemas comprometidos
+isolados</label></li>
+<li><label><input type="checkbox" checked="" />Propagação
+interrompida</label></li>
+<li><label><input type="checkbox" checked="" />Evidências
+preservadas</label></li>
+<li><label><input type="checkbox" checked="" />Stakeholders
+notificados</label></li>
+</ul>
+<h3 data-number="4.7.3" id="erradicação"><span
+class="header-section-number">4.7.3</span> <strong>✅
+Erradicação</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Malware
+removido</label></li>
+<li><label><input type="checkbox" checked="" />Vulnerabilidades
+corrigidas</label></li>
+<li><label><input type="checkbox" checked="" />Credenciais comprometidas
+alteradas</label></li>
+<li><label><input type="checkbox" checked="" />Sistemas
+endurecidos</label></li>
+</ul>
+<h3 data-number="4.7.4" id="recuperação"><span
+class="header-section-number">4.7.4</span> <strong>✅
+Recuperação</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Sistemas restaurados a
+partir de backups</label></li>
+<li><label><input type="checkbox" checked="" />Funcionalidade
+validada</label></li>
+<li><label><input type="checkbox" checked="" />Monitoramento
+intensificado</label></li>
+<li><label><input type="checkbox" checked="" />Operações
+normalizadas</label></li>
+</ul>
+<h3 data-number="4.7.5" id="pós-incidente"><span
+class="header-section-number">4.7.5</span> <strong>✅
+Pós-Incidente</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />Relatório de incidente
+criado</label></li>
+<li><label><input type="checkbox" checked="" />Lições aprendidas
+documentadas</label></li>
+<li><label><input type="checkbox" checked="" />Melhorias
+implementadas</label></li>
+<li><label><input type="checkbox" checked="" />Comunicação
+finalizada</label></li>
+</ul>
+<hr />
+<p><strong>🎯 Este exemplo demonstra um plano de resposta completo e
+realista. Use-o como base para desenvolver seu próprio plano, adaptando
+para o cenário específico escolhido!</strong></p>
+<h1 data-number="5"
+id="matriz-de-classificação-de-incidentes---nist"><span
+class="header-section-number">5</span> 📊 Matriz de Classificação de
+Incidentes - NIST</h1>
+<p>Esta matriz padroniza a classificação de incidentes de segurança
+seguindo critérios objetivos e mensuráveis.</p>
+<hr />
+<h2 data-number="5.1" id="categorias-de-incidentes"><span
+class="header-section-number">5.1</span> 🎯 Categorias de
+Incidentes</h2>
+<h3 data-number="5.1.1" id="malware"><span
+class="header-section-number">5.1.1</span> <strong>1. 🦠
+Malware</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Software malicioso (vírus, worms,
+trojans, ransomware)</li>
+<li><strong>Exemplos:</strong> WannaCry, Emotet, Zeus Banking
+Trojan</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Integridade,
+Disponibilidade</li>
+</ul>
+<h3 data-number="5.1.2" id="phishingsocial-engineering"><span
+class="header-section-number">5.1.2</span> <strong>2. 🎣 Phishing/Social
+Engineering</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Tentativas de obter informações através
+de engenharia social</li>
+<li><strong>Exemplos:</strong> Emails falsos, vishing, sites
+fraudulentos</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Compliance</li>
+</ul>
+<h3 data-number="5.1.3" id="ddos-distributed-denial-of-service"><span
+class="header-section-number">5.1.3</span> <strong>3. 💥 DDoS
+(Distributed Denial of Service)</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Ataques para tornar serviços
+indisponíveis</li>
+<li><strong>Exemplos:</strong> Botnets, ataques volumétricos, ataques de
+aplicação</li>
+<li><strong>Impacto Típico:</strong> Disponibilidade, Receita</li>
+</ul>
+<h3 data-number="5.1.4" id="data-breachexfiltração"><span
+class="header-section-number">5.1.4</span> <strong>4. 🗃️ Data
+Breach/Exfiltração</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Acesso não autorizado e exposição de
+dados sensíveis</li>
+<li><strong>Exemplos:</strong> SQLi, vazamento de database, insider
+threat</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Regulatório,
+Reputação</li>
+</ul>
+<h3 data-number="5.1.5" id="comprometimento-de-conta"><span
+class="header-section-number">5.1.5</span> <strong>5. 🔐 Comprometimento
+de Conta</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Acesso não autorizado a contas de
+usuário ou administrativas</li>
+<li><strong>Exemplos:</strong> Credential stuffing, password spray,
+token theft</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Integridade</li>
+</ul>
+<h3 data-number="5.1.6" id="defacementalteração"><span
+class="header-section-number">5.1.6</span> <strong>6. 🌐
+Defacement/Alteração</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Modificação não autorizada de websites
+ou sistemas</li>
+<li><strong>Exemplos:</strong> Hacktivismo, alteração de dados,
+sabotagem</li>
+<li><strong>Impacto Típico:</strong> Integridade, Reputação</li>
+</ul>
+<h3 data-number="5.1.7" id="apt-advanced-persistent-threat"><span
+class="header-section-number">5.1.7</span> <strong>7. 🕵️ APT (Advanced
+Persistent Threat)</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Ataques sofisticados com persistência
+prolongada</li>
+<li><strong>Exemplos:</strong> Espionagem industrial, nation-state
+actors</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Propriedade
+Intelectual</li>
+</ul>
+<h3 data-number="5.1.8" id="insider-threat"><span
+class="header-section-number">5.1.8</span> <strong>8. 👤 Insider
+Threat</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Ameaças originadas por colaboradores
+internos</li>
+<li><strong>Exemplos:</strong> Roubo de dados, sabotagem, vazamento
+intencional</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Integridade,
+Confiança</li>
+</ul>
+<hr />
+<h2 data-number="5.2" id="níveis-de-severidade"><span
+class="header-section-number">5.2</span> 🚨 Níveis de Severidade</h2>
+<h3 data-number="5.2.1" id="crítico"><span
+class="header-section-number">5.2.1</span> <strong>🔴
+CRÍTICO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto operacional severo
+e imediato</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas críticos indisponíveis &gt; 1 hora</li>
+<li>Exposição de dados altamente sensíveis (&gt; 10.000 registros)</li>
+<li>Impacto financeiro &gt; R$ 500.000</li>
+<li>Violação de compliance com penalidades</li>
+<li>Comprometimento de infraestrutura crítica</li>
+<li>Repercussão midiática nacional</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 30 minutos</li>
+<li><strong>Escalação:</strong> CEO, CISO, Jurídico, Comunicação</li>
+</ul>
+<h3 data-number="5.2.2" id="alto"><span
+class="header-section-number">5.2.2</span> <strong>🟠 ALTO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto significativo nos
+negócios</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas importantes indisponíveis &gt; 4 horas</li>
+<li>Exposição de dados sensíveis (1.000-10.000 registros)</li>
+<li>Impacto financeiro R$ 100.000 - R$ 500.000</li>
+<li>Comprometimento de múltiplos sistemas</li>
+<li>Possível violação regulatória</li>
+<li>Repercussão midiática regional</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 1 hora</li>
+<li><strong>Escalação:</strong> CISO, TI, Jurídico</li>
+</ul>
+<h3 data-number="5.2.3" id="médio"><span
+class="header-section-number">5.2.3</span> <strong>🟡
+MÉDIO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto moderado e
+controlado</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas não-críticos indisponíveis &lt; 8 horas</li>
+<li>Exposição limitada de dados (&lt; 1.000 registros)</li>
+<li>Impacto financeiro R$ 10.000 - R$ 100.000</li>
+<li>Comprometimento de sistema isolado</li>
+<li>Sem violação regulatória</li>
+<li>Repercussão midiática local ou ausente</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 4 horas</li>
+<li><strong>Escalação:</strong> Líder de TI, Segurança</li>
+</ul>
+<h3 data-number="5.2.4" id="baixo"><span
+class="header-section-number">5.2.4</span> <strong>🟢
+BAIXO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto mínimo ou
+potencial</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas auxiliares indisponíveis &lt; 24 horas</li>
+<li>Nenhuma exposição de dados confirmada</li>
+<li>Impacto financeiro &lt; R$ 10.000</li>
+<li>Tentativa de ataque sem sucesso</li>
+<li>Violação de política interna</li>
+<li>Sem repercussão externa</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 8 horas</li>
+<li><strong>Escalação:</strong> Analista de Segurança</li>
+</ul>
+<hr />
+<h2 data-number="5.3" id="matriz-de-impacto-cia"><span
+class="header-section-number">5.3</span> 📈 Matriz de Impacto CIA</h2>
+<h3 data-number="5.3.1" id="confidencialidade"><span
+class="header-section-number">5.3.1</span>
+<strong>Confidencialidade</strong></h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 39%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Descrição</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALTO</strong></td>
+<td>Dados ultrassecretos ou regulamentados</td>
+<td>CPF, cartões de crédito, dados médicos, PI</td>
+</tr>
+<tr>
+<td><strong>MÉDIO</strong></td>
+<td>Dados internos sensíveis</td>
+<td>Estratégias de negócio, relatórios financeiros</td>
+</tr>
+<tr>
+<td><strong>BAIXO</strong></td>
+<td>Dados públicos ou de baixa sensibilidade</td>
+<td>Informações de marketing, dados agregados</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="5.3.2" id="integridade"><span
+class="header-section-number">5.3.2</span>
+<strong>Integridade</strong></h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 39%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Descrição</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALTO</strong></td>
+<td>Sistemas críticos de missão</td>
+<td>Core banking, controle industrial, emergência</td>
+</tr>
+<tr>
+<td><strong>MÉDIO</strong></td>
+<td>Sistemas importantes de negócio</td>
+<td>ERP, CRM, e-commerce</td>
+</tr>
+<tr>
+<td><strong>BAIXO</strong></td>
+<td>Sistemas auxiliares</td>
+<td>Intranet, sistemas de suporte</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="5.3.3" id="disponibilidade"><span
+class="header-section-number">5.3.3</span>
+<strong>Disponibilidade</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Descrição</th>
+<th>RTO</th>
+<th>RPO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALTO</strong></td>
+<td>Sistemas 24/7 críticos</td>
+<td>&lt; 1 hora</td>
+<td>&lt; 15 min</td>
+</tr>
+<tr>
+<td><strong>MÉDIO</strong></td>
+<td>Sistemas horário comercial</td>
+<td>&lt; 4 horas</td>
+<td>&lt; 1 hora</td>
+</tr>
+<tr>
+<td><strong>BAIXO</strong></td>
+<td>Sistemas não-essenciais</td>
+<td>&lt; 24 horas</td>
+<td>&lt; 8 horas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="5.4" id="matriz-de-urgência"><span
+class="header-section-number">5.4</span> ⚡ Matriz de Urgência</h2>
+<h3 data-number="5.4.1" id="imediata-30-min"><span
+class="header-section-number">5.4.1</span> <strong>🚨 IMEDIATA (&lt; 30
+min)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Ataque em andamento</li>
+<li>Sistemas críticos comprometidos</li>
+<li>Exposição de dados em massa</li>
+<li>Ameaça à segurança física</li>
+<li>Ransomware ativo</li>
+</ul></li>
+</ul>
+<h3 data-number="5.4.2" id="alta-1-hora"><span
+class="header-section-number">5.4.2</span> <strong>🔥 ALTA (&lt; 1
+hora)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Evidências de comprometimento</li>
+<li>Sistemas importantes afetados</li>
+<li>Possível exposição de dados</li>
+<li>Violação detectada por terceiros</li>
+<li>Ameaça de deadline regulatório</li>
+</ul></li>
+</ul>
+<h3 data-number="5.4.3" id="normal-4-horas"><span
+class="header-section-number">5.4.3</span> <strong>⚠️ NORMAL (&lt; 4
+horas)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Incidente contido</li>
+<li>Impacto limitado</li>
+<li>Investigação necessária</li>
+<li>Melhorias de segurança</li>
+<li>Compliance preventivo</li>
+</ul></li>
+</ul>
+<h3 data-number="5.4.4" id="baixa-8-horas"><span
+class="header-section-number">5.4.4</span> <strong>📋 BAIXA (&lt; 8
+horas)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Incidente resolvido</li>
+<li>Análise pós-incidente</li>
+<li>Documentação</li>
+<li>Treinamento</li>
+<li>Auditoria de rotina</li>
+</ul></li>
+</ul>
+<hr />
+<h2 data-number="5.5" id="matriz-de-priorização"><span
+class="header-section-number">5.5</span> 🎯 Matriz de Priorização</h2>
+<table>
+<thead>
+<tr>
+<th>Severidade</th>
+<th>Impacto Alto</th>
+<th>Impacto Médio</th>
+<th>Impacto Baixo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Crítico</strong></td>
+<td>P1 - Imediata</td>
+<td>P1 - Imediata</td>
+<td>P2 - Alta</td>
+</tr>
+<tr>
+<td><strong>Alto</strong></td>
+<td>P1 - Imediata</td>
+<td>P2 - Alta</td>
+<td>P3 - Normal</td>
+</tr>
+<tr>
+<td><strong>Médio</strong></td>
+<td>P2 - Alta</td>
+<td>P3 - Normal</td>
+<td>P4 - Baixa</td>
+</tr>
+<tr>
+<td><strong>Baixo</strong></td>
+<td>P3 - Normal</td>
+<td>P4 - Baixa</td>
+<td>P4 - Baixa</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="5.5.1" id="definição-das-prioridades"><span
+class="header-section-number">5.5.1</span> <strong>Definição das
+Prioridades:</strong></h3>
+<ul>
+<li><strong>P1 (Imediata):</strong> Resposta em &lt; 30 min, equipe
+completa mobilizada</li>
+<li><strong>P2 (Alta):</strong> Resposta em &lt; 1 hora, líder técnico +
+especialistas</li>
+<li><strong>P3 (Normal):</strong> Resposta em &lt; 4 horas, analista de
+plantão</li>
+<li><strong>P4 (Baixa):</strong> Resposta em &lt; 8 horas, próxima
+janela de trabalho</li>
+</ul>
+<hr />
+<h2 data-number="5.6" id="exemplos-de-classificação"><span
+class="header-section-number">5.6</span> 📊 Exemplos de
+Classificação</h2>
+<h3 data-number="5.6.1" id="exemplo-1-ransomware"><span
+class="header-section-number">5.6.1</span> <strong>Exemplo 1:
+Ransomware</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> Malware</li>
+<li><strong>Severidade:</strong> Crítico (sistemas indisponíveis)</li>
+<li><strong>Impacto:</strong> Alto (disponibilidade + integridade)</li>
+<li><strong>Urgência:</strong> Imediata (ataque ativo)</li>
+<li><strong>Prioridade:</strong> P1</li>
+<li><strong>SLA:</strong> &lt; 30 minutos</li>
+</ul>
+<h3 data-number="5.6.2" id="exemplo-2-phishing-bem-sucedido"><span
+class="header-section-number">5.6.2</span> <strong>Exemplo 2: Phishing
+bem-sucedido</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> Phishing/Social Engineering</li>
+<li><strong>Severidade:</strong> Alto (credenciais comprometidas)</li>
+<li><strong>Impacto:</strong> Médio (confidencialidade)</li>
+<li><strong>Urgência:</strong> Alta (acesso não autorizado)</li>
+<li><strong>Prioridade:</strong> P2</li>
+<li><strong>SLA:</strong> &lt; 1 hora</li>
+</ul>
+<h3 data-number="5.6.3" id="exemplo-3-defacement-de-site"><span
+class="header-section-number">5.6.3</span> <strong>Exemplo 3: Defacement
+de site</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> Defacement/Alteração</li>
+<li><strong>Severidade:</strong> Médio (reputação afetada)</li>
+<li><strong>Impacto:</strong> Médio (integridade)</li>
+<li><strong>Urgência:</strong> Alta (visibilidade pública)</li>
+<li><strong>Prioridade:</strong> P2</li>
+<li><strong>SLA:</strong> &lt; 1 hora</li>
+</ul>
+<h3 data-number="5.6.4" id="exemplo-4-tentativa-de-ddos-bloqueada"><span
+class="header-section-number">5.6.4</span> <strong>Exemplo 4: Tentativa
+de DDoS bloqueada</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> DDoS</li>
+<li><strong>Severidade:</strong> Baixo (sem impacto)</li>
+<li><strong>Impacto:</strong> Baixo (tentativa frustrada)</li>
+<li><strong>Urgência:</strong> Normal (monitoramento)</li>
+<li><strong>Prioridade:</strong> P3</li>
+<li><strong>SLA:</strong> &lt; 4 horas</li>
+</ul>
+<hr />
+<h2 data-number="5.7" id="processo-de-reclassificação"><span
+class="header-section-number">5.7</span> 🔄 Processo de
+Reclassificação</h2>
+<h3 data-number="5.7.1" id="quando-reclassificar"><span
+class="header-section-number">5.7.1</span> <strong>Quando
+Reclassificar:</strong></h3>
+<ul>
+<li>Novas evidências encontradas</li>
+<li>Escopo do incidente expandido</li>
+<li>Impacto maior que inicialmente avaliado</li>
+<li>Mudança no status de contenção</li>
+</ul>
+<h3 data-number="5.7.2" id="critérios-para-upgrade"><span
+class="header-section-number">5.7.2</span> <strong>Critérios para
+Upgrade:</strong></h3>
+<ul>
+<li>Sistemas críticos adicionais afetados</li>
+<li>Exposição de dados maior que estimada</li>
+<li>Repercussão externa negativa</li>
+<li>Violação regulatória confirmada</li>
+</ul>
+<h3 data-number="5.7.3" id="critérios-para-downgrade"><span
+class="header-section-number">5.7.3</span> <strong>Critérios para
+Downgrade:</strong></h3>
+<ul>
+<li>Incidente contido com sucesso</li>
+<li>Impacto menor que inicialmente estimado</li>
+<li>Dados não foram realmente expostos</li>
+<li>Falso positivo confirmado</li>
+</ul>
+<hr />
+<h2 data-number="5.8" id="formulário-de-classificação"><span
+class="header-section-number">5.8</span> 📝 Formulário de
+Classificação</h2>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## CLASSIFICAÇÃO DE INCIDENTE</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>**ID do Incidente:** INC-YYYY-NNNN</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>**Data/Hora:** DD/MM/YYYY HH:MM</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>**Classificador:** <span class="co">[</span><span class="ot">Nome</span><span class="co">]</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### CATEGORIA</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Malware</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Phishing/Social Engineering  </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> DDoS</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Data Breach/Exfiltração</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Comprometimento de Conta</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Defacement/Alteração</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> APT</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Insider Threat</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Outro: ________________</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### SEVERIDADE</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Crítico</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Alto</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Médio</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Baixo</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### IMPACTO</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>**Confidencialidade:** <span class="co">[ ]</span> Alto <span class="co">[ ]</span> Médio <span class="co">[ ]</span> Baixo</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>**Integridade:** <span class="co">[ ]</span> Alto <span class="co">[ ]</span> Médio <span class="co">[ ]</span> Baixo  </span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>**Disponibilidade:** <span class="co">[ ]</span> Alto <span class="co">[ ]</span> Médio <span class="co">[ ]</span> Baixo</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### URGÊNCIA</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Imediata (&lt; 30 min)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Alta (&lt; 1 hora)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Normal (&lt; 4 horas)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Baixa (&lt; 8 horas)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### PRIORIDADE CALCULADA</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P1 - Imediata</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P2 - Alta</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P3 - Normal</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P4 - Baixa</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### JUSTIFICATIVA</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Explicar os critérios usados para classificação</span><span class="co">]</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### PRÓXIMAS AÇÕES</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Definir ações imediatas baseadas na classificação</span><span class="co">]</span></span></code></pre></div>
+<hr />
+<p><strong>🎯 Esta matriz garante classificação consistente e resposta
+adequada a cada tipo de incidente de segurança!</strong></p>
+<h1 data-number="6" id="playbook-contenção-de-incidentes"><span
+class="header-section-number">6</span> ⚡ Playbook: Contenção de
+Incidentes</h1>
+<p>Este playbook fornece procedimentos técnicos específicos para
+contenção imediata de diferentes tipos de incidentes de segurança.</p>
+<hr />
+<h2 data-number="6.1" id="objetivos-da-contenção"><span
+class="header-section-number">6.1</span> 🎯 Objetivos da Contenção</h2>
+<ol type="1">
+<li><strong>Parar a propagação</strong> do incidente</li>
+<li><strong>Preservar evidências</strong> para análise forense</li>
+<li><strong>Minimizar o impacto</strong> operacional</li>
+<li><strong>Manter sistemas críticos</strong> funcionando</li>
+<li><strong>Preparar para erradicação</strong> e recuperação</li>
+</ol>
+<hr />
+<h2 data-number="6.2" id="contenção-de-malwareransomware"><span
+class="header-section-number">6.2</span> 🦠 Contenção de
+Malware/Ransomware</h2>
+<h3 data-number="6.2.1" id="ações-imediatas-30-min"><span
+class="header-section-number">6.2.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="6.2.1.1" id="isolamento-de-rede-1"><span
+class="header-section-number">6.2.1.1</span> <strong>1. Isolamento de
+Rede</strong></h4>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows - Desabilitar adaptadores de rede</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">netsh</span> interface set interface <span class="st">&quot;Ethernet&quot;</span> admin=disable</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">netsh</span> interface set interface <span class="st">&quot;Wi-Fi&quot;</span> admin=disable</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Linux - Bloquear tráfego</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-P</span> INPUT DROP</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-P</span> OUTPUT DROP</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-P</span> FORWARD DROP</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Manter apenas SSH para administração remota</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 22 <span class="at">-s</span> <span class="pp">[</span><span class="ss">IP_ADMIN</span><span class="pp">]</span> <span class="at">-j</span> ACCEPT</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> OUTPUT <span class="at">-p</span> tcp <span class="at">--sport</span> 22 <span class="at">-d</span> <span class="pp">[</span><span class="ss">IP_ADMIN</span><span class="pp">]</span> <span class="at">-j</span> ACCEPT</span></code></pre></div>
+<h4 data-number="6.2.1.2"
+id="identificação-de-sistemas-comprometidos"><span
+class="header-section-number">6.2.1.2</span> <strong>2. Identificação de
+Sistemas Comprometidos</strong></h4>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar processos suspeitos</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-Process</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.CPU <span class="at">-gt</span> 50} <span class="kw">|</span> <span class="ex">Sort-Object</span> CPU <span class="at">-Descending</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar conexões de rede ativas</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-antb</span> <span class="kw">|</span> <span class="ex">findstr</span> ESTABLISHED</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar arquivos recentemente modificados</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ChildItem</span> <span class="at">-Path</span> <span class="st">&quot;C:</span><span class="dt">\&quot;</span><span class="st"> -Recurse | Where-Object {</span><span class="va">$_</span><span class="st">.LastWriteTime -gt (Get-Date).AddHours(-2)}</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st"># Procurar por arquivos criptografados (ransomware)</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="st">Get-ChildItem -Path &quot;</span>C:<span class="dt">\&quot;</span> <span class="at">-Recurse</span> <span class="at">-Filter</span> <span class="st">&quot;*.*&quot;</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.Extension <span class="at">-match</span> <span class="st">&quot;\.(locked|encrypted|crypto|encode)$&quot;</span>}</span></code></pre></div>
+<h4 data-number="6.2.1.3" id="preservação-de-evidências-1"><span
+class="header-section-number">6.2.1.3</span> <strong>3. Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar memória RAM (Windows)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">winpmem_mini_x64.exe</span> <span class="at">-o</span> physmem.raw</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs do sistema</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl System C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ystem_<span class="va">$(</span><span class="ex">Get-Date</span> <span class="at">-f</span> yyyyMMdd-HHmm<span class="va">)</span>.evtx</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl Security C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ecurity_<span class="va">$(</span><span class="ex">Get-Date</span> <span class="at">-f</span> yyyyMMdd-HHmm<span class="va">)</span>.evtx</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl Application C:<span class="dt">\f</span>orensics<span class="dt">\A</span>pplication_<span class="va">$(</span><span class="ex">Get-Date</span> <span class="at">-f</span> yyyyMMdd-HHmm<span class="va">)</span>.evtx</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar tráfego de rede</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="ex">tcpdump</span> <span class="at">-i</span> any <span class="at">-w</span> /forensics/network_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.pcap <span class="kw">&amp;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Snapshot de VM (se aplicável)</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="ex">vmware-cmd</span> <span class="pp">[</span><span class="ss">path/to/vm.vmx</span><span class="pp">]</span> createsnapshot <span class="st">&quot;incident_</span><span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span><span class="st">&quot;</span> <span class="st">&quot;Pre-remediation snapshot&quot;</span></span></code></pre></div>
+<h4 data-number="6.2.1.4"
+id="contenção-específica-para-ransomware"><span
+class="header-section-number">6.2.1.4</span> <strong>4. Contenção
+Específica para Ransomware</strong></h4>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desconectar backups online</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">net</span> stop <span class="st">&quot;Veeam Backup Service&quot;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">net</span> stop <span class="st">&quot;Windows Backup Service&quot;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Desabilitar Volume Shadow Copy (impedir destruição)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="ex">vssadmin</span> list shadows</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># NÃO executar comandos de limpeza que o ransomware pode tentar</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Proteger Domain Controllers</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolar DCs da rede geral, manter apenas comunicação entre DCs</span></span></code></pre></div>
+<h3 data-number="6.2.2" id="checklist-de-contenção---malware"><span
+class="header-section-number">6.2.2</span> <strong>📋 Checklist de
+Contenção - Malware</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Incidente confirmado</label></li>
+<li><label><input type="checkbox" />🔌 <strong>Isolamento:</strong>
+Sistemas comprometidos desconectados</label></li>
+<li><label><input type="checkbox" />💾 <strong>Evidências:</strong>
+Memória e logs capturados</label></li>
+<li><label><input type="checkbox" />📸 <strong>Snapshots:</strong> VMs
+preservadas</label></li>
+<li><label><input type="checkbox" />🛡️ <strong>Proteção:</strong>
+Backups e DCs protegidos</label></li>
+<li><label><input type="checkbox" />📞 <strong>Comunicação:</strong>
+Equipe e stakeholders notificados</label></li>
+<li><label><input type="checkbox" />📝 <strong>Documentação:</strong>
+Ações registradas</label></li>
+</ul>
+<hr />
+<h2 data-number="6.3"
+id="contenção-de-phishingcompromisso-de-email"><span
+class="header-section-number">6.3</span> 🎣 Contenção de
+Phishing/Compromisso de Email</h2>
+<h3 data-number="6.3.1" id="ações-imediatas-30-min-1"><span
+class="header-section-number">6.3.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="6.3.1.1" id="isolamento-da-conta-comprometida"><span
+class="header-section-number">6.3.1.1</span> <strong>1. Isolamento da
+Conta Comprometida</strong></h4>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Office 365/Exchange Online</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Connect-ExchangeOnline</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Set-Mailbox <span class="op">-</span>Identity <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>AccountDisabled <span class="va">$true</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Set-CASMailbox <span class="op">-</span>Identity <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>OWAEnabled <span class="va">$false</span> <span class="op">-</span>ActiveSyncEnabled <span class="va">$false</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Revogar tokens de autenticação</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>Revoke-AzureADUserAllRefreshToken <span class="op">-</span>ObjectId <span class="op">[</span>User-ObjectID<span class="op">]</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Exchange On-Premises</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>Disable-Mailbox <span class="op">-</span>Identity <span class="st">&quot;usuario@empresa.com&quot;</span></span></code></pre></div>
+<h4 data-number="6.3.1.2" id="análise-de-emails-maliciosos"><span
+class="header-section-number">6.3.1.2</span> <strong>2. Análise de
+Emails Maliciosos</strong></h4>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar emails suspeitos</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Get-MessageTrace <span class="op">-</span>SenderAddress <span class="st">&quot;atacante@malicioso.com&quot;</span> <span class="op">-</span>StartDate <span class="op">(</span><span class="fu">Get-Date</span><span class="op">).</span><span class="fu">AddDays</span><span class="op">(-</span><span class="dv">7</span><span class="op">)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar emails enviados pela conta comprometida</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Get-MessageTrace <span class="op">-</span>SenderAddress <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>StartDate <span class="op">(</span><span class="fu">Get-Date</span><span class="op">).</span><span class="fu">AddHours</span><span class="op">(-</span><span class="dv">24</span><span class="op">)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar regras de encaminhamento suspeitas</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>Get-InboxRule <span class="op">-</span>Mailbox <span class="st">&quot;usuario@empresa.com&quot;</span></span></code></pre></div>
+<h4 data-number="6.3.1.3" id="contenção-de-propagação"><span
+class="header-section-number">6.3.1.3</span> <strong>3. Contenção de
+Propagação</strong></h4>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remover emails maliciosos de todas as caixas postais</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>New-ComplianceSearch <span class="op">-</span>Name <span class="st">&quot;PhishingRemoval&quot;</span> <span class="op">-</span>ExchangeLocation All <span class="op">-</span>ContentMatchQuery <span class="st">&quot;Subject:&#39;Urgent Payment Required&#39;&quot;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Start-ComplianceSearch <span class="op">-</span>Identity <span class="st">&quot;PhishingRemoval&quot;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Após conclusão da busca:</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>New-ComplianceSearchAction <span class="op">-</span>SearchName <span class="st">&quot;PhishingRemoval&quot;</span> <span class="op">-</span>Purge <span class="op">-</span>PurgeType SoftDelete</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bloquear sender externo</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>New-TransportRule <span class="op">-</span>Name <span class="st">&quot;Block-Phishing-Sender&quot;</span> <span class="op">-</span>SenderAddressContainsWords <span class="st">&quot;atacante@malicioso.com&quot;</span> <span class="op">-</span>DeleteMessage <span class="va">$true</span></span></code></pre></div>
+<h3 data-number="6.3.2" id="checklist-de-contenção---phishing"><span
+class="header-section-number">6.3.2</span> <strong>📋 Checklist de
+Contenção - Phishing</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Phishing confirmado</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Conta Bloqueada:</strong>
+Acesso da conta comprometida revogado</label></li>
+<li><label><input type="checkbox" />🔍 <strong>Emails
+Localizados:</strong> Mensagens maliciosas identificadas</label></li>
+<li><label><input type="checkbox" />🗑️ <strong>Remoção:</strong> Emails
+maliciosos removidos das caixas</label></li>
+<li><label><input type="checkbox" />🚧 <strong>Bloqueio:</strong> Sender
+malicioso bloqueado</label></li>
+<li><label><input type="checkbox" />🔑 <strong>Credenciais:</strong>
+Senhas alteradas</label></li>
+<li><label><input type="checkbox" />📞 <strong>Usuários:</strong>
+Afetados notificados</label></li>
+</ul>
+<hr />
+<h2 data-number="6.4" id="contenção-de-ddos"><span
+class="header-section-number">6.4</span> 💥 Contenção de DDoS</h2>
+<h3 data-number="6.4.1" id="ações-imediatas-30-min-2"><span
+class="header-section-number">6.4.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="6.4.1.1" id="análise-de-tráfego"><span
+class="header-section-number">6.4.1.1</span> <strong>1. Análise de
+Tráfego</strong></h4>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar conexões ativas</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :80 <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :443 <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Top IPs conectando</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :80 <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $5}&#39;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d:</span> <span class="at">-f1</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-20</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitorar largura de banda</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="ex">iftop</span> <span class="at">-i</span> eth0</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="ex">nethogs</span></span></code></pre></div>
+<h4 data-number="6.4.1.2" id="filtragem-imediata"><span
+class="header-section-number">6.4.1.2</span> <strong>2. Filtragem
+Imediata</strong></h4>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bloquear IPs com mais de 100 conexões</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :80 <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $5}&#39;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d:</span> <span class="at">-f1</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;$1 &gt; 100 {print $2}&#39;</span> <span class="op">&gt;</span> /tmp/block_ips.txt</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar bloqueios via iptables</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="va">ip</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-s</span> <span class="va">$ip</span> <span class="at">-j</span> DROP</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> /tmp/block_ips.txt</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Rate limiting</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-m</span> limit <span class="at">--limit</span> 25/minute <span class="at">--limit-burst</span> 100 <span class="at">-j</span> ACCEPT</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-j</span> DROP</span></code></pre></div>
+<h4 data-number="6.4.1.3" id="ativação-de-mitigação"><span
+class="header-section-number">6.4.1.3</span> <strong>3. Ativação de
+Mitigação</strong></h4>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cloudflare - Ativar &quot;I&#39;m Under Attack Mode&quot;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PATCH <span class="st">&quot;https://api.cloudflare.com/client/v4/zones/[ZONE_ID]/settings/security_level&quot;</span> <span class="dt">\</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">-H</span> <span class="st">&quot;Authorization: Bearer [API_TOKEN]&quot;</span> <span class="dt">\</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> <span class="dt">\</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--data</span> <span class="st">&#39;{&quot;value&quot;:&quot;under_attack&quot;}&#39;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># AWS - Ativar AWS Shield Advanced (se disponível)</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> shield subscribe-to-proactive-engagement</span></code></pre></div>
+<h3 data-number="6.4.2" id="checklist-de-contenção---ddos"><span
+class="header-section-number">6.4.2</span> <strong>📋 Checklist de
+Contenção - DDoS</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - DDoS detectado</label></li>
+<li><label><input type="checkbox" />📊 <strong>Análise:</strong> Tráfego
+analisado e padrões identificados</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Bloqueios:</strong> IPs
+maliciosos bloqueados</label></li>
+<li><label><input type="checkbox" />⚡ <strong>Rate Limiting:</strong>
+Limitação de taxa implementada</label></li>
+<li><label><input type="checkbox" />☁️ <strong>CDN/WAF:</strong>
+Proteção em nuvem ativada</label></li>
+<li><label><input type="checkbox" />📈 <strong>Monitoramento:</strong>
+Dashboards de tráfego ativos</label></li>
+<li><label><input type="checkbox" />📞 <strong>ISP:</strong> Provedor
+notificado (se necessário)</label></li>
+</ul>
+<hr />
+<h2 data-number="6.5" id="contenção-de-data-breach"><span
+class="header-section-number">6.5</span> 🗃️ Contenção de Data
+Breach</h2>
+<h3 data-number="6.5.1" id="ações-imediatas-30-min-3"><span
+class="header-section-number">6.5.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="6.5.1.1" id="isolamento-da-vulnerabilidade"><span
+class="header-section-number">6.5.1.1</span> <strong>1. Isolamento da
+Vulnerabilidade</strong></h4>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Web Application - Bloquear exploração</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo para SQLi</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-m</span> string <span class="at">--string</span> <span class="st">&quot;UNION SELECT&quot;</span> <span class="at">--algo</span> bm <span class="at">-j</span> DROP</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-m</span> string <span class="at">--string</span> <span class="st">&quot;OR 1=1&quot;</span> <span class="at">--algo</span> bm <span class="at">-j</span> DROP</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Desabilitar aplicação temporariamente</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> stop apache2</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> stop nginx</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Banco de dados - Isolar servidor</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 3306 ! <span class="at">-s</span> <span class="pp">[</span><span class="ss">IP_APLICACAO</span><span class="pp">]</span> <span class="at">-j</span> DROP</span></code></pre></div>
+<h4 data-number="6.5.1.2" id="preservação-de-evidências-2"><span
+class="header-section-number">6.5.1.2</span> <strong>2. Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs de aplicação</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/access.log /forensics/access_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.log</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/error.log /forensics/error_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.log</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Logs de banco de dados</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="ex">mysqldump</span> <span class="at">--routines</span> <span class="at">--triggers</span> <span class="at">--all-databases</span> <span class="op">&gt;</span> /forensics/mysql_backup_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.sql</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar queries suspeitas</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-e</span> <span class="st">&quot;SELECT * FROM mysql.general_log WHERE command_type=&#39;Query&#39; AND argument LIKE &#39;%UNION%&#39; ORDER BY event_time DESC LIMIT 100;&quot;</span> <span class="op">&gt;</span> /forensics/suspicious_queries.txt</span></code></pre></div>
+<h4 data-number="6.5.1.3" id="avaliação-de-exposição"><span
+class="header-section-number">6.5.1.3</span> <strong>3. Avaliação de
+Exposição</strong></h4>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificar dados acessados</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> table_name, table_rows </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> information_schema.<span class="kw">tables</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> table_schema <span class="op">=</span> <span class="st">&#39;production&#39;</span>;</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Logs de acesso a dados sensíveis</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> audit_log </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> table_name <span class="kw">IN</span> (<span class="st">&#39;users&#39;</span>, <span class="st">&#39;credit_cards&#39;</span>, <span class="st">&#39;personal_data&#39;</span>) </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> action <span class="op">=</span> <span class="st">&#39;SELECT&#39;</span> </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> <span class="dt">timestamp</span> <span class="op">&gt;</span> DATE_SUB(NOW(), <span class="dt">INTERVAL</span> <span class="dv">24</span> <span class="kw">HOUR</span>);</span></code></pre></div>
+<h3 data-number="6.5.2" id="checklist-de-contenção---data-breach"><span
+class="header-section-number">6.5.2</span> <strong>📋 Checklist de
+Contenção - Data Breach</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Breach confirmado</label></li>
+<li><label><input type="checkbox" />🔌 <strong>Aplicação:</strong>
+Aplicação vulnerável isolada/desligada</label></li>
+<li><label><input type="checkbox" />🗄️ <strong>Banco:</strong> Base de
+dados protegida</label></li>
+<li><label><input type="checkbox" />💾 <strong>Evidências:</strong> Logs
+e dados preservados</label></li>
+<li><label><input type="checkbox" />📊 <strong>Avaliação:</strong>
+Escopo da exposição mapeado</label></li>
+<li><label><input type="checkbox" />⚖️ <strong>Jurídico:</strong> Equipe
+legal notificada</label></li>
+<li><label><input type="checkbox" />📋 <strong>Compliance:</strong>
+Órgãos reguladores identificados</label></li>
+</ul>
+<hr />
+<h2 data-number="6.6" id="contenção-de-compromisso-de-conta"><span
+class="header-section-number">6.6</span> 🔐 Contenção de Compromisso de
+Conta</h2>
+<h3 data-number="6.6.1" id="ações-imediatas-30-min-4"><span
+class="header-section-number">6.6.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="6.6.1.1" id="desabilitação-imediata"><span
+class="header-section-number">6.6.1.1</span> <strong>1. Desabilitação
+Imediata</strong></h4>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Active Directory</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Disable-ADAccount</span> <span class="op">-</span>Identity <span class="st">&quot;usuario.comprometido&quot;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ADUser</span> <span class="op">-</span>Identity <span class="st">&quot;usuario.comprometido&quot;</span> <span class="op">-</span>ChangePasswordAtLogon <span class="va">$true</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Revogar sessões ativas</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ADUser</span> <span class="st">&quot;usuario.comprometido&quot;</span> <span class="op">|</span> <span class="fu">Set-ADUser</span> <span class="op">-Replace</span> @<span class="op">{</span>userAccountControl<span class="op">=</span><span class="dv">514</span><span class="op">}</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Office 365</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>Set-MsolUser <span class="op">-</span>UserPrincipalName <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>BlockCredential <span class="va">$true</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>Revoke-AzureADUserAllRefreshToken <span class="op">-</span>ObjectId <span class="op">[</span>User-ObjectID<span class="op">]</span></span></code></pre></div>
+<h4 data-number="6.6.1.2" id="análise-de-atividade"><span
+class="header-section-number">6.6.1.2</span> <strong>2. Análise de
+Atividade</strong></h4>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logs de logon</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-WinEvent</span> <span class="op">-</span>FilterHashtable @<span class="op">{</span>LogName<span class="op">=</span><span class="st">&#39;Security&#39;</span><span class="op">;</span> ID<span class="op">=</span><span class="dv">4624</span><span class="op">,</span><span class="dv">4625</span><span class="op">;</span> StartTime<span class="op">=(</span><span class="fu">Get-Date</span><span class="op">).</span><span class="fu">AddHours</span><span class="op">(-</span><span class="dv">24</span><span class="op">)}</span> <span class="op">|</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Where-Object</span> <span class="op">{</span><span class="va">$_</span><span class="op">.</span><span class="fu">Properties</span><span class="op">[</span><span class="dv">5</span><span class="op">].</span><span class="fu">Value</span> <span class="op">-eq</span> <span class="st">&quot;usuario.comprometido&quot;</span><span class="op">}</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Atividades suspeitas no AD</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Search-ADAccount</span> <span class="op">-</span>AccountDisabled <span class="op">-</span>UsersOnly <span class="op">|</span> <span class="fu">Where-Object</span> <span class="op">{</span><span class="va">$_</span><span class="op">.</span><span class="fu">SamAccountName</span> <span class="op">-eq</span> <span class="st">&quot;usuario.comprometido&quot;</span><span class="op">}</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar grupos de segurança</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ADUser</span> <span class="st">&quot;usuario.comprometido&quot;</span> <span class="op">-</span>Properties MemberOf <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>ExpandProperty MemberOf</span></code></pre></div>
+<h4 data-number="6.6.1.3" id="contenção-de-acesso-lateral"><span
+class="header-section-number">6.6.1.3</span> <strong>3. Contenção de
+Acesso Lateral</strong></h4>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar outros sistemas acessados</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Logs de RDP</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-WinEvent</span> <span class="op">-</span>FilterHashtable @<span class="op">{</span>LogName<span class="op">=</span><span class="st">&#39;Microsoft-Windows-TerminalServices-LocalSessionManager/Operational&#39;</span><span class="op">;</span> ID<span class="op">=</span><span class="dv">21</span><span class="op">,</span><span class="dv">23</span><span class="op">,</span><span class="dv">24</span><span class="op">,</span><span class="dv">25</span><span class="op">}</span> <span class="op">|</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Where-Object</span> <span class="op">{</span><span class="va">$_</span><span class="op">.</span><span class="fu">Properties</span><span class="op">[</span><span class="dv">0</span><span class="op">].</span><span class="fu">Value</span> <span class="op">-eq</span> <span class="st">&quot;usuario.comprometido&quot;</span><span class="op">}</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar tokens/tickets Kerberos</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>klist tickets</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Purgar tickets se necessário</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>klist purge</span></code></pre></div>
+<h3 data-number="6.6.2"
+id="checklist-de-contenção---compromisso-de-conta"><span
+class="header-section-number">6.6.2</span> <strong>📋 Checklist de
+Contenção - Compromisso de Conta</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Compromisso confirmado</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Conta
+Desabilitada:</strong> Acesso imediatamente revogado</label></li>
+<li><label><input type="checkbox" />🎫 <strong>Sessões:</strong> Tokens
+e sessões invalidados</label></li>
+<li><label><input type="checkbox" />🔍 <strong>Atividade:</strong> Logs
+de atividade analisados</label></li>
+<li><label><input type="checkbox" />🏃 <strong>Lateral
+Movement:</strong> Acesso a outros sistemas verificado</label></li>
+<li><label><input type="checkbox" />👥 <strong>Grupos:</strong>
+Permissões e grupos auditados</label></li>
+<li><label><input type="checkbox" />🔑 <strong>Credenciais:</strong>
+Senhas alteradas</label></li>
+</ul>
+<hr />
+<h2 data-number="6.7" id="contenção-de-defacement"><span
+class="header-section-number">6.7</span> 🌐 Contenção de Defacement</h2>
+<h3 data-number="6.7.1" id="ações-imediatas-30-min-5"><span
+class="header-section-number">6.7.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="6.7.1.1" id="isolamento-do-site"><span
+class="header-section-number">6.7.1.1</span> <strong>1. Isolamento do
+Site</strong></h4>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nginx - Redirecionar para página de manutenção</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">server</span> {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">listen</span> 80<span class="kw">;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">server_name</span> www.empresa.com<span class="kw">;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">503</span><span class="kw">;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Apache - Desabilitar site</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="ex">a2dissite</span> www.empresa.com</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> reload apache2</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co"># DNS - Apontar para página alternativa</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Alterar registros DNS para IP de servidor de backup</span></span></code></pre></div>
+<h4 data-number="6.7.1.2" id="preservação-de-evidências-3"><span
+class="header-section-number">6.7.1.2</span> <strong>2. Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Backup do site comprometido</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-czf</span> /forensics/website_compromised_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.tar.gz /var/www/html/</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs do servidor web</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/access.log /forensics/</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/error.log /forensics/</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Screenshot da página comprometida</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="ex">wkhtmltoimage</span> <span class="at">--width</span> 1920 <span class="at">--height</span> 1080 http://www.empresa.com /forensics/defacement_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.png</span></code></pre></div>
+<h4 data-number="6.7.1.3" id="análise-de-comprometimento"><span
+class="header-section-number">6.7.1.3</span> <strong>3. Análise de
+Comprometimento</strong></h4>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar arquivos modificados recentemente</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www/html <span class="at">-type</span> f <span class="at">-mtime</span> <span class="at">-1</span> <span class="at">-ls</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar uploads suspeitos</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www/html <span class="at">-name</span> <span class="st">&quot;*.php&quot;</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">&quot;*.jsp&quot;</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">&quot;*.asp&quot;</span> <span class="kw">|</span> <span class="fu">xargs</span> grep <span class="at">-l</span> <span class="st">&quot;eval\|system\|exec&quot;</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar permissões alteradas</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www/html <span class="at">-type</span> f <span class="at">-perm</span> 777 <span class="at">-ls</span></span></code></pre></div>
+<h3 data-number="6.7.2" id="checklist-de-contenção---defacement"><span
+class="header-section-number">6.7.2</span> <strong>📋 Checklist de
+Contenção - Defacement</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Defacement detectado</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Site Isolado:</strong>
+Website temporariamente indisponível</label></li>
+<li><label><input type="checkbox" />📸 <strong>Evidências:</strong>
+Screenshots e arquivos preservados</label></li>
+<li><label><input type="checkbox" />🔍 <strong>Análise:</strong> Método
+de comprometimento identificado</label></li>
+<li><label><input type="checkbox" />🌐 <strong>DNS:</strong> Tráfego
+redirecionado se necessário</label></li>
+<li><label><input type="checkbox" />📞 <strong>Comunicação:</strong>
+Stakeholders notificados</label></li>
+<li><label><input type="checkbox" />📝 <strong>Documentação:</strong>
+Impacto e timeline registrados</label></li>
+</ul>
+<hr />
+<h2 data-number="6.8" id="contenção-de-aptameaça-persistente"><span
+class="header-section-number">6.8</span> 🕵️ Contenção de APT/Ameaça
+Persistente</h2>
+<h3 data-number="6.8.1" id="ações-imediatas-30-min-6"><span
+class="header-section-number">6.8.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="6.8.1.1" id="monitoramento-discreto"><span
+class="header-section-number">6.8.1.1</span> <strong>1. Monitoramento
+Discreto</strong></h4>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NÃO alertar o atacante - manter observação</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar atividade sem interromper</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tcpdump</span> <span class="at">-i</span> any <span class="at">-w</span> /forensics/apt_activity_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.pcap <span class="kw">&amp;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitorar processos e conexões</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="fu">true</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">netstat</span> <span class="at">-antup</span> <span class="op">&gt;&gt;</span> /forensics/connections_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d<span class="va">)</span>.log</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ps</span> aux <span class="op">&gt;&gt;</span> /forensics/processes_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d<span class="va">)</span>.log</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sleep</span> 60</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="kw">&amp;</span></span></code></pre></div>
+<h4 data-number="6.8.1.2" id="contenção-seletiva"><span
+class="header-section-number">6.8.1.2</span> <strong>2. Contenção
+Seletiva</strong></h4>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolar sistemas críticos sem alertar</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Implementar honeypots para desviar atenção</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Alterar credenciais de contas não observadas pelo atacante</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Segmentação de rede silenciosa</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> FORWARD <span class="at">-s</span> <span class="pp">[</span><span class="ss">ATTACKER_IP</span><span class="pp">]</span> <span class="at">-d</span> <span class="pp">[</span><span class="ss">CRITICAL_SUBNET</span><span class="pp">]</span> <span class="at">-j</span> DROP</span></code></pre></div>
+<h4 data-number="6.8.1.3" id="coleta-de-intelligence"><span
+class="header-section-number">6.8.1.3</span> <strong>3. Coleta de
+Intelligence</strong></h4>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar payloads e ferramentas</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">strings</span> /proc/<span class="pp">[</span><span class="ss">PID</span><span class="pp">]</span>/exe <span class="op">&gt;</span> /forensics/malware_strings.txt</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /proc/<span class="pp">[</span><span class="ss">PID</span><span class="pp">]</span>/exe /forensics/apt_binary_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitorar C&amp;C communications</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar proxy transparente para capturar tráfego</span></span></code></pre></div>
+<h3 data-number="6.8.2" id="checklist-de-contenção---apt"><span
+class="header-section-number">6.8.2</span> <strong>📋 Checklist de
+Contenção - APT</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - APT identificado</label></li>
+<li><label><input type="checkbox" />👁️ <strong>Monitoramento:</strong>
+Observação discreta ativada</label></li>
+<li><label><input type="checkbox" />🛡️ <strong>Proteção:</strong>
+Sistemas críticos protegidos silenciosamente</label></li>
+<li><label><input type="checkbox" />🕵️ <strong>Intelligence:</strong>
+Coleta de TTPs e IOCs</label></li>
+<li><label><input type="checkbox" />🔗 <strong>Comunicação:</strong>
+C&amp;C monitorado</label></li>
+<li><label><input type="checkbox" />👥 <strong>Expertise:</strong>
+Especialistas em APT acionados</label></li>
+<li><label><input type="checkbox" />⚖️ <strong>Legal:</strong>
+Autoridades apropriadas consultadas</label></li>
+</ul>
+<hr />
+<h2 data-number="6.9" id="comunicação-durante-contenção"><span
+class="header-section-number">6.9</span> 📞 Comunicação Durante
+Contenção</h2>
+<h3 data-number="6.9.1" id="template-de-comunicação-interna"><span
+class="header-section-number">6.9.1</span> <strong>Template de
+Comunicação Interna</strong></h3>
+<pre><code>ASSUNTO: [CRÍTICO] Incidente de Segurança - Contenção em Andamento
+
+RESUMO:
+- Tipo: [Categoria do incidente]
+- Severidade: [Nível]
+- Status: CONTENÇÃO EM ANDAMENTO
+- ETA Resolução: [Estimativa]
+
+IMPACTO:
+- Sistemas Afetados: [Lista]
+- Usuários Impactados: [Número/Grupos]
+- Serviços Indisponíveis: [Lista]
+
+AÇÕES TOMADAS:
+- [Ação 1 - HH:MM]
+- [Ação 2 - HH:MM]
+- [Ação 3 - HH:MM]
+
+PRÓXIMAS ATUALIZAÇÕES: [Frequência]
+
+Equipe CSIRT</code></pre>
+<h3 data-number="6.9.2" id="escalação-de-contenção"><span
+class="header-section-number">6.9.2</span> <strong>Escalação de
+Contenção</strong></h3>
+<ul>
+<li><strong>5 min:</strong> Não foi possível isolar</li>
+<li><strong>15 min:</strong> Propagação continua</li>
+<li><strong>30 min:</strong> Sistemas críticos em risco</li>
+<li><strong>1 hora:</strong> Contenção falhou</li>
+</ul>
+<hr />
+<h2 data-number="6.10" id="métricas-de-contenção"><span
+class="header-section-number">6.10</span> 📊 Métricas de Contenção</h2>
+<h3 data-number="6.10.1" id="kpis-principais"><span
+class="header-section-number">6.10.1</span> <strong>KPIs
+Principais</strong></h3>
+<ul>
+<li><strong>Time to Containment (TTC):</strong> &lt; 1 hora para P1</li>
+<li><strong>Containment Effectiveness:</strong> &gt; 95% de propagação
+bloqueada</li>
+<li><strong>Evidence Preservation:</strong> 100% de evidências críticas
+preservadas</li>
+<li><strong>False Containment Rate:</strong> &lt; 5% de bloqueios
+desnecessários</li>
+</ul>
+<h3 data-number="6.10.2" id="registro-de-métricas"><span
+class="header-section-number">6.10.2</span> <strong>Registro de
+Métricas</strong></h3>
+<pre><code>Incidente: INC-YYYY-NNNN
+Detecção: HH:MM
+Início Contenção: HH:MM
+Contenção Completa: HH:MM
+TTC: [tempo]
+Sistemas Isolados: [número]
+Evidências Preservadas: [lista]</code></pre>
+<hr />
+<p><strong>⚡ Este playbook deve ser executado rapidamente, mas com
+precisão. Cada minuto conta na contenção efetiva de
+incidentes!</strong></p>
+</body>
+</html>

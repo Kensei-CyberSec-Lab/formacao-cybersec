@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Bônus NIST IR - NIST IR Desafio Bônus</title>
+    <link rel="stylesheet" href="css/professional.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>🚨 Desafio Bônus NIST IR</h1>
+            <p class="subtitle">Plano de Resposta a Incidentes Profissional</p>
+            <span class="badge">NIST SP 800-61 Rev. 2</span>
+        </div>
+    </header>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html" class="btn btn-outline btn-sm">← Voltar ao Índice</a>
+            <div class="nav-controls">
+                <button class="btn btn-outline btn-sm btn-print">🖨️ Imprimir</button>
+                <button class="btn btn-primary btn-sm btn-export-pdf">📄 PDF</button>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="main-content">
+<h1 data-number="1"
+id="desafio-bônus-plano-de-resposta-a-incidentes-nist"><span
+class="header-section-number">1</span> 🚨 Desafio Bônus: Plano de
+Resposta a Incidentes NIST</h1>
+<h2 data-number="1.1" id="objetivo-do-desafio"><span
+class="header-section-number">1.1</span> 🎯 Objetivo do Desafio</h2>
+<p>Criar um <strong>Plano de Resposta a Incidentes (IRP)</strong>
+completo seguindo o framework <strong>NIST SP 800-61 Rev. 2</strong>,
+baseado em cenários reais de segurança cibernética.</p>
+<h2 data-number="1.2" id="framework-nist-sp-800-61-rev.-2"><span
+class="header-section-number">1.2</span> 📚 Framework NIST SP 800-61
+Rev. 2</h2>
+<p>O NIST define <strong>4 fases principais</strong> para resposta a
+incidentes:</p>
+<h3 data-number="1.2.1" id="preparation-preparação"><span
+class="header-section-number">1.2.1</span> 1. 🛠️ <strong>Preparation
+(Preparação)</strong></h3>
+<ul>
+<li>Estabelecer capacidades de resposta</li>
+<li>Treinar equipes</li>
+<li>Criar políticas e procedimentos</li>
+</ul>
+<h3 data-number="1.2.2" id="detection-analysis-detecção-e-análise"><span
+class="header-section-number">1.2.2</span> 2. 🔍 <strong>Detection &amp;
+Analysis (Detecção e Análise)</strong></h3>
+<ul>
+<li>Identificar indicadores de comprometimento</li>
+<li>Analisar e validar incidentes</li>
+<li>Categorizar e priorizar</li>
+</ul>
+<h3 data-number="1.2.3"
+id="containment-eradication-recovery-contenção-erradicação-e-recuperação"><span
+class="header-section-number">1.2.3</span> 3. ⚡ <strong>Containment,
+Eradication &amp; Recovery (Contenção, Erradicação e
+Recuperação)</strong></h3>
+<ul>
+<li>Conter o incidente</li>
+<li>Eliminar a causa raiz</li>
+<li>Recuperar sistemas e serviços</li>
+</ul>
+<h3 data-number="1.2.4"
+id="post-incident-activity-atividades-pós-incidente"><span
+class="header-section-number">1.2.4</span> 4. 📝 <strong>Post-Incident
+Activity (Atividades Pós-Incidente)</strong></h3>
+<ul>
+<li>Lições aprendidas</li>
+<li>Melhorias no processo</li>
+<li>Documentação</li>
+</ul>
+<hr />
+<h2 data-number="1.3" id="cenários-do-desafio"><span
+class="header-section-number">1.3</span> 🎮 Cenários do Desafio</h2>
+<p>Escolha <strong>UM</strong> dos cenários abaixo e desenvolva um plano
+de resposta completo:</p>
+<h3 data-number="1.3.1" id="cenário-a-ataque-de-ransomware"><span
+class="header-section-number">1.3.1</span> 📊 <strong>Cenário A: Ataque
+de Ransomware</strong></h3>
+<p>Uma empresa de médio porte teve seus sistemas criptografados por
+ransomware. Vários servidores estão inacessíveis e há uma nota de
+resgate exigindo pagamento em Bitcoin.</p>
+<p><strong>Indicadores:</strong> - Arquivos com extensão
+<code>.encrypted</code> - Nota de resgate em desktops - Sistemas
+críticos indisponíveis - Logs mostram acesso suspeito via RDP</p>
+<h3 data-number="1.3.2"
+id="cenário-b-violação-de-dados-data-breach"><span
+class="header-section-number">1.3.2</span> 🌐 <strong>Cenário B:
+Violação de Dados (Data Breach)</strong></h3>
+<p>Um e-commerce descobriu que dados de clientes (CPF, cartões de
+crédito, endereços) foram expostos através de uma vulnerabilidade SQL
+Injection não corrigida.</p>
+<p><strong>Indicadores:</strong> - Tráfego anômalo no banco de dados -
+Logs de WAF com ataques SQLi - Dados de clientes encontrados em fóruns
+da dark web - Reclamações de clientes sobre uso fraudulento de
+cartões</p>
+<h3 data-number="1.3.3"
+id="cenário-c-comprometimento-de-conta-privilegiada"><span
+class="header-section-number">1.3.3</span> 🔒 <strong>Cenário C:
+Comprometimento de Conta Privilegiada</strong></h3>
+<p>A conta de administrador de domínio foi comprometida. O atacante tem
+acesso total ao Active Directory e está realizando movimentação lateral
+na rede.</p>
+<p><strong>Indicadores:</strong> - Logins de admin fora do horário
+comercial - Criação de contas de usuário não autorizadas - Acesso a
+sistemas críticos não relacionados às funções do admin - Alterações não
+autorizadas em grupos de segurança</p>
+<hr />
+<h2 data-number="1.4" id="entregáveis"><span
+class="header-section-number">1.4</span> 📋 Entregáveis</h2>
+<p>Crie os seguintes documentos para o cenário escolhido:</p>
+<h3 data-number="1.4.1"
+id="plano-de-resposta-a-incidentes-plano-ir-nist.md"><span
+class="header-section-number">1.4.1</span> 1. 📖 <strong>Plano de
+Resposta a Incidentes</strong> (<code>plano-ir-nist.md</code>)</h3>
+<p>Documento principal seguindo as 4 fases do NIST</p>
+<h3 data-number="1.4.2"
+id="procedimentos-de-comunicação-comunicacao.md"><span
+class="header-section-number">1.4.2</span> 2. 📞 <strong>Procedimentos
+de Comunicação</strong> (<code>comunicacao.md</code>)</h3>
+<ul>
+<li>Matriz de comunicação (quem avisar, quando, como)</li>
+<li>Templates de comunicação interna e externa</li>
+<li>Procedimentos para autoridades e mídia</li>
+</ul>
+<h3 data-number="1.4.3" id="playbooks-técnicos-playbooks"><span
+class="header-section-number">1.4.3</span> 3. 🔧 <strong>Playbooks
+Técnicos</strong> (<code>playbooks/</code>)</h3>
+<p>Procedimentos passo-a-passo para: - Contenção imediata - Coleta de
+evidências - Análise forense - Recuperação de sistemas</p>
+<h3 data-number="1.4.4" id="formulários-e-checklists-forms"><span
+class="header-section-number">1.4.4</span> 4. 📊 <strong>Formulários e
+Checklists</strong> (<code>forms/</code>)</h3>
+<ul>
+<li>Formulário de relato de incidente</li>
+<li>Checklist de contenção</li>
+<li>Log de ações realizadas</li>
+<li>Relatório de lições aprendidas</li>
+</ul>
+<h3 data-number="1.4.5"
+id="matriz-de-classificação-classificacao.md"><span
+class="header-section-number">1.4.5</span> 5. 🎯 <strong>Matriz de
+Classificação</strong> (<code>classificacao.md</code>)</h3>
+<p>Sistema para classificar incidentes por: - Severidade (Crítico, Alto,
+Médio, Baixo) - Impacto (Confidencialidade, Integridade,
+Disponibilidade) - Tempo de resposta (SLA)</p>
+<hr />
+<h2 data-number="1.5" id="estrutura-de-pastas-sugerida"><span
+class="header-section-number">1.5</span> 📐 Estrutura de Pastas
+Sugerida</h2>
+<pre><code>cenario-[A|B|C]/
+├── plano-ir-nist.md
+├── comunicacao.md
+├── classificacao.md
+├── playbooks/
+│   ├── contencao.md
+│   ├── evidencias.md
+│   ├── analise-forense.md
+│   └── recuperacao.md
+├── forms/
+│   ├── relato-incidente.md
+│   ├── checklist-contencao.md
+│   ├── log-acoes.md
+│   └── licoes-aprendidas.md
+└── templates/
+    ├── comunicacao-interna.md
+    ├── comunicacao-externa.md
+    └── relatorio-executivo.md</code></pre>
+<hr />
+<h2 data-number="1.6" id="critérios-de-avaliação"><span
+class="header-section-number">1.6</span> ✅ Critérios de Avaliação</h2>
+<h3 data-number="1.6.1" id="excelente-90-100-pontos"><span
+class="header-section-number">1.6.1</span> 🏆 <strong>Excelente (90-100
+pontos)</strong></h3>
+<ul>
+<li>Plano completo cobrindo todas as 4 fases do NIST</li>
+<li>Procedimentos detalhados e executáveis</li>
+<li>Matriz de comunicação bem definida</li>
+<li>Templates profissionais</li>
+<li>Considerações legais e regulatórias</li>
+<li>Timeline realista e bem estruturada</li>
+</ul>
+<h3 data-number="1.6.2" id="bom-70-89-pontos"><span
+class="header-section-number">1.6.2</span> 🥈 <strong>Bom (70-89
+pontos)</strong></h3>
+<ul>
+<li>Plano cobrindo as principais fases do NIST</li>
+<li>Procedimentos adequados mas não totalmente detalhados</li>
+<li>Comunicação básica definida</li>
+<li>Templates funcionais</li>
+<li>Algumas considerações legais</li>
+</ul>
+<h3 data-number="1.6.3" id="satisfatório-50-69-pontos"><span
+class="header-section-number">1.6.3</span> 🥉 <strong>Satisfatório
+(50-69 pontos)</strong></h3>
+<ul>
+<li>Plano básico seguindo estrutura NIST</li>
+<li>Procedimentos genéricos</li>
+<li>Comunicação superficial</li>
+<li>Templates simples</li>
+</ul>
+<h3 data-number="1.6.4" id="insuficiente-50-pontos"><span
+class="header-section-number">1.6.4</span> ❌ <strong>Insuficiente
+(&lt;50 pontos)</strong></h3>
+<ul>
+<li>Plano incompleto ou não segue NIST</li>
+<li>Procedimentos vagos ou irrealistas</li>
+<li>Falta de estrutura organizacional</li>
+</ul>
+<hr />
+<h2 data-number="1.7" id="dicas-para-desenvolvimento"><span
+class="header-section-number">1.7</span> 🔍 Dicas para
+Desenvolvimento</h2>
+<h3 data-number="1.7.1" id="pesquise-o-cenário"><span
+class="header-section-number">1.7.1</span> <strong>1. Pesquise o
+Cenário</strong></h3>
+<ul>
+<li>Estude casos reais similares</li>
+<li>Entenda as técnicas dos atacantes</li>
+<li>Identifique vulnerabilidades exploradas</li>
+</ul>
+<h3 data-number="1.7.2" id="seja-específico"><span
+class="header-section-number">1.7.2</span> <strong>2. Seja
+Específico</strong></h3>
+<ul>
+<li>Use comandos técnicos reais</li>
+<li>Defina tempos específicos (ex: “contenção em 30 minutos”)</li>
+<li>Identifique ferramentas e responsáveis</li>
+</ul>
+<h3 data-number="1.7.3" id="considere-o-contexto"><span
+class="header-section-number">1.7.3</span> <strong>3. Considere o
+Contexto</strong></h3>
+<ul>
+<li>Tamanho da organização</li>
+<li>Setor de atuação (financeiro, saúde, varejo)</li>
+<li>Regulamentações aplicáveis (LGPD, PCI-DSS, etc.)</li>
+</ul>
+<h3 data-number="1.7.4" id="pense-na-prática"><span
+class="header-section-number">1.7.4</span> <strong>4. Pense na
+Prática</strong></h3>
+<ul>
+<li>Como seria executado às 2h da manhã?</li>
+<li>E se o responsável estiver de férias?</li>
+<li>Como comunicar sem causar pânico?</li>
+</ul>
+<hr />
+<h2 data-number="1.8" id="recursos-de-referência"><span
+class="header-section-number">1.8</span> 📚 Recursos de Referência</h2>
+<h3 data-number="1.8.1" id="documentos-nist"><span
+class="header-section-number">1.8.1</span> <strong>Documentos
+NIST</strong></h3>
+<ul>
+<li><a
+href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf">NIST
+SP 800-61 Rev. 2</a></li>
+<li><a href="https://www.nist.gov/cyberframework">NIST Cybersecurity
+Framework</a></li>
+</ul>
+<h3 data-number="1.8.2" id="frameworks-complementares"><span
+class="header-section-number">1.8.2</span> <strong>Frameworks
+Complementares</strong></h3>
+<ul>
+<li><a
+href="https://www.sans.org/reading-room/whitepapers/incident/incident-handlers-handbook-33901">SANS
+Incident Response Process</a></li>
+<li><a href="https://attack.mitre.org/">MITRE ATT&amp;CK
+Framework</a></li>
+<li><a href="https://owasp.org/www-community/Incident_Response">OWASP
+Incident Response</a></li>
+</ul>
+<h3 data-number="1.8.3" id="ferramentas-úteis"><span
+class="header-section-number">1.8.3</span> <strong>Ferramentas
+Úteis</strong></h3>
+<ul>
+<li><strong>Análise:</strong> Volatility, Autopsy, Wireshark</li>
+<li><strong>Contenção:</strong> iptables, PowerShell, Group Policy</li>
+<li><strong>Comunicação:</strong> Slack, Microsoft Teams, PagerDuty</li>
+<li><strong>Documentação:</strong> Mermaid (diagramas), Markdown</li>
+</ul>
+<hr />
+<h2 data-number="1.9" id="prazo-e-entrega"><span
+class="header-section-number">1.9</span> ⏰ Prazo e Entrega</h2>
+<h3 data-number="1.9.1"
+id="prazo-2-semanas-a-partir-da-data-de-lançamento"><span
+class="header-section-number">1.9.1</span> <strong>Prazo:</strong> 2
+semanas a partir da data de lançamento</h3>
+<h3 data-number="1.9.2" id="forma-de-entrega"><span
+class="header-section-number">1.9.2</span> <strong>Forma de
+Entrega:</strong></h3>
+<ol type="1">
+<li>Criar pasta com o nome do cenário escolhido</li>
+<li>Organizar arquivos conforme estrutura sugerida</li>
+<li>Incluir arquivo <code>README.md</code> explicando suas escolhas</li>
+<li>Adicionar ao repositório do curso</li>
+</ol>
+<h3 data-number="1.9.3" id="apresentação-opcional"><span
+class="header-section-number">1.9.3</span> <strong>Apresentação
+(Opcional):</strong></h3>
+<ul>
+<li>Apresentação de 15 minutos do plano desenvolvido</li>
+<li>Simulação de uma fase do processo de resposta</li>
+<li>Q&amp;A com discussão de melhorias</li>
+</ul>
+<hr />
+<h2 data-number="1.10" id="bônus-extra"><span
+class="header-section-number">1.10</span> 🏅 Bônus Extra</h2>
+<h3 data-number="1.10.1"
+id="pontos-criar-diagrama-de-fluxo-do-processo-usando-mermaid"><span
+class="header-section-number">1.10.1</span> <strong>+10 pontos:</strong>
+Criar diagrama de fluxo do processo usando Mermaid</h3>
+<h3 data-number="1.10.2"
+id="pontos-incluir-scripts-automatizados-para-contenção"><span
+class="header-section-number">1.10.2</span> <strong>+10 pontos:</strong>
+Incluir scripts automatizados para contenção</h3>
+<h3 data-number="1.10.3"
+id="pontos-desenvolver-dashboard-de-métricas-de-resposta"><span
+class="header-section-number">1.10.3</span> <strong>+10 pontos:</strong>
+Desenvolver dashboard de métricas de resposta</h3>
+<h3 data-number="1.10.4"
+id="pontos-integração-com-ferramentas-siemsoar"><span
+class="header-section-number">1.10.4</span> <strong>+5 pontos:</strong>
+Integração com ferramentas SIEM/SOAR</h3>
+<hr />
+<h2 data-number="1.11" id="dúvidas-e-suporte"><span
+class="header-section-number">1.11</span> 🤝 Dúvidas e Suporte</h2>
+<ul>
+<li>Consulte a documentação NIST SP 800-61 Rev. 2</li>
+<li>Analise casos reais de resposta a incidentes</li>
+<li>Discuta com colegas (colaboração é incentivada!)</li>
+<li>Pergunte ao instrutor em caso de dúvidas específicas</li>
+</ul>
+<hr />
+<p><strong>🚀 Este desafio simula situações reais que profissionais de
+segurança enfrentam diariamente. Desenvolva um plano que você usaria em
+uma situação real!</strong></p>
+        </div>
+    </main>
+    <script src="js/interactive.js"></script>
+</body>
+</html>

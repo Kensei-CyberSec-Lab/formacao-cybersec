@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook de Contenção - NIST IR</title>
+    <link rel="stylesheet" href="css/professional.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>⚡ Playbook de Contenção</h1>
+            <p class="subtitle">Procedimentos Técnicos de Resposta a Incidentes</p>
+            <span class="badge">Playbook Técnico</span>
+        </div>
+    </header>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html" class="btn btn-outline btn-sm">← Voltar ao Índice</a>
+            <div class="nav-controls">
+                <button class="btn btn-outline btn-sm btn-print">🖨️ Imprimir</button>
+                <button class="btn btn-primary btn-sm btn-export-pdf">📄 PDF</button>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="main-content">
+<h1 data-number="1" id="playbook-contenção-de-incidentes"><span
+class="header-section-number">1</span> ⚡ Playbook: Contenção de
+Incidentes</h1>
+<p>Este playbook fornece procedimentos técnicos específicos para
+contenção imediata de diferentes tipos de incidentes de segurança.</p>
+<hr />
+<h2 data-number="1.1" id="objetivos-da-contenção"><span
+class="header-section-number">1.1</span> 🎯 Objetivos da Contenção</h2>
+<ol type="1">
+<li><strong>Parar a propagação</strong> do incidente</li>
+<li><strong>Preservar evidências</strong> para análise forense</li>
+<li><strong>Minimizar o impacto</strong> operacional</li>
+<li><strong>Manter sistemas críticos</strong> funcionando</li>
+<li><strong>Preparar para erradicação</strong> e recuperação</li>
+</ol>
+<hr />
+<h2 data-number="1.2" id="contenção-de-malwareransomware"><span
+class="header-section-number">1.2</span> 🦠 Contenção de
+Malware/Ransomware</h2>
+<h3 data-number="1.2.1" id="ações-imediatas-30-min"><span
+class="header-section-number">1.2.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="1.2.1.1" id="isolamento-de-rede"><span
+class="header-section-number">1.2.1.1</span> <strong>1. Isolamento de
+Rede</strong></h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows - Desabilitar adaptadores de rede</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">netsh</span> interface set interface <span class="st">&quot;Ethernet&quot;</span> admin=disable</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">netsh</span> interface set interface <span class="st">&quot;Wi-Fi&quot;</span> admin=disable</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Linux - Bloquear tráfego</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-P</span> INPUT DROP</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-P</span> OUTPUT DROP</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-P</span> FORWARD DROP</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Manter apenas SSH para administração remota</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 22 <span class="at">-s</span> <span class="pp">[</span><span class="ss">IP_ADMIN</span><span class="pp">]</span> <span class="at">-j</span> ACCEPT</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> OUTPUT <span class="at">-p</span> tcp <span class="at">--sport</span> 22 <span class="at">-d</span> <span class="pp">[</span><span class="ss">IP_ADMIN</span><span class="pp">]</span> <span class="at">-j</span> ACCEPT</span></code></pre></div>
+<h4 data-number="1.2.1.2"
+id="identificação-de-sistemas-comprometidos"><span
+class="header-section-number">1.2.1.2</span> <strong>2. Identificação de
+Sistemas Comprometidos</strong></h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar processos suspeitos</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-Process</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.CPU <span class="at">-gt</span> 50} <span class="kw">|</span> <span class="ex">Sort-Object</span> CPU <span class="at">-Descending</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar conexões de rede ativas</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-antb</span> <span class="kw">|</span> <span class="ex">findstr</span> ESTABLISHED</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar arquivos recentemente modificados</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Get-ChildItem</span> <span class="at">-Path</span> <span class="st">&quot;C:</span><span class="dt">\&quot;</span><span class="st"> -Recurse | Where-Object {</span><span class="va">$_</span><span class="st">.LastWriteTime -gt (Get-Date).AddHours(-2)}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st"># Procurar por arquivos criptografados (ransomware)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">Get-ChildItem -Path &quot;</span>C:<span class="dt">\&quot;</span> <span class="at">-Recurse</span> <span class="at">-Filter</span> <span class="st">&quot;*.*&quot;</span> <span class="kw">|</span> <span class="ex">Where-Object</span> {<span class="va">$_</span>.Extension <span class="at">-match</span> <span class="st">&quot;\.(locked|encrypted|crypto|encode)$&quot;</span>}</span></code></pre></div>
+<h4 data-number="1.2.1.3" id="preservação-de-evidências"><span
+class="header-section-number">1.2.1.3</span> <strong>3. Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar memória RAM (Windows)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">winpmem_mini_x64.exe</span> <span class="at">-o</span> physmem.raw</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs do sistema</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl System C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ystem_<span class="va">$(</span><span class="ex">Get-Date</span> <span class="at">-f</span> yyyyMMdd-HHmm<span class="va">)</span>.evtx</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl Security C:<span class="dt">\f</span>orensics<span class="dt">\S</span>ecurity_<span class="va">$(</span><span class="ex">Get-Date</span> <span class="at">-f</span> yyyyMMdd-HHmm<span class="va">)</span>.evtx</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">wevtutil</span> epl Application C:<span class="dt">\f</span>orensics<span class="dt">\A</span>pplication_<span class="va">$(</span><span class="ex">Get-Date</span> <span class="at">-f</span> yyyyMMdd-HHmm<span class="va">)</span>.evtx</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar tráfego de rede</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">tcpdump</span> <span class="at">-i</span> any <span class="at">-w</span> /forensics/network_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.pcap <span class="kw">&amp;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Snapshot de VM (se aplicável)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">vmware-cmd</span> <span class="pp">[</span><span class="ss">path/to/vm.vmx</span><span class="pp">]</span> createsnapshot <span class="st">&quot;incident_</span><span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span><span class="st">&quot;</span> <span class="st">&quot;Pre-remediation snapshot&quot;</span></span></code></pre></div>
+<h4 data-number="1.2.1.4"
+id="contenção-específica-para-ransomware"><span
+class="header-section-number">1.2.1.4</span> <strong>4. Contenção
+Específica para Ransomware</strong></h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desconectar backups online</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">net</span> stop <span class="st">&quot;Veeam Backup Service&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">net</span> stop <span class="st">&quot;Windows Backup Service&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Desabilitar Volume Shadow Copy (impedir destruição)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">vssadmin</span> list shadows</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># NÃO executar comandos de limpeza que o ransomware pode tentar</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Proteger Domain Controllers</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolar DCs da rede geral, manter apenas comunicação entre DCs</span></span></code></pre></div>
+<h3 data-number="1.2.2" id="checklist-de-contenção---malware"><span
+class="header-section-number">1.2.2</span> <strong>📋 Checklist de
+Contenção - Malware</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Incidente confirmado</label></li>
+<li><label><input type="checkbox" />🔌 <strong>Isolamento:</strong>
+Sistemas comprometidos desconectados</label></li>
+<li><label><input type="checkbox" />💾 <strong>Evidências:</strong>
+Memória e logs capturados</label></li>
+<li><label><input type="checkbox" />📸 <strong>Snapshots:</strong> VMs
+preservadas</label></li>
+<li><label><input type="checkbox" />🛡️ <strong>Proteção:</strong>
+Backups e DCs protegidos</label></li>
+<li><label><input type="checkbox" />📞 <strong>Comunicação:</strong>
+Equipe e stakeholders notificados</label></li>
+<li><label><input type="checkbox" />📝 <strong>Documentação:</strong>
+Ações registradas</label></li>
+</ul>
+<hr />
+<h2 data-number="1.3"
+id="contenção-de-phishingcompromisso-de-email"><span
+class="header-section-number">1.3</span> 🎣 Contenção de
+Phishing/Compromisso de Email</h2>
+<h3 data-number="1.3.1" id="ações-imediatas-30-min-1"><span
+class="header-section-number">1.3.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="1.3.1.1" id="isolamento-da-conta-comprometida"><span
+class="header-section-number">1.3.1.1</span> <strong>1. Isolamento da
+Conta Comprometida</strong></h4>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Office 365/Exchange Online</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Connect-ExchangeOnline</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Set-Mailbox <span class="op">-</span>Identity <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>AccountDisabled <span class="va">$true</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Set-CASMailbox <span class="op">-</span>Identity <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>OWAEnabled <span class="va">$false</span> <span class="op">-</span>ActiveSyncEnabled <span class="va">$false</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Revogar tokens de autenticação</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Revoke-AzureADUserAllRefreshToken <span class="op">-</span>ObjectId <span class="op">[</span>User-ObjectID<span class="op">]</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Exchange On-Premises</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Disable-Mailbox <span class="op">-</span>Identity <span class="st">&quot;usuario@empresa.com&quot;</span></span></code></pre></div>
+<h4 data-number="1.3.1.2" id="análise-de-emails-maliciosos"><span
+class="header-section-number">1.3.1.2</span> <strong>2. Análise de
+Emails Maliciosos</strong></h4>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar emails suspeitos</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Get-MessageTrace <span class="op">-</span>SenderAddress <span class="st">&quot;atacante@malicioso.com&quot;</span> <span class="op">-</span>StartDate <span class="op">(</span><span class="fu">Get-Date</span><span class="op">).</span><span class="fu">AddDays</span><span class="op">(-</span><span class="dv">7</span><span class="op">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar emails enviados pela conta comprometida</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Get-MessageTrace <span class="op">-</span>SenderAddress <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>StartDate <span class="op">(</span><span class="fu">Get-Date</span><span class="op">).</span><span class="fu">AddHours</span><span class="op">(-</span><span class="dv">24</span><span class="op">)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar regras de encaminhamento suspeitas</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>Get-InboxRule <span class="op">-</span>Mailbox <span class="st">&quot;usuario@empresa.com&quot;</span></span></code></pre></div>
+<h4 data-number="1.3.1.3" id="contenção-de-propagação"><span
+class="header-section-number">1.3.1.3</span> <strong>3. Contenção de
+Propagação</strong></h4>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remover emails maliciosos de todas as caixas postais</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>New-ComplianceSearch <span class="op">-</span>Name <span class="st">&quot;PhishingRemoval&quot;</span> <span class="op">-</span>ExchangeLocation All <span class="op">-</span>ContentMatchQuery <span class="st">&quot;Subject:&#39;Urgent Payment Required&#39;&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Start-ComplianceSearch <span class="op">-</span>Identity <span class="st">&quot;PhishingRemoval&quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Após conclusão da busca:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>New-ComplianceSearchAction <span class="op">-</span>SearchName <span class="st">&quot;PhishingRemoval&quot;</span> <span class="op">-</span>Purge <span class="op">-</span>PurgeType SoftDelete</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Bloquear sender externo</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>New-TransportRule <span class="op">-</span>Name <span class="st">&quot;Block-Phishing-Sender&quot;</span> <span class="op">-</span>SenderAddressContainsWords <span class="st">&quot;atacante@malicioso.com&quot;</span> <span class="op">-</span>DeleteMessage <span class="va">$true</span></span></code></pre></div>
+<h3 data-number="1.3.2" id="checklist-de-contenção---phishing"><span
+class="header-section-number">1.3.2</span> <strong>📋 Checklist de
+Contenção - Phishing</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Phishing confirmado</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Conta Bloqueada:</strong>
+Acesso da conta comprometida revogado</label></li>
+<li><label><input type="checkbox" />🔍 <strong>Emails
+Localizados:</strong> Mensagens maliciosas identificadas</label></li>
+<li><label><input type="checkbox" />🗑️ <strong>Remoção:</strong> Emails
+maliciosos removidos das caixas</label></li>
+<li><label><input type="checkbox" />🚧 <strong>Bloqueio:</strong> Sender
+malicioso bloqueado</label></li>
+<li><label><input type="checkbox" />🔑 <strong>Credenciais:</strong>
+Senhas alteradas</label></li>
+<li><label><input type="checkbox" />📞 <strong>Usuários:</strong>
+Afetados notificados</label></li>
+</ul>
+<hr />
+<h2 data-number="1.4" id="contenção-de-ddos"><span
+class="header-section-number">1.4</span> 💥 Contenção de DDoS</h2>
+<h3 data-number="1.4.1" id="ações-imediatas-30-min-2"><span
+class="header-section-number">1.4.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="1.4.1.1" id="análise-de-tráfego"><span
+class="header-section-number">1.4.1.1</span> <strong>1. Análise de
+Tráfego</strong></h4>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar conexões ativas</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :80 <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :443 <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Top IPs conectando</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :80 <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $5}&#39;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d:</span> <span class="at">-f1</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-20</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitorar largura de banda</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">iftop</span> <span class="at">-i</span> eth0</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">nethogs</span></span></code></pre></div>
+<h4 data-number="1.4.1.2" id="filtragem-imediata"><span
+class="header-section-number">1.4.1.2</span> <strong>2. Filtragem
+Imediata</strong></h4>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bloquear IPs com mais de 100 conexões</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">netstat</span> <span class="at">-an</span> <span class="kw">|</span> <span class="fu">grep</span> :80 <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $5}&#39;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d:</span> <span class="at">-f1</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;$1 &gt; 100 {print $2}&#39;</span> <span class="op">&gt;</span> /tmp/block_ips.txt</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar bloqueios via iptables</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="va">ip</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-s</span> <span class="va">$ip</span> <span class="at">-j</span> DROP</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> /tmp/block_ips.txt</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Rate limiting</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-m</span> limit <span class="at">--limit</span> 25/minute <span class="at">--limit-burst</span> 100 <span class="at">-j</span> ACCEPT</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-j</span> DROP</span></code></pre></div>
+<h4 data-number="1.4.1.3" id="ativação-de-mitigação"><span
+class="header-section-number">1.4.1.3</span> <strong>3. Ativação de
+Mitigação</strong></h4>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cloudflare - Ativar &quot;I&#39;m Under Attack Mode&quot;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> PATCH <span class="st">&quot;https://api.cloudflare.com/client/v4/zones/[ZONE_ID]/settings/security_level&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">-H</span> <span class="st">&quot;Authorization: Bearer [API_TOKEN]&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--data</span> <span class="st">&#39;{&quot;value&quot;:&quot;under_attack&quot;}&#39;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># AWS - Ativar AWS Shield Advanced (se disponível)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> shield subscribe-to-proactive-engagement</span></code></pre></div>
+<h3 data-number="1.4.2" id="checklist-de-contenção---ddos"><span
+class="header-section-number">1.4.2</span> <strong>📋 Checklist de
+Contenção - DDoS</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - DDoS detectado</label></li>
+<li><label><input type="checkbox" />📊 <strong>Análise:</strong> Tráfego
+analisado e padrões identificados</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Bloqueios:</strong> IPs
+maliciosos bloqueados</label></li>
+<li><label><input type="checkbox" />⚡ <strong>Rate Limiting:</strong>
+Limitação de taxa implementada</label></li>
+<li><label><input type="checkbox" />☁️ <strong>CDN/WAF:</strong>
+Proteção em nuvem ativada</label></li>
+<li><label><input type="checkbox" />📈 <strong>Monitoramento:</strong>
+Dashboards de tráfego ativos</label></li>
+<li><label><input type="checkbox" />📞 <strong>ISP:</strong> Provedor
+notificado (se necessário)</label></li>
+</ul>
+<hr />
+<h2 data-number="1.5" id="contenção-de-data-breach"><span
+class="header-section-number">1.5</span> 🗃️ Contenção de Data
+Breach</h2>
+<h3 data-number="1.5.1" id="ações-imediatas-30-min-3"><span
+class="header-section-number">1.5.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="1.5.1.1" id="isolamento-da-vulnerabilidade"><span
+class="header-section-number">1.5.1.1</span> <strong>1. Isolamento da
+Vulnerabilidade</strong></h4>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Web Application - Bloquear exploração</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo para SQLi</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-m</span> string <span class="at">--string</span> <span class="st">&quot;UNION SELECT&quot;</span> <span class="at">--algo</span> bm <span class="at">-j</span> DROP</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 80 <span class="at">-m</span> string <span class="at">--string</span> <span class="st">&quot;OR 1=1&quot;</span> <span class="at">--algo</span> bm <span class="at">-j</span> DROP</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Desabilitar aplicação temporariamente</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> stop apache2</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> stop nginx</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Banco de dados - Isolar servidor</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-p</span> tcp <span class="at">--dport</span> 3306 ! <span class="at">-s</span> <span class="pp">[</span><span class="ss">IP_APLICACAO</span><span class="pp">]</span> <span class="at">-j</span> DROP</span></code></pre></div>
+<h4 data-number="1.5.1.2" id="preservação-de-evidências-1"><span
+class="header-section-number">1.5.1.2</span> <strong>2. Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs de aplicação</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/access.log /forensics/access_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.log</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/error.log /forensics/error_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.log</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Logs de banco de dados</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">mysqldump</span> <span class="at">--routines</span> <span class="at">--triggers</span> <span class="at">--all-databases</span> <span class="op">&gt;</span> /forensics/mysql_backup_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.sql</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar queries suspeitas</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-e</span> <span class="st">&quot;SELECT * FROM mysql.general_log WHERE command_type=&#39;Query&#39; AND argument LIKE &#39;%UNION%&#39; ORDER BY event_time DESC LIMIT 100;&quot;</span> <span class="op">&gt;</span> /forensics/suspicious_queries.txt</span></code></pre></div>
+<h4 data-number="1.5.1.3" id="avaliação-de-exposição"><span
+class="header-section-number">1.5.1.3</span> <strong>3. Avaliação de
+Exposição</strong></h4>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Verificar dados acessados</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> table_name, table_rows </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> information_schema.<span class="kw">tables</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> table_schema <span class="op">=</span> <span class="st">&#39;production&#39;</span>;</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Logs de acesso a dados sensíveis</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> audit_log </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> table_name <span class="kw">IN</span> (<span class="st">&#39;users&#39;</span>, <span class="st">&#39;credit_cards&#39;</span>, <span class="st">&#39;personal_data&#39;</span>) </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> action <span class="op">=</span> <span class="st">&#39;SELECT&#39;</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> <span class="dt">timestamp</span> <span class="op">&gt;</span> DATE_SUB(NOW(), <span class="dt">INTERVAL</span> <span class="dv">24</span> <span class="kw">HOUR</span>);</span></code></pre></div>
+<h3 data-number="1.5.2" id="checklist-de-contenção---data-breach"><span
+class="header-section-number">1.5.2</span> <strong>📋 Checklist de
+Contenção - Data Breach</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Breach confirmado</label></li>
+<li><label><input type="checkbox" />🔌 <strong>Aplicação:</strong>
+Aplicação vulnerável isolada/desligada</label></li>
+<li><label><input type="checkbox" />🗄️ <strong>Banco:</strong> Base de
+dados protegida</label></li>
+<li><label><input type="checkbox" />💾 <strong>Evidências:</strong> Logs
+e dados preservados</label></li>
+<li><label><input type="checkbox" />📊 <strong>Avaliação:</strong>
+Escopo da exposição mapeado</label></li>
+<li><label><input type="checkbox" />⚖️ <strong>Jurídico:</strong> Equipe
+legal notificada</label></li>
+<li><label><input type="checkbox" />📋 <strong>Compliance:</strong>
+Órgãos reguladores identificados</label></li>
+</ul>
+<hr />
+<h2 data-number="1.6" id="contenção-de-compromisso-de-conta"><span
+class="header-section-number">1.6</span> 🔐 Contenção de Compromisso de
+Conta</h2>
+<h3 data-number="1.6.1" id="ações-imediatas-30-min-4"><span
+class="header-section-number">1.6.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="1.6.1.1" id="desabilitação-imediata"><span
+class="header-section-number">1.6.1.1</span> <strong>1. Desabilitação
+Imediata</strong></h4>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Active Directory</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Disable-ADAccount</span> <span class="op">-</span>Identity <span class="st">&quot;usuario.comprometido&quot;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-ADUser</span> <span class="op">-</span>Identity <span class="st">&quot;usuario.comprometido&quot;</span> <span class="op">-</span>ChangePasswordAtLogon <span class="va">$true</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Revogar sessões ativas</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ADUser</span> <span class="st">&quot;usuario.comprometido&quot;</span> <span class="op">|</span> <span class="fu">Set-ADUser</span> <span class="op">-Replace</span> @<span class="op">{</span>userAccountControl<span class="op">=</span><span class="dv">514</span><span class="op">}</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Office 365</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>Set-MsolUser <span class="op">-</span>UserPrincipalName <span class="st">&quot;usuario@empresa.com&quot;</span> <span class="op">-</span>BlockCredential <span class="va">$true</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>Revoke-AzureADUserAllRefreshToken <span class="op">-</span>ObjectId <span class="op">[</span>User-ObjectID<span class="op">]</span></span></code></pre></div>
+<h4 data-number="1.6.1.2" id="análise-de-atividade"><span
+class="header-section-number">1.6.1.2</span> <strong>2. Análise de
+Atividade</strong></h4>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logs de logon</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-WinEvent</span> <span class="op">-</span>FilterHashtable @<span class="op">{</span>LogName<span class="op">=</span><span class="st">&#39;Security&#39;</span><span class="op">;</span> ID<span class="op">=</span><span class="dv">4624</span><span class="op">,</span><span class="dv">4625</span><span class="op">;</span> StartTime<span class="op">=(</span><span class="fu">Get-Date</span><span class="op">).</span><span class="fu">AddHours</span><span class="op">(-</span><span class="dv">24</span><span class="op">)}</span> <span class="op">|</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Where-Object</span> <span class="op">{</span><span class="va">$_</span><span class="op">.</span><span class="fu">Properties</span><span class="op">[</span><span class="dv">5</span><span class="op">].</span><span class="fu">Value</span> <span class="op">-eq</span> <span class="st">&quot;usuario.comprometido&quot;</span><span class="op">}</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Atividades suspeitas no AD</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Search-ADAccount</span> <span class="op">-</span>AccountDisabled <span class="op">-</span>UsersOnly <span class="op">|</span> <span class="fu">Where-Object</span> <span class="op">{</span><span class="va">$_</span><span class="op">.</span><span class="fu">SamAccountName</span> <span class="op">-eq</span> <span class="st">&quot;usuario.comprometido&quot;</span><span class="op">}</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar grupos de segurança</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ADUser</span> <span class="st">&quot;usuario.comprometido&quot;</span> <span class="op">-</span>Properties MemberOf <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>ExpandProperty MemberOf</span></code></pre></div>
+<h4 data-number="1.6.1.3" id="contenção-de-acesso-lateral"><span
+class="header-section-number">1.6.1.3</span> <strong>3. Contenção de
+Acesso Lateral</strong></h4>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar outros sistemas acessados</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Logs de RDP</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-WinEvent</span> <span class="op">-</span>FilterHashtable @<span class="op">{</span>LogName<span class="op">=</span><span class="st">&#39;Microsoft-Windows-TerminalServices-LocalSessionManager/Operational&#39;</span><span class="op">;</span> ID<span class="op">=</span><span class="dv">21</span><span class="op">,</span><span class="dv">23</span><span class="op">,</span><span class="dv">24</span><span class="op">,</span><span class="dv">25</span><span class="op">}</span> <span class="op">|</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Where-Object</span> <span class="op">{</span><span class="va">$_</span><span class="op">.</span><span class="fu">Properties</span><span class="op">[</span><span class="dv">0</span><span class="op">].</span><span class="fu">Value</span> <span class="op">-eq</span> <span class="st">&quot;usuario.comprometido&quot;</span><span class="op">}</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar tokens/tickets Kerberos</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>klist tickets</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Purgar tickets se necessário</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>klist purge</span></code></pre></div>
+<h3 data-number="1.6.2"
+id="checklist-de-contenção---compromisso-de-conta"><span
+class="header-section-number">1.6.2</span> <strong>📋 Checklist de
+Contenção - Compromisso de Conta</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Compromisso confirmado</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Conta
+Desabilitada:</strong> Acesso imediatamente revogado</label></li>
+<li><label><input type="checkbox" />🎫 <strong>Sessões:</strong> Tokens
+e sessões invalidados</label></li>
+<li><label><input type="checkbox" />🔍 <strong>Atividade:</strong> Logs
+de atividade analisados</label></li>
+<li><label><input type="checkbox" />🏃 <strong>Lateral
+Movement:</strong> Acesso a outros sistemas verificado</label></li>
+<li><label><input type="checkbox" />👥 <strong>Grupos:</strong>
+Permissões e grupos auditados</label></li>
+<li><label><input type="checkbox" />🔑 <strong>Credenciais:</strong>
+Senhas alteradas</label></li>
+</ul>
+<hr />
+<h2 data-number="1.7" id="contenção-de-defacement"><span
+class="header-section-number">1.7</span> 🌐 Contenção de Defacement</h2>
+<h3 data-number="1.7.1" id="ações-imediatas-30-min-5"><span
+class="header-section-number">1.7.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="1.7.1.1" id="isolamento-do-site"><span
+class="header-section-number">1.7.1.1</span> <strong>1. Isolamento do
+Site</strong></h4>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nginx - Redirecionar para página de manutenção</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">server</span> {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">listen</span> 80<span class="kw">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">server_name</span> www.empresa.com<span class="kw">;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">503</span><span class="kw">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Apache - Desabilitar site</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="ex">a2dissite</span> www.empresa.com</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> reload apache2</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># DNS - Apontar para página alternativa</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Alterar registros DNS para IP de servidor de backup</span></span></code></pre></div>
+<h4 data-number="1.7.1.2" id="preservação-de-evidências-2"><span
+class="header-section-number">1.7.1.2</span> <strong>2. Preservação de
+Evidências</strong></h4>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Backup do site comprometido</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-czf</span> /forensics/website_compromised_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.tar.gz /var/www/html/</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar logs do servidor web</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/access.log /forensics/</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /var/log/apache2/error.log /forensics/</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Screenshot da página comprometida</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="ex">wkhtmltoimage</span> <span class="at">--width</span> 1920 <span class="at">--height</span> 1080 http://www.empresa.com /forensics/defacement_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.png</span></code></pre></div>
+<h4 data-number="1.7.1.3" id="análise-de-comprometimento"><span
+class="header-section-number">1.7.1.3</span> <strong>3. Análise de
+Comprometimento</strong></h4>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar arquivos modificados recentemente</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www/html <span class="at">-type</span> f <span class="at">-mtime</span> <span class="at">-1</span> <span class="at">-ls</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar uploads suspeitos</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www/html <span class="at">-name</span> <span class="st">&quot;*.php&quot;</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">&quot;*.jsp&quot;</span> <span class="at">-o</span> <span class="at">-name</span> <span class="st">&quot;*.asp&quot;</span> <span class="kw">|</span> <span class="fu">xargs</span> grep <span class="at">-l</span> <span class="st">&quot;eval\|system\|exec&quot;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar permissões alteradas</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/www/html <span class="at">-type</span> f <span class="at">-perm</span> 777 <span class="at">-ls</span></span></code></pre></div>
+<h3 data-number="1.7.2" id="checklist-de-contenção---defacement"><span
+class="header-section-number">1.7.2</span> <strong>📋 Checklist de
+Contenção - Defacement</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - Defacement detectado</label></li>
+<li><label><input type="checkbox" />🚫 <strong>Site Isolado:</strong>
+Website temporariamente indisponível</label></li>
+<li><label><input type="checkbox" />📸 <strong>Evidências:</strong>
+Screenshots e arquivos preservados</label></li>
+<li><label><input type="checkbox" />🔍 <strong>Análise:</strong> Método
+de comprometimento identificado</label></li>
+<li><label><input type="checkbox" />🌐 <strong>DNS:</strong> Tráfego
+redirecionado se necessário</label></li>
+<li><label><input type="checkbox" />📞 <strong>Comunicação:</strong>
+Stakeholders notificados</label></li>
+<li><label><input type="checkbox" />📝 <strong>Documentação:</strong>
+Impacto e timeline registrados</label></li>
+</ul>
+<hr />
+<h2 data-number="1.8" id="contenção-de-aptameaça-persistente"><span
+class="header-section-number">1.8</span> 🕵️ Contenção de APT/Ameaça
+Persistente</h2>
+<h3 data-number="1.8.1" id="ações-imediatas-30-min-6"><span
+class="header-section-number">1.8.1</span> <strong>⚡ Ações Imediatas
+(&lt; 30 min)</strong></h3>
+<h4 data-number="1.8.1.1" id="monitoramento-discreto"><span
+class="header-section-number">1.8.1.1</span> <strong>1. Monitoramento
+Discreto</strong></h4>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NÃO alertar o atacante - manter observação</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar atividade sem interromper</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tcpdump</span> <span class="at">-i</span> any <span class="at">-w</span> /forensics/apt_activity_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span>.pcap <span class="kw">&amp;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitorar processos e conexões</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="fu">true</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">netstat</span> <span class="at">-antup</span> <span class="op">&gt;&gt;</span> /forensics/connections_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d<span class="va">)</span>.log</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ps</span> aux <span class="op">&gt;&gt;</span> /forensics/processes_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d<span class="va">)</span>.log</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sleep</span> 60</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="kw">&amp;</span></span></code></pre></div>
+<h4 data-number="1.8.1.2" id="contenção-seletiva"><span
+class="header-section-number">1.8.1.2</span> <strong>2. Contenção
+Seletiva</strong></h4>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolar sistemas críticos sem alertar</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Implementar honeypots para desviar atenção</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Alterar credenciais de contas não observadas pelo atacante</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Segmentação de rede silenciosa</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> FORWARD <span class="at">-s</span> <span class="pp">[</span><span class="ss">ATTACKER_IP</span><span class="pp">]</span> <span class="at">-d</span> <span class="pp">[</span><span class="ss">CRITICAL_SUBNET</span><span class="pp">]</span> <span class="at">-j</span> DROP</span></code></pre></div>
+<h4 data-number="1.8.1.3" id="coleta-de-intelligence"><span
+class="header-section-number">1.8.1.3</span> <strong>3. Coleta de
+Intelligence</strong></h4>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Capturar payloads e ferramentas</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">strings</span> /proc/<span class="pp">[</span><span class="ss">PID</span><span class="pp">]</span>/exe <span class="op">&gt;</span> /forensics/malware_strings.txt</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /proc/<span class="pp">[</span><span class="ss">PID</span><span class="pp">]</span>/exe /forensics/apt_binary_<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M<span class="va">)</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitorar C&amp;C communications</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar proxy transparente para capturar tráfego</span></span></code></pre></div>
+<h3 data-number="1.8.2" id="checklist-de-contenção---apt"><span
+class="header-section-number">1.8.2</span> <strong>📋 Checklist de
+Contenção - APT</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />⏰ <strong>Timestamp:</strong>
+[HH:MM] - APT identificado</label></li>
+<li><label><input type="checkbox" />👁️ <strong>Monitoramento:</strong>
+Observação discreta ativada</label></li>
+<li><label><input type="checkbox" />🛡️ <strong>Proteção:</strong>
+Sistemas críticos protegidos silenciosamente</label></li>
+<li><label><input type="checkbox" />🕵️ <strong>Intelligence:</strong>
+Coleta de TTPs e IOCs</label></li>
+<li><label><input type="checkbox" />🔗 <strong>Comunicação:</strong>
+C&amp;C monitorado</label></li>
+<li><label><input type="checkbox" />👥 <strong>Expertise:</strong>
+Especialistas em APT acionados</label></li>
+<li><label><input type="checkbox" />⚖️ <strong>Legal:</strong>
+Autoridades apropriadas consultadas</label></li>
+</ul>
+<hr />
+<h2 data-number="1.9" id="comunicação-durante-contenção"><span
+class="header-section-number">1.9</span> 📞 Comunicação Durante
+Contenção</h2>
+<h3 data-number="1.9.1" id="template-de-comunicação-interna"><span
+class="header-section-number">1.9.1</span> <strong>Template de
+Comunicação Interna</strong></h3>
+<pre><code>ASSUNTO: [CRÍTICO] Incidente de Segurança - Contenção em Andamento
+
+RESUMO:
+- Tipo: [Categoria do incidente]
+- Severidade: [Nível]
+- Status: CONTENÇÃO EM ANDAMENTO
+- ETA Resolução: [Estimativa]
+
+IMPACTO:
+- Sistemas Afetados: [Lista]
+- Usuários Impactados: [Número/Grupos]
+- Serviços Indisponíveis: [Lista]
+
+AÇÕES TOMADAS:
+- [Ação 1 - HH:MM]
+- [Ação 2 - HH:MM]
+- [Ação 3 - HH:MM]
+
+PRÓXIMAS ATUALIZAÇÕES: [Frequência]
+
+Equipe CSIRT</code></pre>
+<h3 data-number="1.9.2" id="escalação-de-contenção"><span
+class="header-section-number">1.9.2</span> <strong>Escalação de
+Contenção</strong></h3>
+<ul>
+<li><strong>5 min:</strong> Não foi possível isolar</li>
+<li><strong>15 min:</strong> Propagação continua</li>
+<li><strong>30 min:</strong> Sistemas críticos em risco</li>
+<li><strong>1 hora:</strong> Contenção falhou</li>
+</ul>
+<hr />
+<h2 data-number="1.10" id="métricas-de-contenção"><span
+class="header-section-number">1.10</span> 📊 Métricas de Contenção</h2>
+<h3 data-number="1.10.1" id="kpis-principais"><span
+class="header-section-number">1.10.1</span> <strong>KPIs
+Principais</strong></h3>
+<ul>
+<li><strong>Time to Containment (TTC):</strong> &lt; 1 hora para P1</li>
+<li><strong>Containment Effectiveness:</strong> &gt; 95% de propagação
+bloqueada</li>
+<li><strong>Evidence Preservation:</strong> 100% de evidências críticas
+preservadas</li>
+<li><strong>False Containment Rate:</strong> &lt; 5% de bloqueios
+desnecessários</li>
+</ul>
+<h3 data-number="1.10.2" id="registro-de-métricas"><span
+class="header-section-number">1.10.2</span> <strong>Registro de
+Métricas</strong></h3>
+<pre><code>Incidente: INC-YYYY-NNNN
+Detecção: HH:MM
+Início Contenção: HH:MM
+Contenção Completa: HH:MM
+TTC: [tempo]
+Sistemas Isolados: [número]
+Evidências Preservadas: [lista]</code></pre>
+<hr />
+<p><strong>⚡ Este playbook deve ser executado rapidamente, mas com
+precisão. Cada minuto conta na contenção efetiva de
+incidentes!</strong></p>
+        </div>
+    </main>
+    <script src="js/interactive.js"></script>
+</body>
+</html>
