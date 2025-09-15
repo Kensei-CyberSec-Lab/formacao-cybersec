@@ -13,6 +13,25 @@
     --border-color: #dee2e6;
     --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    --bg-color: #ffffff;
+    --card-bg: #ffffff;
+    --nav-bg: #ffffff;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --primary-color: #3498db;
+    --secondary-color: #5dade2;
+    --text-color: #ecf0f1;
+    --light-text: #bdc3c7;
+    --light-bg: #2c3e50;
+    --dark-bg: #1a252f;
+    --border-color: #34495e;
+    --bg-color: #1a252f;
+    --card-bg: #2c3e50;
+    --nav-bg: #2c3e50;
+    --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -25,7 +44,8 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Header Styles */
@@ -85,12 +105,13 @@ body {
 
 /* Navigation */
 .nav {
-    background: white;
+    background: var(--nav-bg);
     padding: 1rem 0;
     box-shadow: var(--shadow);
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: background-color 0.3s ease;
 }
 
 .nav-content {
@@ -100,6 +121,42 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-container input {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    width: 250px;
+    font-size: 0.875rem;
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.search-container input::placeholder {
+    color: var(--light-text);
+}
+
+.nav-brand {
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
 .nav-links {
@@ -156,11 +213,11 @@ body {
 
 /* Cards */
 .card {
-    background: white;
+    background: var(--card-bg);
     border-radius: 1rem;
     box-shadow: var(--shadow);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     margin-bottom: 2rem;
 }
 
@@ -205,7 +262,7 @@ body {
     border-radius: 1rem;
     overflow: hidden;
     transition: all 0.3s ease;
-    background: white;
+    background: var(--card-bg);
 }
 
 .doc-card:hover {
@@ -348,10 +405,11 @@ body {
 
 /* Table of Contents */
 .toc {
-    background: white;
+    background: var(--card-bg);
     border-radius: 0.5rem;
     padding: 1.5rem;
     box-shadow: var(--shadow);
+    transition: background-color 0.3s ease;
 }
 
 .toc h3 {
@@ -395,11 +453,12 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: var(--card-bg);
     padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: var(--shadow);
     text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 .stat-number {
@@ -465,6 +524,39 @@ body {
     color: white;
 }
 
+/* Theme Toggle Button */
+#themeToggle {
+    min-width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+#themeToggle:hover {
+    transform: scale(1.1);
+}
+
+/* Search Results Styling */
+.search-results {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.search-result:hover {
+    background: var(--light-bg);
+}
+
+/* Main Content Background */
+.main-content {
+    background: var(--card-bg);
+    transition: background-color 0.3s ease;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .header h1 {
@@ -483,6 +575,20 @@ body {
     .nav-content {
         flex-direction: column;
         gap: 1rem;
+    }
+    
+    .nav-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .search-container {
+        width: 100%;
+    }
+    
+    .search-container input {
+        width: 100%;
     }
     
     .nav-links {
@@ -598,10 +704,11 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0;
-    background: white;
+    background: var(--card-bg);
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: var(--shadow);
+    transition: background-color 0.3s ease;
 }
 
 th, td {

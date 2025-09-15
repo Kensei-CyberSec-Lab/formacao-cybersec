@@ -303,25 +303,45 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (themeToggle) {
             // Set initial theme
-            const savedTheme = localStorage.getItem('theme') || 
-                              (prefersDark.matches ? 'dark' : 'light');
+            const savedTheme = localStorage.getItem('nist-ir-theme') || 'light';
             setTheme(savedTheme);
             
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
+            themeToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 setTheme(newTheme);
-                localStorage.setItem('theme', newTheme);
+                localStorage.setItem('nist-ir-theme', newTheme);
+                
+                // Visual feedback
+                themeToggle.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    themeToggle.style.transform = 'scale(1)';
+                }, 200);
+            });
+            
+            // Listen for system theme changes
+            prefersDark.addEventListener('change', (e) => {
+                if (!localStorage.getItem('nist-ir-theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
             });
         }
         
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
             if (themeToggle) {
-                themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+                themeToggle.innerHTML = theme === 'dark' ? '☀️' : '🌙';
                 themeToggle.setAttribute('data-tooltip', 
                     theme === 'dark' ? 'Modo Claro' : 'Modo Escuro');
+                themeToggle.setAttribute('aria-label', 
+                    theme === 'dark' ? 'Alternar para modo claro' : 'Alternar para modo escuro');
             }
+            
+            // Trigger a custom event for other components
+            document.dispatchEvent(new CustomEvent('themeChanged', { 
+                detail: { theme: theme } 
+            }));
         }
     }
     
