@@ -33,21 +33,6 @@ Atue como **consultor Blue Team**: proponha **defesa em profundidade**, **plano 
 - **Clareza executiva**: 1 página de **sumário executivo** obrigatória
 - **Rastreabilidade**: referencie prints/logs (com data/hora) e anexe configs
 
-## 🧪 Avaliação (Rubrica 0–10)
-| Critério | Peso |
-|---|---:|
-| Metodologia e justificativas técnicas | 2.0 |
-| Qualidade da arquitetura/defesa (camadas) | 2.0 |
-| Monitoramento e evidências (logs/alertas) | 2.0 |
-| Resposta a incidente (ciclo NIST IR) | 2.0 |
-| Comunicação (sumário executivo, clareza) | 2.0 |
-
-> **Bônus** (+0.5): automações, dashboards, runbooks acionáveis, diagramas mermaid bem comentados.
-
-## ⏱️ Linha do Tempo Sugerida
-- **Checkpoint 1**: Diagrama + Metodologia
-- **Checkpoint 2**: Entrega final (relatório + anexos)
-- **Apresentação**: 5–8 min por grupo (demonstração ou walkthrough)
 
 ## ⚠️ Ética e Segurança
 Exercícios apenas em **ambiente controlado** do curso. Respeite o **juramento Kensei** e práticas de **divulgação responsável**.
