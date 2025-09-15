@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Template Plano IR NIST</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Template Plano IR NIST</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#template-plano-de-resposta-a-incidentes-nist"
+id="toc-template-plano-de-resposta-a-incidentes-nist"><span
+class="toc-section-number">1</span> 📋 Template: Plano de Resposta a
+Incidentes NIST</a>
+<ul>
+<li><a href="#informações-do-documento"
+id="toc-informações-do-documento"><span
+class="toc-section-number">1.1</span> 📊 Informações do
+Documento</a></li>
+<li><a href="#escopo-e-objetivos" id="toc-escopo-e-objetivos"><span
+class="toc-section-number">1.2</span> 🎯 Escopo e Objetivos</a>
+<ul>
+<li><a href="#escopo" id="toc-escopo"><span
+class="toc-section-number">1.2.1</span> <strong>Escopo</strong></a></li>
+<li><a href="#objetivos" id="toc-objetivos"><span
+class="toc-section-number">1.2.2</span>
+<strong>Objetivos</strong></a></li>
+</ul></li>
+<li><a href="#contexto-organizacional"
+id="toc-contexto-organizacional"><span
+class="toc-section-number">1.3</span> 🏢 Contexto Organizacional</a>
+<ul>
+<li><a href="#perfil-da-organização"
+id="toc-perfil-da-organização"><span
+class="toc-section-number">1.3.1</span> <strong>Perfil da
+Organização</strong></a></li>
+<li><a href="#infraestrutura-tecnológica"
+id="toc-infraestrutura-tecnológica"><span
+class="toc-section-number">1.3.2</span> <strong>Infraestrutura
+Tecnológica</strong></a></li>
+</ul></li>
+<li><a href="#equipe-de-resposta-a-incidentes"
+id="toc-equipe-de-resposta-a-incidentes"><span
+class="toc-section-number">1.4</span> 📞 Equipe de Resposta a
+Incidentes</a>
+<ul>
+<li><a href="#csirt---computer-security-incident-response-team"
+id="toc-csirt---computer-security-incident-response-team"><span
+class="toc-section-number">1.4.1</span> <strong>CSIRT - Computer
+Security Incident Response Team</strong></a></li>
+<li><a href="#stakeholders-externos"
+id="toc-stakeholders-externos"><span
+class="toc-section-number">1.4.2</span> <strong>Stakeholders
+Externos</strong></a></li>
+</ul></li>
+<li><a href="#fase-1-preparação" id="toc-fase-1-preparação"><span
+class="toc-section-number">1.5</span> 🔴 FASE 1: PREPARAÇÃO</a>
+<ul>
+<li><a href="#políticas-e-procedimentos"
+id="toc-políticas-e-procedimentos"><span
+class="toc-section-number">1.5.1</span> <strong>1.1 Políticas e
+Procedimentos</strong></a></li>
+<li><a href="#ferramentas-e-recursos"
+id="toc-ferramentas-e-recursos"><span
+class="toc-section-number">1.5.2</span> <strong>1.2 Ferramentas e
+Recursos</strong></a></li>
+<li><a href="#treinamento-e-conscientização"
+id="toc-treinamento-e-conscientização"><span
+class="toc-section-number">1.5.3</span> <strong>1.3 Treinamento e
+Conscientização</strong></a></li>
+<li><a href="#métricas-e-indicadores"
+id="toc-métricas-e-indicadores"><span
+class="toc-section-number">1.5.4</span> <strong>1.4 Métricas e
+Indicadores</strong></a></li>
+</ul></li>
+<li><a href="#fase-2-detecção-e-análise"
+id="toc-fase-2-detecção-e-análise"><span
+class="toc-section-number">1.6</span> 🔍 FASE 2: DETECÇÃO E ANÁLISE</a>
+<ul>
+<li><a href="#indicadores-de-comprometimento-iocs"
+id="toc-indicadores-de-comprometimento-iocs"><span
+class="toc-section-number">1.6.1</span> <strong>2.1 Indicadores de
+Comprometimento (IoCs)</strong></a></li>
+<li><a href="#fontes-de-detecção" id="toc-fontes-de-detecção"><span
+class="toc-section-number">1.6.2</span> <strong>2.2 Fontes de
+Detecção</strong></a></li>
+<li><a href="#processo-de-análise-inicial"
+id="toc-processo-de-análise-inicial"><span
+class="toc-section-number">1.6.3</span> <strong>2.3 Processo de Análise
+Inicial</strong></a></li>
+<li><a href="#escalação-e-ativação" id="toc-escalação-e-ativação"><span
+class="toc-section-number">1.6.4</span> <strong>2.4 Escalação e
+Ativação</strong></a></li>
+</ul></li>
+<li><a href="#fase-3-contenção-erradicação-e-recuperação"
+id="toc-fase-3-contenção-erradicação-e-recuperação"><span
+class="toc-section-number">1.7</span> ⚡ FASE 3: CONTENÇÃO, ERRADICAÇÃO
+E RECUPERAÇÃO</a>
+<ul>
+<li><a href="#contenção-imediata-1-hora"
+id="toc-contenção-imediata-1-hora"><span
+class="toc-section-number">1.7.1</span> <strong>3.1 Contenção Imediata
+(&lt; 1 hora)</strong></a></li>
+<li><a href="#coleta-de-evidências-forenses"
+id="toc-coleta-de-evidências-forenses"><span
+class="toc-section-number">1.7.2</span> <strong>3.2 Coleta de Evidências
+Forenses</strong></a></li>
+<li><a href="#erradicação-4-horas" id="toc-erradicação-4-horas"><span
+class="toc-section-number">1.7.3</span> <strong>3.3 Erradicação (&lt; 4
+horas)</strong></a></li>
+<li><a href="#recuperação-8-horas" id="toc-recuperação-8-horas"><span
+class="toc-section-number">1.7.4</span> <strong>3.4 Recuperação (&lt; 8
+horas)</strong></a></li>
+</ul></li>
+<li><a href="#fase-4-atividades-pós-incidente"
+id="toc-fase-4-atividades-pós-incidente"><span
+class="toc-section-number">1.8</span> 📝 FASE 4: ATIVIDADES
+PÓS-INCIDENTE</a>
+<ul>
+<li><a href="#relatório-de-incidente"
+id="toc-relatório-de-incidente"><span
+class="toc-section-number">1.8.1</span> <strong>4.1 Relatório de
+Incidente</strong></a></li>
+<li><a href="#lições-aprendidas" id="toc-lições-aprendidas"><span
+class="toc-section-number">1.8.2</span> <strong>4.2 Lições
+Aprendidas</strong></a></li>
+<li><a href="#plano-de-ação" id="toc-plano-de-ação"><span
+class="toc-section-number">1.8.3</span> <strong>4.3 Plano de
+Ação</strong></a></li>
+<li><a href="#métricas-do-incidente"
+id="toc-métricas-do-incidente"><span
+class="toc-section-number">1.8.4</span> <strong>4.4 Métricas do
+Incidente</strong></a></li>
+</ul></li>
+<li><a href="#comunicação" id="toc-comunicação"><span
+class="toc-section-number">1.9</span> 📞 Comunicação</a>
+<ul>
+<li><a href="#comunicação-interna" id="toc-comunicação-interna"><span
+class="toc-section-number">1.9.1</span> <strong>Comunicação
+Interna</strong></a></li>
+<li><a href="#comunicação-externa" id="toc-comunicação-externa"><span
+class="toc-section-number">1.9.2</span> <strong>Comunicação
+Externa</strong></a></li>
+<li><a href="#templates-de-comunicação"
+id="toc-templates-de-comunicação"><span
+class="toc-section-number">1.9.3</span> <strong>Templates de
+Comunicação</strong></a></li>
+</ul></li>
+<li><a href="#considerações-legais-e-regulatórias"
+id="toc-considerações-legais-e-regulatórias"><span
+class="toc-section-number">1.10</span> ⚖️ Considerações Legais e
+Regulatórias</a>
+<ul>
+<li><a href="#lgpd-lei-geral-de-proteção-de-dados"
+id="toc-lgpd-lei-geral-de-proteção-de-dados"><span
+class="toc-section-number">1.10.1</span> <strong>LGPD (Lei Geral de
+Proteção de Dados)</strong></a></li>
+<li><a href="#outras-regulamentações"
+id="toc-outras-regulamentações"><span
+class="toc-section-number">1.10.2</span> <strong>Outras
+Regulamentações</strong></a></li>
+</ul></li>
+<li><a href="#anexos" id="toc-anexos"><span
+class="toc-section-number">1.11</span> 📚 Anexos</a>
+<ul>
+<li><a href="#a.-procedimentos-técnicos-detalhados"
+id="toc-a.-procedimentos-técnicos-detalhados"><span
+class="toc-section-number">1.11.1</span> <strong>A. Procedimentos
+Técnicos Detalhados</strong></a></li>
+<li><a href="#b.-formulários-e-checklists"
+id="toc-b.-formulários-e-checklists"><span
+class="toc-section-number">1.11.2</span> <strong>B. Formulários e
+Checklists</strong></a></li>
+<li><a href="#c.-contatos-de-emergência"
+id="toc-c.-contatos-de-emergência"><span
+class="toc-section-number">1.11.3</span> <strong>C. Contatos de
+Emergência</strong></a></li>
+<li><a href="#d.-ferramentas-e-recursos"
+id="toc-d.-ferramentas-e-recursos"><span
+class="toc-section-number">1.11.4</span> <strong>D. Ferramentas e
+Recursos</strong></a></li>
+</ul></li>
+<li><a href="#controle-de-versões" id="toc-controle-de-versões"><span
+class="toc-section-number">1.12</span> 📝 Controle de Versões</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="1"
+id="template-plano-de-resposta-a-incidentes-nist"><span
+class="header-section-number">1</span> 📋 Template: Plano de Resposta a
+Incidentes NIST</h1>
+<blockquote>
+<p><strong>Cenário:</strong> [Substitua pelo cenário escolhido: A, B ou
+C]<br />
+<strong>Data:</strong> [Data de criação do plano]<br />
+<strong>Versão:</strong> 1.0<br />
+<strong>Responsável:</strong> [Seu nome]</p>
+</blockquote>
+<hr />
+<h2 data-number="1.1" id="informações-do-documento"><span
+class="header-section-number">1.1</span> 📊 Informações do
+Documento</h2>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Título</strong></td>
+<td>Plano de Resposta a Incidentes - [Cenário]</td>
+</tr>
+<tr>
+<td><strong>Classificação</strong></td>
+<td>[Interno/Confidencial/Restrito]</td>
+</tr>
+<tr>
+<td><strong>Aprovação</strong></td>
+<td>[Nome do aprovador]</td>
+</tr>
+<tr>
+<td><strong>Próxima Revisão</strong></td>
+<td>[Data]</td>
+</tr>
+<tr>
+<td><strong>Distribuição</strong></td>
+<td>CSIRT, TI, Segurança, Jurídico</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="1.2" id="escopo-e-objetivos"><span
+class="header-section-number">1.2</span> 🎯 Escopo e Objetivos</h2>
+<h3 data-number="1.2.1" id="escopo"><span
+class="header-section-number">1.2.1</span> <strong>Escopo</strong></h3>
+<p>Este plano abrange a resposta a [tipo de incidente] em [tipo de
+organização], incluindo: - [ ] Sistemas críticos afetados - [ ] Dados
+envolvidos - [ ] Stakeholders impactados - [ ] Processos de negócio</p>
+<h3 data-number="1.2.2" id="objetivos"><span
+class="header-section-number">1.2.2</span>
+<strong>Objetivos</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Minimizar impacto
+operacional</label></li>
+<li><label><input type="checkbox" />Preservar evidências para
+investigação</label></li>
+<li><label><input type="checkbox" />Cumprir obrigações legais e
+regulatórias</label></li>
+<li><label><input type="checkbox" />Restaurar operações normais
+rapidamente</label></li>
+<li><label><input type="checkbox" />Prevenir recorrência do
+incidente</label></li>
+</ul>
+<hr />
+<h2 data-number="1.3" id="contexto-organizacional"><span
+class="header-section-number">1.3</span> 🏢 Contexto Organizacional</h2>
+<h3 data-number="1.3.1" id="perfil-da-organização"><span
+class="header-section-number">1.3.1</span> <strong>Perfil da
+Organização</strong></h3>
+<ul>
+<li><strong>Setor:</strong> [Ex: Financeiro, Saúde, E-commerce]</li>
+<li><strong>Porte:</strong> [Ex: 500 funcionários, 10 filiais]</li>
+<li><strong>Receita:</strong> [Ex: R$ 100M anuais]</li>
+<li><strong>Dados Críticos:</strong> [Ex: PII, PHI, Cartões de
+crédito]</li>
+</ul>
+<h3 data-number="1.3.2" id="infraestrutura-tecnológica"><span
+class="header-section-number">1.3.2</span> <strong>Infraestrutura
+Tecnológica</strong></h3>
+<ul>
+<li><strong>Sistemas Críticos:</strong> [Liste os principais]</li>
+<li><strong>Fornecedores:</strong> [Cloud providers, terceirizados]</li>
+<li><strong>Compliance:</strong> [LGPD, PCI-DSS, ISO 27001]</li>
+</ul>
+<hr />
+<h2 data-number="1.4" id="equipe-de-resposta-a-incidentes"><span
+class="header-section-number">1.4</span> 📞 Equipe de Resposta a
+Incidentes</h2>
+<h3 data-number="1.4.1"
+id="csirt---computer-security-incident-response-team"><span
+class="header-section-number">1.4.1</span> <strong>CSIRT - Computer
+Security Incident Response Team</strong></h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 15%" />
+<col style="width: 25%" />
+<col style="width: 17%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>Função</th>
+<th>Nome</th>
+<th>Telefone</th>
+<th>Email</th>
+<th>Backup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Coordenador CSIRT</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Líder Técnico</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Analista Forense</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Especialista em Redes</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Representante Jurídico</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+<tr>
+<td><strong>Comunicação</strong></td>
+<td>[Nome]</td>
+<td>[Telefone]</td>
+<td>[Email]</td>
+<td>[Nome Backup]</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.4.2" id="stakeholders-externos"><span
+class="header-section-number">1.4.2</span> <strong>Stakeholders
+Externos</strong></h3>
+<ul>
+<li><strong>Autoridades:</strong> Polícia Civil/Federal, ANPD</li>
+<li><strong>Fornecedores:</strong> [Cloud providers, consultores]</li>
+<li><strong>Clientes:</strong> [Representantes de clientes
+importantes]</li>
+<li><strong>Mídia:</strong> [Assessoria de imprensa]</li>
+</ul>
+<hr />
+<h2 data-number="1.5" id="fase-1-preparação"><span
+class="header-section-number">1.5</span> 🔴 FASE 1: PREPARAÇÃO</h2>
+<h3 data-number="1.5.1" id="políticas-e-procedimentos"><span
+class="header-section-number">1.5.1</span> <strong>1.1 Políticas e
+Procedimentos</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Política de Segurança da Informação
+aprovada</label></li>
+<li><label><input type="checkbox" />Procedimentos de backup e
+recuperação testados</label></li>
+<li><label><input type="checkbox" />Plano de Continuidade de Negócios
+atualizado</label></li>
+<li><label><input type="checkbox" />Contratos com fornecedores incluem
+cláusulas de segurança</label></li>
+</ul>
+<h3 data-number="1.5.2" id="ferramentas-e-recursos"><span
+class="header-section-number">1.5.2</span> <strong>1.2 Ferramentas e
+Recursos</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>SIEM:</strong> [Ex: Splunk,
+QRadar, ELK Stack]</label></li>
+<li><label><input type="checkbox" /><strong>Análise Forense:</strong>
+[Ex: Volatility, Autopsy, FTK]</label></li>
+<li><label><input type="checkbox" /><strong>Comunicação:</strong> [Ex:
+Slack, Teams, PagerDuty]</label></li>
+<li><label><input type="checkbox" /><strong>Monitoramento:</strong> [Ex:
+Nagios, Zabbix, Datadog]</label></li>
+</ul>
+<h3 data-number="1.5.3" id="treinamento-e-conscientização"><span
+class="header-section-number">1.5.3</span> <strong>1.3 Treinamento e
+Conscientização</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Equipe CSIRT treinada
+trimestralmente</label></li>
+<li><label><input type="checkbox" />Simulados de resposta a incidentes
+semestrais</label></li>
+<li><label><input type="checkbox" />Funcionários treinados em
+identificação de ameaças</label></li>
+<li><label><input type="checkbox" />Procedimentos de escalação
+conhecidos por todos</label></li>
+</ul>
+<h3 data-number="1.5.4" id="métricas-e-indicadores"><span
+class="header-section-number">1.5.4</span> <strong>1.4 Métricas e
+Indicadores</strong></h3>
+<ul>
+<li><strong>MTTD (Mean Time to Detection):</strong> [Ex: &lt; 30
+minutos]</li>
+<li><strong>MTTR (Mean Time to Response):</strong> [Ex: &lt; 1
+hora]</li>
+<li><strong>MTTR (Mean Time to Recovery):</strong> [Ex: &lt; 4
+horas]</li>
+<li><strong>RTO (Recovery Time Objective):</strong> [Ex: &lt; 8
+horas]</li>
+</ul>
+<hr />
+<h2 data-number="1.6" id="fase-2-detecção-e-análise"><span
+class="header-section-number">1.6</span> 🔍 FASE 2: DETECÇÃO E
+ANÁLISE</h2>
+<h3 data-number="1.6.1" id="indicadores-de-comprometimento-iocs"><span
+class="header-section-number">1.6.1</span> <strong>2.1 Indicadores de
+Comprometimento (IoCs)</strong></h3>
+<h4 data-number="1.6.1.1"
+id="cenário-específico-detalhe-os-iocs-do-seu-cenário"><span
+class="header-section-number">1.6.1.1</span> <strong>Cenário Específico:
+[Detalhe os IoCs do seu cenário]</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Indicador 1 - Ex: Arquivos
+.encrypted]</label></li>
+<li><label><input type="checkbox" />[Indicador 2 - Ex: Conexões para IPs
+maliciosos]</label></li>
+<li><label><input type="checkbox" />[Indicador 3 - Ex: Processos
+suspeitos]</label></li>
+<li><label><input type="checkbox" />[Indicador 4 - Ex: Tráfego
+anômalo]</label></li>
+</ul>
+<h3 data-number="1.6.2" id="fontes-de-detecção"><span
+class="header-section-number">1.6.2</span> <strong>2.2 Fontes de
+Detecção</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Logs de Sistema:</strong>
+Windows Event Logs, Syslog</label></li>
+<li><label><input type="checkbox" /><strong>Logs de Rede:</strong>
+Firewall, IPS/IDS, DNS</label></li>
+<li><label><input type="checkbox" /><strong>Logs de Aplicação:</strong>
+Web servers, Databases</label></li>
+<li><label><input type="checkbox" /><strong>Usuários:</strong> Relatos
+de funcionários/clientes</label></li>
+<li><label><input type="checkbox" /><strong>Terceiros:</strong> Threat
+intelligence, fornecedores</label></li>
+</ul>
+<h3 data-number="1.6.3" id="processo-de-análise-inicial"><span
+class="header-section-number">1.6.3</span> <strong>2.3 Processo de
+Análise Inicial</strong></h3>
+<h4 data-number="1.6.3.1"
+id="passo-1-validação-do-incidente-15-min"><span
+class="header-section-number">1.6.3.1</span> <strong>Passo 1: Validação
+do Incidente (&lt; 15 min)</strong></h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comandos para verificação inicial</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[Adicione</span> comandos específicos do cenário]</span></code></pre></div>
+<h4 data-number="1.6.3.2" id="passo-2-classificação-30-min"><span
+class="header-section-number">1.6.3.2</span> <strong>Passo 2:
+Classificação (&lt; 30 min)</strong></h4>
+<ul>
+<li><strong>Severidade:</strong> [Crítico/Alto/Médio/Baixo]</li>
+<li><strong>Impacto:</strong>
+[Confidencialidade/Integridade/Disponibilidade]</li>
+<li><strong>Categoria:</strong> [Malware/Phishing/DDoS/Data
+Breach/etc]</li>
+<li><strong>Urgência:</strong> [Imediata/Alta/Normal/Baixa]</li>
+</ul>
+<h4 data-number="1.6.3.3"
+id="passo-3-coleta-de-evidências-iniciais"><span
+class="header-section-number">1.6.3.3</span> <strong>Passo 3: Coleta de
+Evidências Iniciais</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Screenshots de alertas/sistemas
+afetados</label></li>
+<li><label><input type="checkbox" />Logs relevantes
+preservados</label></li>
+<li><label><input type="checkbox" />Memória RAM capturada (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Tráfego de rede
+capturado</label></li>
+<li><label><input type="checkbox" />Depoimentos iniciais
+coletados</label></li>
+</ul>
+<h3 data-number="1.6.4" id="escalação-e-ativação"><span
+class="header-section-number">1.6.4</span> <strong>2.4 Escalação e
+Ativação</strong></h3>
+<h4 data-number="1.6.4.1" id="critérios-de-escalação"><span
+class="header-section-number">1.6.4.1</span> <strong>Critérios de
+Escalação</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Impacto em sistemas
+críticos</label></li>
+<li><label><input type="checkbox" />Exposição de dados
+sensíveis</label></li>
+<li><label><input type="checkbox" />Paralisação de
+operações</label></li>
+<li><label><input type="checkbox" />Repercussão midiática
+potencial</label></li>
+<li><label><input type="checkbox" />Valor financeiro envolvido &gt; R$
+[valor]</label></li>
+</ul>
+<h4 data-number="1.6.4.2" id="processo-de-ativação-do-csirt"><span
+class="header-section-number">1.6.4.2</span> <strong>Processo de
+Ativação do CSIRT</strong></h4>
+<ol type="1">
+<li><strong>Detecção inicial</strong> → Analista de plantão</li>
+<li><strong>Validação</strong> → Líder técnico (&lt; 15 min)</li>
+<li><strong>Escalação</strong> → Coordenador CSIRT (&lt; 30 min)</li>
+<li><strong>Ativação completa</strong> → Toda a equipe (&lt; 1
+hora)</li>
+</ol>
+<hr />
+<h2 data-number="1.7"
+id="fase-3-contenção-erradicação-e-recuperação"><span
+class="header-section-number">1.7</span> ⚡ FASE 3: CONTENÇÃO,
+ERRADICAÇÃO E RECUPERAÇÃO</h2>
+<h3 data-number="1.7.1" id="contenção-imediata-1-hora"><span
+class="header-section-number">1.7.1</span> <strong>3.1 Contenção
+Imediata (&lt; 1 hora)</strong></h3>
+<h4 data-number="1.7.1.1" id="objetivos-1"><span
+class="header-section-number">1.7.1.1</span>
+<strong>Objetivos</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Parar a propagação do
+incidente</label></li>
+<li><label><input type="checkbox" />Preservar evidências</label></li>
+<li><label><input type="checkbox" />Manter sistemas críticos
+funcionando</label></li>
+<li><label><input type="checkbox" />Minimizar impacto nos
+negócios</label></li>
+</ul>
+<h4 data-number="1.7.1.2"
+id="ações-de-contenção---cenário-específico"><span
+class="header-section-number">1.7.1.2</span> <strong>Ações de Contenção
+- [Cenário Específico]</strong></h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comandos de contenção específicos</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[Adicione</span> comandos específicos do seu cenário]</span></code></pre></div>
+<p><strong>Checklist de Contenção:</strong> - [ ] [Ação específica 1] -
+[ ] [Ação específica 2] - [ ] [Ação específica 3] - [ ] [Ação específica
+4] - [ ] Comunicação às partes interessadas - [ ] Documentação das ações
+realizadas</p>
+<h3 data-number="1.7.2" id="coleta-de-evidências-forenses"><span
+class="header-section-number">1.7.2</span> <strong>3.2 Coleta de
+Evidências Forenses</strong></h3>
+<h4 data-number="1.7.2.1" id="ordem-de-volatilidade-rfc-3227"><span
+class="header-section-number">1.7.2.1</span> <strong>Ordem de
+Volatilidade (RFC 3227)</strong></h4>
+<ol type="1">
+<li><strong>Memória RAM</strong> → Mais volátil</li>
+<li><strong>Estado do sistema</strong> → Processos, conexões</li>
+<li><strong>Disco rígido</strong> → Arquivos, logs</li>
+<li><strong>Logs remotos</strong> → SIEM, syslog</li>
+<li><strong>Configurações</strong> → Menos volátil</li>
+</ol>
+<h4 data-number="1.7.2.2" id="procedimentos-de-coleta"><span
+class="header-section-number">1.7.2.2</span> <strong>Procedimentos de
+Coleta</strong></h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de comandos forenses</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[Adicione</span> comandos específicos de coleta]</span></code></pre></div>
+<h3 data-number="1.7.3" id="erradicação-4-horas"><span
+class="header-section-number">1.7.3</span> <strong>3.3 Erradicação (&lt;
+4 horas)</strong></h3>
+<h4 data-number="1.7.3.1" id="identificação-da-causa-raiz"><span
+class="header-section-number">1.7.3.1</span> <strong>Identificação da
+Causa Raiz</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Vetor de ataque
+identificado</label></li>
+<li><label><input type="checkbox" />Vulnerabilidade explorada
+mapeada</label></li>
+<li><label><input type="checkbox" />Timeline de comprometimento
+estabelecida</label></li>
+<li><label><input type="checkbox" />Extensão do comprometimento
+avaliada</label></li>
+</ul>
+<h4 data-number="1.7.3.2" id="ações-de-erradicação"><span
+class="header-section-number">1.7.3.2</span> <strong>Ações de
+Erradicação</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Ação específica 1 - Ex: Remoção de
+malware]</label></li>
+<li><label><input type="checkbox" />[Ação específica 2 - Ex: Correção de
+vulnerabilidade]</label></li>
+<li><label><input type="checkbox" />[Ação específica 3 - Ex: Revogação
+de credenciais]</label></li>
+<li><label><input type="checkbox" />[Ação específica 4 - Ex: Atualização
+de sistemas]</label></li>
+</ul>
+<h3 data-number="1.7.4" id="recuperação-8-horas"><span
+class="header-section-number">1.7.4</span> <strong>3.4 Recuperação (&lt;
+8 horas)</strong></h3>
+<h4 data-number="1.7.4.1" id="plano-de-recuperação"><span
+class="header-section-number">1.7.4.1</span> <strong>Plano de
+Recuperação</strong></h4>
+<ol type="1">
+<li><strong>Sistemas Críticos</strong> (Prioridade 1)
+<ul class="task-list">
+<li><label><input type="checkbox" />[Sistema crítico 1]</label></li>
+<li><label><input type="checkbox" />[Sistema crítico 2]</label></li>
+</ul></li>
+<li><strong>Sistemas Importantes</strong> (Prioridade 2)
+<ul class="task-list">
+<li><label><input type="checkbox" />[Sistema importante 1]</label></li>
+<li><label><input type="checkbox" />[Sistema importante 2]</label></li>
+</ul></li>
+<li><strong>Sistemas Auxiliares</strong> (Prioridade 3)
+<ul class="task-list">
+<li><label><input type="checkbox" />[Sistema auxiliar 1]</label></li>
+<li><label><input type="checkbox" />[Sistema auxiliar 2]</label></li>
+</ul></li>
+</ol>
+<h4 data-number="1.7.4.2" id="validação-da-recuperação"><span
+class="header-section-number">1.7.4.2</span> <strong>Validação da
+Recuperação</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Funcionalidade
+restaurada</label></li>
+<li><label><input type="checkbox" />Performance normal</label></li>
+<li><label><input type="checkbox" />Conectividade
+verificada</label></li>
+<li><label><input type="checkbox" />Dados íntegros</label></li>
+<li><label><input type="checkbox" />Usuários conseguem
+acessar</label></li>
+</ul>
+<hr />
+<h2 data-number="1.8" id="fase-4-atividades-pós-incidente"><span
+class="header-section-number">1.8</span> 📝 FASE 4: ATIVIDADES
+PÓS-INCIDENTE</h2>
+<h3 data-number="1.8.1" id="relatório-de-incidente"><span
+class="header-section-number">1.8.1</span> <strong>4.1 Relatório de
+Incidente</strong></h3>
+<h4 data-number="1.8.1.1" id="resumo-executivo"><span
+class="header-section-number">1.8.1.1</span> <strong>Resumo
+Executivo</strong></h4>
+<ul>
+<li><strong>Tipo de Incidente:</strong> [Descrição breve]</li>
+<li><strong>Data/Hora:</strong> [Início e fim do incidente]</li>
+<li><strong>Duração:</strong> [Tempo total]</li>
+<li><strong>Sistemas Afetados:</strong> [Lista dos sistemas]</li>
+<li><strong>Impacto:</strong> [Descrição do impacto]</li>
+<li><strong>Custo Estimado:</strong> [Valor financeiro]</li>
+</ul>
+<h4 data-number="1.8.1.2" id="timeline-detalhada"><span
+class="header-section-number">1.8.1.2</span> <strong>Timeline
+Detalhada</strong></h4>
+<table>
+<thead>
+<tr>
+<th>Timestamp</th>
+<th>Evento</th>
+<th>Responsável</th>
+<th>Evidência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[HH:MM]</td>
+<td>[Descrição do evento]</td>
+<td>[Nome]</td>
+<td>[Link/referência]</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.8.2" id="lições-aprendidas"><span
+class="header-section-number">1.8.2</span> <strong>4.2 Lições
+Aprendidas</strong></h3>
+<h4 data-number="1.8.2.1" id="o-que-funcionou-bem"><span
+class="header-section-number">1.8.2.1</span> <strong>O que funcionou
+bem?</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Aspecto positivo 1]</label></li>
+<li><label><input type="checkbox" />[Aspecto positivo 2]</label></li>
+<li><label><input type="checkbox" />[Aspecto positivo 3]</label></li>
+</ul>
+<h4 data-number="1.8.2.2" id="o-que-precisa-melhorar"><span
+class="header-section-number">1.8.2.2</span> <strong>O que precisa
+melhorar?</strong></h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Ponto de melhoria 1]</label></li>
+<li><label><input type="checkbox" />[Ponto de melhoria 2]</label></li>
+<li><label><input type="checkbox" />[Ponto de melhoria 3]</label></li>
+</ul>
+<h4 data-number="1.8.2.3" id="recomendações"><span
+class="header-section-number">1.8.2.3</span>
+<strong>Recomendações</strong></h4>
+<ol type="1">
+<li><strong>Prevenção:</strong>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Recomendação preventiva
+1]</label></li>
+<li><label><input type="checkbox" />[Recomendação preventiva
+2]</label></li>
+</ul></li>
+<li><strong>Detecção:</strong>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Melhoria na detecção
+1]</label></li>
+<li><label><input type="checkbox" />[Melhoria na detecção
+2]</label></li>
+</ul></li>
+<li><strong>Resposta:</strong>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Melhoria na resposta
+1]</label></li>
+<li><label><input type="checkbox" />[Melhoria na resposta
+2]</label></li>
+</ul></li>
+</ol>
+<h3 data-number="1.8.3" id="plano-de-ação"><span
+class="header-section-number">1.8.3</span> <strong>4.3 Plano de
+Ação</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Ação</th>
+<th>Responsável</th>
+<th>Prazo</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[Ação 1]</td>
+<td>[Nome]</td>
+<td>[Data]</td>
+<td>[Pendente/Em andamento/Concluído]</td>
+</tr>
+<tr>
+<td>[Ação 2]</td>
+<td>[Nome]</td>
+<td>[Data]</td>
+<td>[Pendente/Em andamento/Concluído]</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.8.4" id="métricas-do-incidente"><span
+class="header-section-number">1.8.4</span> <strong>4.4 Métricas do
+Incidente</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Valor</th>
+<th>Meta</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MTTD</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+<tr>
+<td><strong>Downtime</strong></td>
+<td>[tempo]</td>
+<td>[meta]</td>
+<td>[✅/❌]</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="1.9" id="comunicação"><span
+class="header-section-number">1.9</span> 📞 Comunicação</h2>
+<h3 data-number="1.9.1" id="comunicação-interna"><span
+class="header-section-number">1.9.1</span> <strong>Comunicação
+Interna</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />CEO/Diretoria
+notificada</label></li>
+<li><label><input type="checkbox" />TI notificado</label></li>
+<li><label><input type="checkbox" />RH notificado (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Jurídico notificado</label></li>
+<li><label><input type="checkbox" />Auditoria notificada</label></li>
+</ul>
+<h3 data-number="1.9.2" id="comunicação-externa"><span
+class="header-section-number">1.9.2</span> <strong>Comunicação
+Externa</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Autoridades notificadas (se
+requerido)</label></li>
+<li><label><input type="checkbox" />Clientes notificados (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Fornecedores notificados (se
+aplicável)</label></li>
+<li><label><input type="checkbox" />Seguradoras notificadas</label></li>
+<li><label><input type="checkbox" />Mídia (se necessário)</label></li>
+</ul>
+<h3 data-number="1.9.3" id="templates-de-comunicação"><span
+class="header-section-number">1.9.3</span> <strong>Templates de
+Comunicação</strong></h3>
+<ul>
+<li>[Link para template de comunicação interna]</li>
+<li>[Link para template de comunicação externa]</li>
+<li>[Link para template de notificação regulatória]</li>
+</ul>
+<hr />
+<h2 data-number="1.10" id="considerações-legais-e-regulatórias"><span
+class="header-section-number">1.10</span> ⚖️ Considerações Legais e
+Regulatórias</h2>
+<h3 data-number="1.10.1" id="lgpd-lei-geral-de-proteção-de-dados"><span
+class="header-section-number">1.10.1</span> <strong>LGPD (Lei Geral de
+Proteção de Dados)</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Incidente envolve dados
+pessoais?</label></li>
+<li><label><input type="checkbox" />Notificação à ANPD necessária? (72
+horas)</label></li>
+<li><label><input type="checkbox" />Notificação aos titulares
+necessária?</label></li>
+<li><label><input type="checkbox" />Registro no relatório de
+impacto</label></li>
+</ul>
+<h3 data-number="1.10.2" id="outras-regulamentações"><span
+class="header-section-number">1.10.2</span> <strong>Outras
+Regulamentações</strong></h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />[Regulamentação específica do
+setor]</label></li>
+<li><label><input type="checkbox" />[Padrão de compliance
+aplicável]</label></li>
+<li><label><input type="checkbox" />[Certificação que pode ser
+impactada]</label></li>
+</ul>
+<hr />
+<h2 data-number="1.11" id="anexos"><span
+class="header-section-number">1.11</span> 📚 Anexos</h2>
+<h3 data-number="1.11.1" id="a.-procedimentos-técnicos-detalhados"><span
+class="header-section-number">1.11.1</span> <strong>A. Procedimentos
+Técnicos Detalhados</strong></h3>
+<ul>
+<li>[Link para playbook de contenção]</li>
+<li>[Link para playbook de análise forense]</li>
+<li>[Link para playbook de recuperação]</li>
+</ul>
+<h3 data-number="1.11.2" id="b.-formulários-e-checklists"><span
+class="header-section-number">1.11.2</span> <strong>B. Formulários e
+Checklists</strong></h3>
+<ul>
+<li>[Link para formulário de relato de incidente]</li>
+<li>[Link para checklist de contenção]</li>
+<li>[Link para log de ações]</li>
+</ul>
+<h3 data-number="1.11.3" id="c.-contatos-de-emergência"><span
+class="header-section-number">1.11.3</span> <strong>C. Contatos de
+Emergência</strong></h3>
+<ul>
+<li>[Lista completa de contatos]</li>
+<li>[Procedimentos de escalação 24/7]</li>
+</ul>
+<h3 data-number="1.11.4" id="d.-ferramentas-e-recursos"><span
+class="header-section-number">1.11.4</span> <strong>D. Ferramentas e
+Recursos</strong></h3>
+<ul>
+<li>[Lista de ferramentas disponíveis]</li>
+<li>[Credenciais de acesso (referência segura)]</li>
+<li>[Documentação técnica]</li>
+</ul>
+<hr />
+<h2 data-number="1.12" id="controle-de-versões"><span
+class="header-section-number">1.12</span> 📝 Controle de Versões</h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Autor</th>
+<th>Alterações</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>[Data]</td>
+<td>[Nome]</td>
+<td>Versão inicial</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>🔒 Este documento contém informações sensíveis de segurança.
+Distribua apenas para pessoal autorizado.</strong></p>
+</body>
+</html>

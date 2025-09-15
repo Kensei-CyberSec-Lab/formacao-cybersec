@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  kali_lab35:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: kali_lab35
+    tty: true
+    volumes:
+      - ./scripts:/scripts
+    networks:
+      labnet35:
+        ipv4_address: 192.168.35.11
+
+  waf_modsec:
+    image: owasp/modsecurity-crs:nginx-alpine
+    container_name: waf_modsec
+    environment:
+      - BACKEND=http://dvwa:80        # para onde o WAF faz proxy_pass
+      - SERVER_NAME=localhost         # hostname do WAF
+      - MODSEC_RULE_ENGINE=On  # modo blocking (bloqueia ataques)
+      # - MODSEC_RULE_ENGINE=DetectionOnly
+      # Níveis de paranoia (afinam detecção/bloqueio):
+      - BLOCKING_PARANOIA=1
+      - DETECTION_PARANOIA=1
+    depends_on:
+      - dvwa
+    ports:
+      - "8080:8080"                   # atenção: 8080:8080 (default da imagem OWASP)
+    networks:
+      labnet35:
+        ipv4_address: 192.168.35.30
+
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    networks:
+      labnet35:
+        ipv4_address: 192.168.35.40
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    ports:
+      - "9999:8080"
+    environment:
+      - DOZZLE_USERNAME=admin
+      - DOZZLE_PASSWORD=admin
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      labnet35:
+        ipv4_address: 192.168.35.50
+
+networks:
+  labnet35:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.35.0/24

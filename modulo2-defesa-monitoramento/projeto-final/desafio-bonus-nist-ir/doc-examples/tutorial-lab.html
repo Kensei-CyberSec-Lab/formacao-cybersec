@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Lab Completo - WAF + DVWA</title>
+    <link rel="stylesheet" href="css/professional.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>🧪 Tutorial Lab Completo</h1>
+            <p class="subtitle">Laboratório WAF + DVWA Hands-on</p>
+            <span class="badge">Tutorial Prático</span>
+        </div>
+    </header>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html" class="btn btn-outline btn-sm">← Voltar ao Índice</a>
+            <div class="nav-controls">
+                <button class="btn btn-outline btn-sm btn-print">🖨️ Imprimir</button>
+                <button class="btn btn-primary btn-sm btn-export-pdf">📄 PDF</button>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="main-content">
+<h1 data-number="1"
+id="tutorial-completo---lab-de-segurança-waf-dvwa"><span
+class="header-section-number">1</span> 🛡️ Tutorial Completo - Lab de
+Segurança WAF + DVWA</h1>
+<p>Este tutorial te guia passo a passo para executar o laboratório
+completo de defesa e monitoramento, demonstrando ataques controlados e
+resposta com WAF ModSecurity.</p>
+<h2 data-number="1.1" id="índice"><span
+class="header-section-number">1.1</span> 📋 Índice</h2>
+<ol type="1">
+<li><a href="#pré-requisitos">Pré-requisitos</a></li>
+<li><a href="#configuração-inicial">Configuração Inicial</a></li>
+<li><a href="#subindo-o-ambiente">Subindo o Ambiente</a></li>
+<li><a href="#verificação-dos-containers">Verificação dos
+Containers</a></li>
+<li><a href="#configuração-do-dvwa">Configuração do DVWA</a></li>
+<li><a href="#reconhecimento-nmap">Reconhecimento (Nmap)</a></li>
+<li><a href="#teste-no-modo-detecção">Teste no Modo Detecção</a></li>
+<li><a href="#teste-no-modo-blocking">Teste no Modo Blocking</a></li>
+<li><a href="#monitoramento-com-dozzle">Monitoramento com
+Dozzle</a></li>
+<li><a href="#coleta-de-evidências">Coleta de Evidências</a></li>
+<li><a href="#solução-de-problemas">Solução de Problemas</a></li>
+</ol>
+<hr />
+<h2 data-number="1.2" id="pré-requisitos"><span
+class="header-section-number">1.2</span> 📦 Pré-requisitos</h2>
+<p>Antes de começar, certifique-se de ter:</p>
+<ul>
+<li><strong>Docker</strong> e <strong>Docker Compose</strong>
+instalados</li>
+<li><strong>Navegador web</strong> (Chrome, Firefox, Safari)</li>
+<li><strong>Terminal</strong> (macOS Terminal, Windows PowerShell, Linux
+Terminal)</li>
+<li>Conexão com a internet para baixar as imagens Docker</li>
+</ul>
+<h3 data-number="1.2.1" id="verificar-docker"><span
+class="header-section-number">1.2.1</span> Verificar Docker</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> <span class="at">--version</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> <span class="at">--version</span></span></code></pre></div>
+<hr />
+<h2 data-number="1.3" id="configuração-inicial"><span
+class="header-section-number">1.3</span> ⚙️ Configuração Inicial</h2>
+<h3 data-number="1.3.1" id="navegar-para-o-diretório-do-lab"><span
+class="header-section-number">1.3.1</span> 1. Navegar para o Diretório
+do Lab</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ./labs</span></code></pre></div>
+<h3 data-number="1.3.2" id="verificar-arquivos-necessários"><span
+class="header-section-number">1.3.2</span> 2. Verificar Arquivos
+Necessários</h3>
+<p>Certifique-se de que existem estes arquivos:</p>
+<pre><code>labs/
+├── docker-compose.yml
+├── Dockerfile.kali
+├── scripts/
+│   ├── attack_script.sh
+│   └── monitor_defense.sh
+└── README.md</code></pre>
+<hr />
+<h2 data-number="1.4" id="subindo-o-ambiente"><span
+class="header-section-number">1.4</span> 🚀 Subindo o Ambiente</h2>
+<h3 data-number="1.4.1" id="iniciar-todos-os-containers"><span
+class="header-section-number">1.4.1</span> 1. Iniciar Todos os
+Containers</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span> <span class="at">--build</span></span></code></pre></div>
+<p><strong>O que acontece:</strong> - 🐧 <strong>Kali Linux</strong>:
+Container atacante com ferramentas de pentest - 🛡️ <strong>WAF
+ModSecurity</strong>: Firewall de aplicação web com OWASP CRS - 🎯
+<strong>DVWA</strong>: Aplicação web vulnerável (alvo) - 📊
+<strong>Dozzle</strong>: Interface para monitorar logs em tempo real</p>
+<h3 data-number="1.4.2" id="aguardar-inicialização"><span
+class="header-section-number">1.4.2</span> 2. Aguardar
+Inicialização</h3>
+<p>Espere alguns segundos para todos os containers estarem prontos.</p>
+<hr />
+<h2 data-number="1.5" id="verificação-dos-containers"><span
+class="header-section-number">1.5</span> ✅ Verificação dos
+Containers</h2>
+<h3 data-number="1.5.1" id="verificar-status-dos-containers"><span
+class="header-section-number">1.5.1</span> 1. Verificar Status dos
+Containers</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> ps</span></code></pre></div>
+<p><strong>Resultado esperado:</strong></p>
+<pre><code>CONTAINER ID   IMAGE                              PORTS                    NAMES
+xxxxxxxxxx     owasp/modsecurity-crs:nginx-alpine 0.0.0.0:8080-&gt;8080/tcp  waf_modsec
+xxxxxxxxxx     labs-kali_lab35                                             kali_lab35
+xxxxxxxxxx     vulnerables/web-dvwa               80/tcp                   dvwa
+xxxxxxxxxx     amir20/dozzle:latest               0.0.0.0:9999-&gt;8080/tcp  dozzle</code></pre>
+<h3 data-number="1.5.2" id="testar-conectividade"><span
+class="header-section-number">1.5.2</span> 2. Testar Conectividade</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> http://localhost:8080 <span class="kw">|</span> <span class="fu">head</span> <span class="at">-5</span></span></code></pre></div>
+<p><strong>Se funcionar:</strong> Você verá HTML do DVWA <strong>Se não
+funcionar:</strong> Veja a seção <a href="#solução-de-problemas">Solução
+de Problemas</a></p>
+<hr />
+<h2 data-number="1.6" id="configuração-do-dvwa"><span
+class="header-section-number">1.6</span> 🎯 Configuração do DVWA</h2>
+<h3 data-number="1.6.1" id="acessar-dvwa-no-navegador"><span
+class="header-section-number">1.6.1</span> 1. Acessar DVWA no
+Navegador</h3>
+<p>Abra seu navegador e vá para:
+<strong>http://localhost:8080</strong></p>
+<h3 data-number="1.6.2" id="fazer-login"><span
+class="header-section-number">1.6.2</span> 2. Fazer Login</h3>
+<ul>
+<li><strong>Usuário:</strong> <code>admin</code></li>
+<li><strong>Senha:</strong> <code>password</code></li>
+</ul>
+<h3 data-number="1.6.3" id="configurar-banco-de-dados"><span
+class="header-section-number">1.6.3</span> 3. Configurar Banco de
+Dados</h3>
+<ol type="1">
+<li>Após login, clique em <strong>“Setup”</strong> (menu lateral)</li>
+<li>Clique em <strong>“Create / Reset Database”</strong></li>
+<li>Aguarde a mensagem de sucesso</li>
+</ol>
+<h3 data-number="1.6.4" id="configurar-nível-de-segurança"><span
+class="header-section-number">1.6.4</span> 4. Configurar Nível de
+Segurança</h3>
+<ol type="1">
+<li>Clique em <strong>“DVWA Security”</strong> (menu lateral)</li>
+<li>Selecione <strong>“Low”</strong></li>
+<li>Clique em <strong>“Submit”</strong></li>
+</ol>
+<p><strong>🔥 Importante:</strong> Mantenha o navegador aberto para
+manter a sessão ativa!</p>
+<hr />
+<h2 data-number="1.7" id="reconhecimento-nmap"><span
+class="header-section-number">1.7</span> 🔍 Reconhecimento (Nmap)</h2>
+<h3 data-number="1.7.1" id="entrar-no-container-kali"><span
+class="header-section-number">1.7.1</span> 1. Entrar no Container
+Kali</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> exec <span class="at">-it</span> kali_lab35 /bin/bash</span></code></pre></div>
+<h3 data-number="1.7.2" id="executar-scan-nmap"><span
+class="header-section-number">1.7.2</span> 2. Executar Scan Nmap</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nmap</span> <span class="at">-sS</span> <span class="at">-sV</span> waf_modsec</span></code></pre></div>
+<p><strong>Resultado esperado:</strong></p>
+<pre><code>PORT     STATE SERVICE  VERSION
+8080/tcp open  http     nginx
+8443/tcp open  ssl/http nginx</code></pre>
+<h3 data-number="1.7.3" id="sair-do-container"><span
+class="header-section-number">1.7.3</span> 3. Sair do Container</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div>
+<p><strong>📝 Explicação:</strong> O nmap identifica que o WAF está
+rodando nginx nas portas 8080 (HTTP) e 8443 (HTTPS).</p>
+<hr />
+<h2 data-number="1.8" id="teste-no-modo-detecção"><span
+class="header-section-number">1.8</span> 🕵️ Teste no Modo Detecção</h2>
+<h3 data-number="1.8.1" id="configurar-waf-para-modo-detecção"><span
+class="header-section-number">1.8.1</span> 1. Configurar WAF para Modo
+Detecção</h3>
+<p>Edite o arquivo <code>docker-compose.yml</code> e certifique-se de
+que a linha esteja assim:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> MODSEC_RULE_ENGINE=DetectionOnly</span><span class="co">  # modo detecção apenas</span></span></code></pre></div>
+<h3 data-number="1.8.2" id="recriar-o-container-waf"><span
+class="header-section-number">1.8.2</span> 2. Recriar o Container
+WAF</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span> <span class="at">--force-recreate</span> waf_modsec</span></code></pre></div>
+<h3 data-number="1.8.3" id="testar-ataque-sqli-deve-passar"><span
+class="header-section-number">1.8.3</span> 3. Testar Ataque SQLi (Deve
+Passar)</h3>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> exec kali_lab35 curl <span class="at">-s</span> <span class="st">&quot;http://waf_modsec:8080/vulnerabilities/sqli/?id=1&#39;+OR+&#39;1&#39;=&#39;1&#39;--+-&amp;Submit=Submit&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Host: dvwa&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Cookie: PHPSESSID=test; security=low&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-w</span> <span class="st">&quot;Status: %{http_code}\n&quot;</span></span></code></pre></div>
+<p><strong>Resultado esperado:</strong> Status 302 (redirecionamento) -
+<strong>ATAQUE DETECTADO MAS NÃO BLOQUEADO</strong></p>
+<h3 data-number="1.8.4" id="testar-ataque-xss-deve-passar"><span
+class="header-section-number">1.8.4</span> 4. Testar Ataque XSS (Deve
+Passar)</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> exec kali_lab35 curl <span class="at">-s</span> <span class="st">&quot;http://waf_modsec:8080/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28%22XSS%22%29%3C/script%3E&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Host: dvwa&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Cookie: security=low&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-w</span> <span class="st">&quot;Status: %{http_code}\n&quot;</span></span></code></pre></div>
+<p><strong>Resultado esperado:</strong> Status 302 (redirecionamento) -
+<strong>ATAQUE DETECTADO MAS NÃO BLOQUEADO</strong></p>
+<hr />
+<h2 data-number="1.9" id="teste-no-modo-blocking"><span
+class="header-section-number">1.9</span> 🚫 Teste no Modo Blocking</h2>
+<h3 data-number="1.9.1" id="configurar-waf-para-modo-blocking"><span
+class="header-section-number">1.9.1</span> 1. Configurar WAF para Modo
+Blocking</h3>
+<p>Edite o arquivo <code>docker-compose.yml</code> e altere para:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> MODSEC_RULE_ENGINE=On</span><span class="co">  # modo blocking (bloqueia ataques)</span></span></code></pre></div>
+<h3 data-number="1.9.2" id="recriar-o-container-waf-1"><span
+class="header-section-number">1.9.2</span> 2. Recriar o Container
+WAF</h3>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span> <span class="at">--force-recreate</span> waf_modsec</span></code></pre></div>
+<h3 data-number="1.9.3" id="testar-ataque-sqli-deve-ser-bloqueado"><span
+class="header-section-number">1.9.3</span> 3. Testar Ataque SQLi (Deve
+ser Bloqueado)</h3>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> exec kali_lab35 curl <span class="at">-s</span> <span class="st">&quot;http://waf_modsec:8080/vulnerabilities/sqli/?id=1&#39;+OR+&#39;1&#39;=&#39;1&#39;--+-&amp;Submit=Submit&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Host: dvwa&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Cookie: PHPSESSID=test; security=low&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-w</span> <span class="st">&quot;Status: %{http_code}\n&quot;</span></span></code></pre></div>
+<p><strong>Resultado esperado:</strong> Status 403 + página “403
+Forbidden” - <strong>ATAQUE BLOQUEADO!</strong></p>
+<h3 data-number="1.9.4" id="testar-ataque-xss-deve-ser-bloqueado"><span
+class="header-section-number">1.9.4</span> 4. Testar Ataque XSS (Deve
+ser Bloqueado)</h3>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> exec kali_lab35 curl <span class="at">-s</span> <span class="st">&quot;http://waf_modsec:8080/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28%22XSS%22%29%3C/script%3E&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Host: dvwa&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Cookie: security=low&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-w</span> <span class="st">&quot;Status: %{http_code}\n&quot;</span></span></code></pre></div>
+<p><strong>Resultado esperado:</strong> Status 403 + página “403
+Forbidden” - <strong>ATAQUE BLOQUEADO!</strong></p>
+<hr />
+<h2 data-number="1.10" id="monitoramento-com-dozzle"><span
+class="header-section-number">1.10</span> 📊 Monitoramento com
+Dozzle</h2>
+<h3 data-number="1.10.1" id="acessar-interface-dozzle"><span
+class="header-section-number">1.10.1</span> 1. Acessar Interface
+Dozzle</h3>
+<p>Abra seu navegador e vá para:
+<strong>http://localhost:9999</strong></p>
+<h3 data-number="1.10.2" id="fazer-login-no-dozzle"><span
+class="header-section-number">1.10.2</span> 2. Fazer Login no
+Dozzle</h3>
+<ul>
+<li><strong>Usuário:</strong> <code>admin</code></li>
+<li><strong>Senha:</strong> <code>admin</code></li>
+</ul>
+<h3 data-number="1.10.3" id="visualizar-logs-do-waf"><span
+class="header-section-number">1.10.3</span> 3. Visualizar Logs do
+WAF</h3>
+<ol type="1">
+<li>Clique no container <strong>“waf_modsec”</strong></li>
+<li>Observe os logs em tempo real</li>
+<li>Execute novos ataques e veja as detecções aparecerem</li>
+</ol>
+<h3 data-number="1.10.4" id="analisar-logs-estruturados"><span
+class="header-section-number">1.10.4</span> 4. Analisar Logs
+Estruturados</h3>
+<p>Procure por estas informações importantes: -
+<strong><code>"secrules_engine":"DetectionOnly"</code></strong> ou
+<strong><code>"secrules_engine":"Enabled"</code></strong> - <strong>Rule
+IDs:</strong> 942100 (SQLi), 941100 (XSS) - <strong>HTTP Status
+Codes:</strong> 302 (detecção) vs 403 (bloqueio)</p>
+<hr />
+<h2 data-number="1.11" id="coleta-de-evidências"><span
+class="header-section-number">1.11</span> 📋 Coleta de Evidências</h2>
+<h3 data-number="1.11.1" id="capturar-logs-detalhados"><span
+class="header-section-number">1.11.1</span> 1. Capturar Logs
+Detalhados</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> logs waf_modsec <span class="at">--tail</span> 50 <span class="op">&gt;</span> logs_waf_evidencias.txt</span></code></pre></div>
+<h3 data-number="1.11.2" id="fazer-screenshots"><span
+class="header-section-number">1.11.2</span> 2. Fazer Screenshots</h3>
+<p>Capture telas do: - ✅ Dozzle mostrando logs de detecção - ✅ Dozzle
+mostrando logs de bloqueio - ✅ Resultado do nmap - ✅ Páginas 403
+Forbidden</p>
+<h3 data-number="1.11.3" id="documentar-timeline-nist-ir"><span
+class="header-section-number">1.11.3</span> 3. Documentar Timeline NIST
+IR</h3>
+<ol type="1">
+<li><strong>Detecção:</strong> Timestamp dos logs de detecção</li>
+<li><strong>Análise:</strong> Identificação dos tipos de ataque</li>
+<li><strong>Contenção:</strong> Ativação do modo blocking</li>
+<li><strong>Erradicação:</strong> Bloqueio efetivo dos ataques</li>
+</ol>
+<hr />
+<h2 data-number="1.12" id="solução-de-problemas"><span
+class="header-section-number">1.12</span> 🛠️ Solução de Problemas</h2>
+<h3 data-number="1.12.1" id="container-não-sobe"><span
+class="header-section-number">1.12.1</span> Container não sobe</h3>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar logs de erro</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> logs waf_modsec</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> logs dvwa</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Recriar tudo do zero</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose down</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span> <span class="at">--build</span></span></code></pre></div>
+<h3 data-number="1.12.2" id="dvwa-não-carrega"><span
+class="header-section-number">1.12.2</span> DVWA não carrega</h3>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar se header Host está correto</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-v</span> <span class="st">&quot;http://localhost:8080/login.php&quot;</span> <span class="at">-H</span> <span class="st">&quot;Host: dvwa&quot;</span></span></code></pre></div>
+<h3 data-number="1.12.3" id="waf-não-bloqueia"><span
+class="header-section-number">1.12.3</span> WAF não bloqueia</h3>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar configuração</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> exec waf_modsec env <span class="kw">|</span> <span class="fu">grep</span> MODSEC_RULE_ENGINE</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Deve mostrar: MODSEC_RULE_ENGINE=On (para blocking)</span></span></code></pre></div>
+<h3 data-number="1.12.4" id="dozzle-não-acessa"><span
+class="header-section-number">1.12.4</span> Dozzle não acessa</h3>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar se porta está disponível</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> ps <span class="kw">|</span> <span class="fu">grep</span> dozzle</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Deve mostrar: 0.0.0.0:9999-&gt;8080/tcp</span></span></code></pre></div>
+<hr />
+<h2 data-number="1.13" id="objetivos-do-lab"><span
+class="header-section-number">1.13</span> 🎯 Objetivos do Lab</h2>
+<p>Ao completar este tutorial, você terá demonstrado:</p>
+<p>✅ <strong>Reconhecimento:</strong> Identificação de serviços com
+nmap<br />
+✅ <strong>Ataques Controlados:</strong> SQLi e XSS contra aplicação
+vulnerável<br />
+✅ <strong>Detecção:</strong> WAF identificando ataques sem
+bloquear<br />
+✅ <strong>Proteção:</strong> WAF bloqueando ataques maliciosos<br />
+✅ <strong>Monitoramento:</strong> Logs estruturados em tempo real<br />
+✅ <strong>Resposta:</strong> Transição de detecção para bloqueio</p>
+<hr />
+<h2 data-number="1.14" id="referências-técnicas"><span
+class="header-section-number">1.14</span> 📚 Referências Técnicas</h2>
+<ul>
+<li><strong>ModSecurity:</strong> https://modsecurity.org/</li>
+<li><strong>OWASP CRS:</strong>
+https://owasp.org/www-project-modsecurity-core-rule-set/</li>
+<li><strong>DVWA:</strong> https://dvwa.co.uk/</li>
+<li><strong>NIST IR Framework:</strong>
+https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf</li>
+</ul>
+<hr />
+<h2 data-number="1.15" id="próximos-passos"><span
+class="header-section-number">1.15</span> 🎓 Próximos Passos</h2>
+<ol type="1">
+<li><strong>Criar Relatório:</strong> Use o template
+<code>RELATORIO-template.md</code></li>
+<li><strong>Expandir Ataques:</strong> Teste Command Injection, File
+Inclusion</li>
+<li><strong>Configurar Containment:</strong> Implementar regras
+iptables</li>
+<li><strong>Automatizar Resposta:</strong> Scripts de detecção e
+bloqueio</li>
+</ol>
+<p><strong>🏆 Parabéns! Você completou um laboratório completo de
+segurança ofensiva e defensiva!</strong></p>
+        </div>
+    </main>
+    <script src="js/interactive.js"></script>
+</body>
+</html>

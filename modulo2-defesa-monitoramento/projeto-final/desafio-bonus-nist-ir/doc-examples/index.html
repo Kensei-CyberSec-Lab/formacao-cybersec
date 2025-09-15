@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Desafio Bônus: Plano de Resposta a Incidentes NIST - Guia completo com templates, exemplos e playbooks profissionais">
+    <meta name="keywords" content="NIST, IR, Incident Response, Cybersecurity, Security, Ransomware, Data Breach, SOC, CSIRT">
+    <meta name="author" content="Formação Cybersec - Módulo 2">
+    
+    <title>NIST IR - Desafio Bônus | Formação Cybersec</title>
+    
+    <link rel="stylesheet" href="css/professional.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NIST IR - Desafio Bônus Resposta a Incidentes">
+    <meta property="og:description" content="Guia completo para desenvolvimento de planos de resposta a incidentes seguindo NIST SP 800-61 Rev. 2">
+    <meta property="og:image" content="assets/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="NIST IR - Desafio Bônus">
+    <meta property="twitter:description" content="Templates profissionais e exemplos práticos para resposta a incidentes de segurança">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="typing-animation">NIST IR - Desafio Bônus</h1>
+            <p class="subtitle">Planos de Resposta a Incidentes Profissionais</p>
+            <div class="header-badges">
+                <span class="badge">NIST SP 800-61 Rev. 2</span>
+                <span class="badge">Templates Profissionais</span>
+                <span class="badge">Exemplos Práticos</span>
+                <span class="badge">Playbooks Técnicos</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <strong>📚 Documentação</strong>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#documents">Documentos</a></li>
+                <li><a href="#tutorial">Tutorial</a></li>
+                <li><a href="#resources">Recursos</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+            <div class="nav-controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Buscar documentos...">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                <button id="themeToggle" class="btn btn-outline btn-sm" data-tooltip="Alternar tema">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Quick Stats -->
+        <section id="overview">
+            <div class="stats">
+                <div class="stat-card fade-in-up">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Documentos</div>
+                </div>
+                <div class="stat-card fade-in-up">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Páginas</div>
+                </div>
+                <div class="stat-card fade-in-up">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Cenários</div>
+                </div>
+                <div class="stat-card fade-in-up">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Fases NIST</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            
+            <!-- Main Content -->
+            <div class="main-content">
+                
+                <!-- Introduction -->
+                <section class="card mb-4">
+                    <div class="card-header">
+                        <h2>📋 Sobre o Desafio</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Este desafio bônus oferece uma experiência completa no desenvolvimento de <strong>Planos de Resposta a Incidentes</strong> seguindo o framework <strong>NIST SP 800-61 Rev. 2</strong>. Você encontrará templates profissionais, exemplos práticos e playbooks técnicos para situações reais de segurança cibernética.</p>
+                        
+                        <h3>🎯 Objetivos de Aprendizagem</h3>
+                        <ul>
+                            <li><strong>Dominar o framework NIST</strong> de resposta a incidentes</li>
+                            <li><strong>Desenvolver planos executáveis</strong> para cenários reais</li>
+                            <li><strong>Aplicar técnicas de contenção</strong> e análise forense</li>
+                            <li><strong>Criar documentação profissional</strong> para ambientes corporativos</li>
+                        </ul>
+
+                        <div class="progress mb-2">
+                            <div class="progress-bar" data-width="100%" style="width: 0%;"></div>
+                        </div>
+                        <p class="text-muted text-center">Material 100% completo e pronto para uso</p>
+                    </div>
+                </section>
+
+                <!-- Documents Section -->
+                <section id="documents" class="mb-4">
+                    <h2 class="mb-3">📚 Documentos Disponíveis</h2>
+                    
+                    <div class="doc-grid">
+                        
+                        <!-- Document 1: Desafio -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <div class="doc-card-title">🚨 Desafio Bônus NIST IR</div>
+                                <div class="doc-card-subtitle">Descrição completa do desafio</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <p class="doc-card-description">
+                                    Documento principal com descrição detalhada dos 3 cenários disponíveis, critérios de avaliação e estrutura de entregáveis.
+                                </p>
+                                <div class="doc-meta">
+                                    <span class="meta-item">📄 15 páginas</span>
+                                    <span class="meta-item">⭐ Fundamental</span>
+                                    <span class="meta-item">🎯 3 cenários</span>
+                                </div>
+                                <div class="status status-ready">Pronto</div>
+                            </div>
+                            <div class="doc-card-footer">
+                                <a href="desafio-bonus.html" class="btn btn-primary btn-sm">Visualizar</a>
+                                <a href="../README.md" class="btn btn-outline btn-sm" download>Download MD</a>
+                            </div>
+                        </div>
+
+                        <!-- Document 2: Template -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <div class="doc-card-title">📋 Template Plano IR</div>
+                                <div class="doc-card-subtitle">Template estruturado NIST</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <p class="doc-card-description">
+                                    Template completo seguindo as 4 fases do NIST com tabelas, checklists e seções prontas para preenchimento.
+                                </p>
+                                <div class="doc-meta">
+                                    <span class="meta-item">📄 25 páginas</span>
+                                    <span class="meta-item">📐 Template</span>
+                                    <span class="meta-item">✅ Checklists</span>
+                                </div>
+                                <div class="status status-template">Template</div>
+                            </div>
+                            <div class="doc-card-footer">
+                                <a href="template-plano.html" class="btn btn-primary btn-sm">Visualizar</a>
+                                <a href="../template-plano-ir.md" class="btn btn-outline btn-sm" download>Download MD</a>
+                            </div>
+                        </div>
+
+                        <!-- Document 3: Example -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <div class="doc-card-title">🔐 Exemplo Ransomware</div>
+                                <div class="doc-card-subtitle">Caso prático completo</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <p class="doc-card-description">
+                                    Exemplo detalhado de resposta a ataque ransomware com timeline realista, comandos técnicos e métricas de performance.
+                                </p>
+                                <div class="doc-meta">
+                                    <span class="meta-item">📄 20 páginas</span>
+                                    <span class="meta-item">🎯 Prático</span>
+                                    <span class="meta-item">⏱️ Timeline</span>
+                                </div>
+                                <div class="status status-example">Exemplo</div>
+                            </div>
+                            <div class="doc-card-footer">
+                                <a href="exemplo-ransomware.html" class="btn btn-primary btn-sm">Visualizar</a>
+                                <a href="../exemplo-cenario-ransomware.md" class="btn btn-outline btn-sm" download>Download MD</a>
+                            </div>
+                        </div>
+
+                        <!-- Document 4: Classification -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <div class="doc-card-title">📊 Matriz Classificação</div>
+                                <div class="doc-card-subtitle">Sistema de categorização</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <p class="doc-card-description">
+                                    Matriz completa para classificação de incidentes por severidade, impacto e urgência com SLAs de resposta definidos.
+                                </p>
+                                <div class="doc-meta">
+                                    <span class="meta-item">📄 18 páginas</span>
+                                    <span class="meta-item">📊 Métricas</span>
+                                    <span class="meta-item">⏰ SLAs</span>
+                                </div>
+                                <div class="status status-guide">Guia</div>
+                            </div>
+                            <div class="doc-card-footer">
+                                <a href="matriz-classificacao.html" class="btn btn-primary btn-sm">Visualizar</a>
+                                <a href="../matriz-classificacao.md" class="btn btn-outline btn-sm" download>Download MD</a>
+                            </div>
+                        </div>
+
+                        <!-- Document 5: Playbook -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <div class="doc-card-title">⚡ Playbook Contenção</div>
+                                <div class="doc-card-subtitle">Procedimentos técnicos</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <p class="doc-card-description">
+                                    Playbook técnico com procedimentos específicos para contenção de malware, phishing, DDoS, data breach e outros incidentes.
+                                </p>
+                                <div class="doc-meta">
+                                    <span class="meta-item">📄 30 páginas</span>
+                                    <span class="meta-item">🔧 Técnico</span>
+                                    <span class="meta-item">💻 Comandos</span>
+                                </div>
+                                <div class="status status-ready">Pronto</div>
+                            </div>
+                            <div class="doc-card-footer">
+                                <a href="playbook-contencao.html" class="btn btn-primary btn-sm">Visualizar</a>
+                                <a href="../playbook-contencao.md" class="btn btn-outline btn-sm" download>Download MD</a>
+                            </div>
+                        </div>
+
+                        <!-- Document 6: Tutorial -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <div class="doc-card-title">🧪 Tutorial Lab</div>
+                                <div class="doc-card-subtitle">Laboratório hands-on</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <p class="doc-card-description">
+                                    Tutorial completo do laboratório WAF + DVWA com Docker, demonstrando ataques controlados e resposta com ModSecurity.
+                                </p>
+                                <div class="doc-meta">
+                                    <span class="meta-item">📄 25 páginas</span>
+                                    <span class="meta-item">🐳 Docker</span>
+                                    <span class="meta-item">🛡️ WAF</span>
+                                </div>
+                                <div class="status status-guide">Tutorial</div>
+                            </div>
+                            <div class="doc-card-footer">
+                                <a href="tutorial-lab.html" class="btn btn-primary btn-sm">Visualizar</a>
+                                <a href="../../opcao1-hands-on/TUTORIAL-COMPLETO.md" class="btn btn-outline btn-sm" download>Download MD</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Tutorial Section -->
+                <section id="tutorial" class="card mb-4">
+                    <div class="card-header">
+                        <h2>🎓 Como Utilizar Este Material</h2>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                            
+                            <div>
+                                <h3>📖 1. Estudar o Framework</h3>
+                                <ol>
+                                    <li>Leia o <strong>Desafio Bônus</strong> para entender o contexto</li>
+                                    <li>Estude a <strong>Matriz de Classificação</strong> para critérios</li>
+                                    <li>Analise o <strong>Exemplo Ransomware</strong> como referência</li>
+                                </ol>
+                            </div>
+
+                            <div>
+                                <h3>📝 2. Desenvolver o Plano</h3>
+                                <ol>
+                                    <li>Escolha um dos 3 <strong>cenários disponíveis</strong></li>
+                                    <li>Use o <strong>Template Plano IR</strong> como base</li>
+                                    <li>Consulte o <strong>Playbook de Contenção</strong> para técnicas</li>
+                                </ol>
+                            </div>
+
+                            <div>
+                                <h3>🧪 3. Praticar no Lab</h3>
+                                <ol>
+                                    <li>Execute o <strong>Tutorial Lab</strong> hands-on</li>
+                                    <li>Simule ataques e resposta com WAF</li>
+                                    <li>Colete evidências para o relatório</li>
+                                </ol>
+                            </div>
+
+                            <div>
+                                <h3>🎯 4. Finalizar Entrega</h3>
+                                <ol>
+                                    <li>Complete todas as seções do template</li>
+                                    <li>Inclua evidências e screenshots</li>
+                                    <li>Documente lições aprendidas</li>
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Resources Section -->
+                <section id="resources" class="card mb-4">
+                    <div class="card-header">
+                        <h2>🔗 Recursos Adicionais</h2>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                            
+                            <div>
+                                <h4>📚 Documentação NIST</h4>
+                                <ul>
+                                    <li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf" target="_blank" rel="noopener">NIST SP 800-61 Rev. 2</a></li>
+                                    <li><a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener">NIST Cybersecurity Framework</a></li>
+                                    <li><a href="https://csrc.nist.gov/" target="_blank" rel="noopener">NIST Computer Security Resource Center</a></li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4>🛠️ Ferramentas Técnicas</h4>
+                                <ul>
+                                    <li><a href="https://www.volatilityfoundation.org/" target="_blank" rel="noopener">Volatility Framework</a></li>
+                                    <li><a href="https://www.sleuthkit.org/" target="_blank" rel="noopener">The Sleuth Kit & Autopsy</a></li>
+                                    <li><a href="https://www.wireshark.org/" target="_blank" rel="noopener">Wireshark</a></li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4>📖 Frameworks Complementares</h4>
+                                <ul>
+                                    <li><a href="https://www.sans.org/reading-room/whitepapers/incident/incident-handlers-handbook-33901" target="_blank" rel="noopener">SANS Incident Handler's Handbook</a></li>
+                                    <li><a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&CK</a></li>
+                                    <li><a href="https://owasp.org/www-community/Incident_Response" target="_blank" rel="noopener">OWASP Incident Response</a></li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4>🎓 Certificações</h4>
+                                <ul>
+                                    <li><a href="https://www.sans.org/cyber-security-courses/hacker-techniques-exploits-incident-handling/" target="_blank" rel="noopener">SANS GCIH</a></li>
+                                    <li><a href="https://www.isc2.org/Certifications/CISSP" target="_blank" rel="noopener">CISSP</a></li>
+                                    <li><a href="https://www.eccouncil.org/programs/certified-computer-security-incident-handler-ecih/" target="_blank" rel="noopener">EC-Council ECIH</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h3>📑 Índice Rápido</h3>
+                    <ul>
+                        <li><a href="#overview">Visão Geral</a></li>
+                        <li><a href="#documents">Documentos</a>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                <li><a href="desafio-bonus.html">Desafio Bônus</a></li>
+                                <li><a href="template-plano.html">Template IR</a></li>
+                                <li><a href="exemplo-ransomware.html">Exemplo Prático</a></li>
+                                <li><a href="matriz-classificacao.html">Classificação</a></li>
+                                <li><a href="playbook-contencao.html">Playbook</a></li>
+                                <li><a href="tutorial-lab.html">Tutorial Lab</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#tutorial">Como Usar</a></li>
+                        <li><a href="#resources">Recursos</a></li>
+                        <li><a href="#download">Downloads</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="toc mt-3">
+                    <h3>⚡ Ações Rápidas</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="../README.md" class="btn btn-primary btn-sm" download>📥 Download Completo</a>
+                        <button class="btn btn-outline btn-sm btn-print">🖨️ Imprimir Página</button>
+                        <button class="btn btn-outline btn-sm btn-export-pdf">📄 Exportar PDF</button>
+                        <a href="../../opcao1-hands-on/labs/" class="btn btn-secondary btn-sm">🧪 Acessar Lab</a>
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="card mt-3">
+                    <div class="card-body text-center">
+                        <h4>📈 Progresso</h4>
+                        <div class="stat-number text-secondary" style="font-size: 1.5rem;">100%</div>
+                        <p class="text-muted mb-0">Material Completo</p>
+                        <div class="progress mt-2">
+                            <div class="progress-bar" data-width="100%" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+    <!-- Download Section -->
+    <section id="download" class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>📦 Downloads e Formatos</h2>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    
+                    <div class="text-center">
+                        <h3>📝 Markdown Original</h3>
+                        <p>Arquivos fonte em formato Markdown, editáveis e versionáveis.</p>
+                        <a href="../README.md" class="btn btn-primary" download>Download MD Files</a>
+                    </div>
+
+                    <div class="text-center">
+                        <h3>🌐 HTML Interativo</h3>
+                        <p>Versão web com navegação interativa, busca e funcionalidades avançadas.</p>
+                        <button class="btn btn-secondary" onclick="window.print()">Salvar como PDF</button>
+                    </div>
+
+                    <div class="text-center">
+                        <h3>🗂️ Arquivo Completo</h3>
+                        <p>Todos os documentos, templates e exemplos em um pacote único.</p>
+                        <a href="../" class="btn btn-outline" download>Download Completo</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.nist.gov/" target="_blank" rel="noopener">NIST</a>
+                <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf" target="_blank" rel="noopener">SP 800-61 Rev. 2</a>
+                <a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&CK</a>
+                <a href="https://www.sans.org/" target="_blank" rel="noopener">SANS</a>
+                <a href="https://owasp.org/" target="_blank" rel="noopener">OWASP</a>
+            </div>
+            <p>&copy; 2024 Formação Cybersec - Módulo 2. Material educacional para desenvolvimento de competências em resposta a incidentes.</p>
+            <p class="text-muted">Baseado em NIST SP 800-61 Rev. 2 e melhores práticas da indústria.</p>
+        </div>
+    </footer>
+
+    <script src="js/interactive.js"></script>
+</body>
+</html>

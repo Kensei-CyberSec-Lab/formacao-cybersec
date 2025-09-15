@@ -1,0 +1,5 @@
+FROM kalilinux/kali-rolling
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    nmap gobuster sqlmap tcpdump iputils-ping curl wget && \
+    rm -rf /var/lib/apt/lists/*
+CMD ["/bin/bash"]

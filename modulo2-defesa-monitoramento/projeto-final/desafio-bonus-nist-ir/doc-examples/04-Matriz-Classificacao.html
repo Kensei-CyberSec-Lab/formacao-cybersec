@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Matriz de Classificação NIST</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Matriz de Classificação NIST</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#matriz-de-classificação-de-incidentes---nist"
+id="toc-matriz-de-classificação-de-incidentes---nist"><span
+class="toc-section-number">1</span> 📊 Matriz de Classificação de
+Incidentes - NIST</a>
+<ul>
+<li><a href="#categorias-de-incidentes"
+id="toc-categorias-de-incidentes"><span
+class="toc-section-number">1.1</span> 🎯 Categorias de Incidentes</a>
+<ul>
+<li><a href="#malware" id="toc-malware"><span
+class="toc-section-number">1.1.1</span> <strong>1. 🦠
+Malware</strong></a></li>
+<li><a href="#phishingsocial-engineering"
+id="toc-phishingsocial-engineering"><span
+class="toc-section-number">1.1.2</span> <strong>2. 🎣 Phishing/Social
+Engineering</strong></a></li>
+<li><a href="#ddos-distributed-denial-of-service"
+id="toc-ddos-distributed-denial-of-service"><span
+class="toc-section-number">1.1.3</span> <strong>3. 💥 DDoS (Distributed
+Denial of Service)</strong></a></li>
+<li><a href="#data-breachexfiltração"
+id="toc-data-breachexfiltração"><span
+class="toc-section-number">1.1.4</span> <strong>4. 🗃️ Data
+Breach/Exfiltração</strong></a></li>
+<li><a href="#comprometimento-de-conta"
+id="toc-comprometimento-de-conta"><span
+class="toc-section-number">1.1.5</span> <strong>5. 🔐 Comprometimento de
+Conta</strong></a></li>
+<li><a href="#defacementalteração" id="toc-defacementalteração"><span
+class="toc-section-number">1.1.6</span> <strong>6. 🌐
+Defacement/Alteração</strong></a></li>
+<li><a href="#apt-advanced-persistent-threat"
+id="toc-apt-advanced-persistent-threat"><span
+class="toc-section-number">1.1.7</span> <strong>7. 🕵️ APT (Advanced
+Persistent Threat)</strong></a></li>
+<li><a href="#insider-threat" id="toc-insider-threat"><span
+class="toc-section-number">1.1.8</span> <strong>8. 👤 Insider
+Threat</strong></a></li>
+</ul></li>
+<li><a href="#níveis-de-severidade" id="toc-níveis-de-severidade"><span
+class="toc-section-number">1.2</span> 🚨 Níveis de Severidade</a>
+<ul>
+<li><a href="#crítico" id="toc-crítico"><span
+class="toc-section-number">1.2.1</span> <strong>🔴
+CRÍTICO</strong></a></li>
+<li><a href="#alto" id="toc-alto"><span
+class="toc-section-number">1.2.2</span> <strong>🟠
+ALTO</strong></a></li>
+<li><a href="#médio" id="toc-médio"><span
+class="toc-section-number">1.2.3</span> <strong>🟡
+MÉDIO</strong></a></li>
+<li><a href="#baixo" id="toc-baixo"><span
+class="toc-section-number">1.2.4</span> <strong>🟢
+BAIXO</strong></a></li>
+</ul></li>
+<li><a href="#matriz-de-impacto-cia"
+id="toc-matriz-de-impacto-cia"><span
+class="toc-section-number">1.3</span> 📈 Matriz de Impacto CIA</a>
+<ul>
+<li><a href="#confidencialidade" id="toc-confidencialidade"><span
+class="toc-section-number">1.3.1</span>
+<strong>Confidencialidade</strong></a></li>
+<li><a href="#integridade" id="toc-integridade"><span
+class="toc-section-number">1.3.2</span>
+<strong>Integridade</strong></a></li>
+<li><a href="#disponibilidade" id="toc-disponibilidade"><span
+class="toc-section-number">1.3.3</span>
+<strong>Disponibilidade</strong></a></li>
+</ul></li>
+<li><a href="#matriz-de-urgência" id="toc-matriz-de-urgência"><span
+class="toc-section-number">1.4</span> ⚡ Matriz de Urgência</a>
+<ul>
+<li><a href="#imediata-30-min" id="toc-imediata-30-min"><span
+class="toc-section-number">1.4.1</span> <strong>🚨 IMEDIATA (&lt; 30
+min)</strong></a></li>
+<li><a href="#alta-1-hora" id="toc-alta-1-hora"><span
+class="toc-section-number">1.4.2</span> <strong>🔥 ALTA (&lt; 1
+hora)</strong></a></li>
+<li><a href="#normal-4-horas" id="toc-normal-4-horas"><span
+class="toc-section-number">1.4.3</span> <strong>⚠️ NORMAL (&lt; 4
+horas)</strong></a></li>
+<li><a href="#baixa-8-horas" id="toc-baixa-8-horas"><span
+class="toc-section-number">1.4.4</span> <strong>📋 BAIXA (&lt; 8
+horas)</strong></a></li>
+</ul></li>
+<li><a href="#matriz-de-priorização"
+id="toc-matriz-de-priorização"><span
+class="toc-section-number">1.5</span> 🎯 Matriz de Priorização</a>
+<ul>
+<li><a href="#definição-das-prioridades"
+id="toc-definição-das-prioridades"><span
+class="toc-section-number">1.5.1</span> <strong>Definição das
+Prioridades:</strong></a></li>
+</ul></li>
+<li><a href="#exemplos-de-classificação"
+id="toc-exemplos-de-classificação"><span
+class="toc-section-number">1.6</span> 📊 Exemplos de Classificação</a>
+<ul>
+<li><a href="#exemplo-1-ransomware" id="toc-exemplo-1-ransomware"><span
+class="toc-section-number">1.6.1</span> <strong>Exemplo 1:
+Ransomware</strong></a></li>
+<li><a href="#exemplo-2-phishing-bem-sucedido"
+id="toc-exemplo-2-phishing-bem-sucedido"><span
+class="toc-section-number">1.6.2</span> <strong>Exemplo 2: Phishing
+bem-sucedido</strong></a></li>
+<li><a href="#exemplo-3-defacement-de-site"
+id="toc-exemplo-3-defacement-de-site"><span
+class="toc-section-number">1.6.3</span> <strong>Exemplo 3: Defacement de
+site</strong></a></li>
+<li><a href="#exemplo-4-tentativa-de-ddos-bloqueada"
+id="toc-exemplo-4-tentativa-de-ddos-bloqueada"><span
+class="toc-section-number">1.6.4</span> <strong>Exemplo 4: Tentativa de
+DDoS bloqueada</strong></a></li>
+</ul></li>
+<li><a href="#processo-de-reclassificação"
+id="toc-processo-de-reclassificação"><span
+class="toc-section-number">1.7</span> 🔄 Processo de Reclassificação</a>
+<ul>
+<li><a href="#quando-reclassificar" id="toc-quando-reclassificar"><span
+class="toc-section-number">1.7.1</span> <strong>Quando
+Reclassificar:</strong></a></li>
+<li><a href="#critérios-para-upgrade"
+id="toc-critérios-para-upgrade"><span
+class="toc-section-number">1.7.2</span> <strong>Critérios para
+Upgrade:</strong></a></li>
+<li><a href="#critérios-para-downgrade"
+id="toc-critérios-para-downgrade"><span
+class="toc-section-number">1.7.3</span> <strong>Critérios para
+Downgrade:</strong></a></li>
+</ul></li>
+<li><a href="#formulário-de-classificação"
+id="toc-formulário-de-classificação"><span
+class="toc-section-number">1.8</span> 📝 Formulário de
+Classificação</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="1"
+id="matriz-de-classificação-de-incidentes---nist"><span
+class="header-section-number">1</span> 📊 Matriz de Classificação de
+Incidentes - NIST</h1>
+<p>Esta matriz padroniza a classificação de incidentes de segurança
+seguindo critérios objetivos e mensuráveis.</p>
+<hr />
+<h2 data-number="1.1" id="categorias-de-incidentes"><span
+class="header-section-number">1.1</span> 🎯 Categorias de
+Incidentes</h2>
+<h3 data-number="1.1.1" id="malware"><span
+class="header-section-number">1.1.1</span> <strong>1. 🦠
+Malware</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Software malicioso (vírus, worms,
+trojans, ransomware)</li>
+<li><strong>Exemplos:</strong> WannaCry, Emotet, Zeus Banking
+Trojan</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Integridade,
+Disponibilidade</li>
+</ul>
+<h3 data-number="1.1.2" id="phishingsocial-engineering"><span
+class="header-section-number">1.1.2</span> <strong>2. 🎣 Phishing/Social
+Engineering</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Tentativas de obter informações através
+de engenharia social</li>
+<li><strong>Exemplos:</strong> Emails falsos, vishing, sites
+fraudulentos</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Compliance</li>
+</ul>
+<h3 data-number="1.1.3" id="ddos-distributed-denial-of-service"><span
+class="header-section-number">1.1.3</span> <strong>3. 💥 DDoS
+(Distributed Denial of Service)</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Ataques para tornar serviços
+indisponíveis</li>
+<li><strong>Exemplos:</strong> Botnets, ataques volumétricos, ataques de
+aplicação</li>
+<li><strong>Impacto Típico:</strong> Disponibilidade, Receita</li>
+</ul>
+<h3 data-number="1.1.4" id="data-breachexfiltração"><span
+class="header-section-number">1.1.4</span> <strong>4. 🗃️ Data
+Breach/Exfiltração</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Acesso não autorizado e exposição de
+dados sensíveis</li>
+<li><strong>Exemplos:</strong> SQLi, vazamento de database, insider
+threat</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Regulatório,
+Reputação</li>
+</ul>
+<h3 data-number="1.1.5" id="comprometimento-de-conta"><span
+class="header-section-number">1.1.5</span> <strong>5. 🔐 Comprometimento
+de Conta</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Acesso não autorizado a contas de
+usuário ou administrativas</li>
+<li><strong>Exemplos:</strong> Credential stuffing, password spray,
+token theft</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Integridade</li>
+</ul>
+<h3 data-number="1.1.6" id="defacementalteração"><span
+class="header-section-number">1.1.6</span> <strong>6. 🌐
+Defacement/Alteração</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Modificação não autorizada de websites
+ou sistemas</li>
+<li><strong>Exemplos:</strong> Hacktivismo, alteração de dados,
+sabotagem</li>
+<li><strong>Impacto Típico:</strong> Integridade, Reputação</li>
+</ul>
+<h3 data-number="1.1.7" id="apt-advanced-persistent-threat"><span
+class="header-section-number">1.1.7</span> <strong>7. 🕵️ APT (Advanced
+Persistent Threat)</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Ataques sofisticados com persistência
+prolongada</li>
+<li><strong>Exemplos:</strong> Espionagem industrial, nation-state
+actors</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Propriedade
+Intelectual</li>
+</ul>
+<h3 data-number="1.1.8" id="insider-threat"><span
+class="header-section-number">1.1.8</span> <strong>8. 👤 Insider
+Threat</strong></h3>
+<ul>
+<li><strong>Descrição:</strong> Ameaças originadas por colaboradores
+internos</li>
+<li><strong>Exemplos:</strong> Roubo de dados, sabotagem, vazamento
+intencional</li>
+<li><strong>Impacto Típico:</strong> Confidencialidade, Integridade,
+Confiança</li>
+</ul>
+<hr />
+<h2 data-number="1.2" id="níveis-de-severidade"><span
+class="header-section-number">1.2</span> 🚨 Níveis de Severidade</h2>
+<h3 data-number="1.2.1" id="crítico"><span
+class="header-section-number">1.2.1</span> <strong>🔴
+CRÍTICO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto operacional severo
+e imediato</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas críticos indisponíveis &gt; 1 hora</li>
+<li>Exposição de dados altamente sensíveis (&gt; 10.000 registros)</li>
+<li>Impacto financeiro &gt; R$ 500.000</li>
+<li>Violação de compliance com penalidades</li>
+<li>Comprometimento de infraestrutura crítica</li>
+<li>Repercussão midiática nacional</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 30 minutos</li>
+<li><strong>Escalação:</strong> CEO, CISO, Jurídico, Comunicação</li>
+</ul>
+<h3 data-number="1.2.2" id="alto"><span
+class="header-section-number">1.2.2</span> <strong>🟠 ALTO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto significativo nos
+negócios</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas importantes indisponíveis &gt; 4 horas</li>
+<li>Exposição de dados sensíveis (1.000-10.000 registros)</li>
+<li>Impacto financeiro R$ 100.000 - R$ 500.000</li>
+<li>Comprometimento de múltiplos sistemas</li>
+<li>Possível violação regulatória</li>
+<li>Repercussão midiática regional</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 1 hora</li>
+<li><strong>Escalação:</strong> CISO, TI, Jurídico</li>
+</ul>
+<h3 data-number="1.2.3" id="médio"><span
+class="header-section-number">1.2.3</span> <strong>🟡
+MÉDIO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto moderado e
+controlado</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas não-críticos indisponíveis &lt; 8 horas</li>
+<li>Exposição limitada de dados (&lt; 1.000 registros)</li>
+<li>Impacto financeiro R$ 10.000 - R$ 100.000</li>
+<li>Comprometimento de sistema isolado</li>
+<li>Sem violação regulatória</li>
+<li>Repercussão midiática local ou ausente</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 4 horas</li>
+<li><strong>Escalação:</strong> Líder de TI, Segurança</li>
+</ul>
+<h3 data-number="1.2.4" id="baixo"><span
+class="header-section-number">1.2.4</span> <strong>🟢
+BAIXO</strong></h3>
+<ul>
+<li><strong>Definição:</strong> Incidente com impacto mínimo ou
+potencial</li>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Sistemas auxiliares indisponíveis &lt; 24 horas</li>
+<li>Nenhuma exposição de dados confirmada</li>
+<li>Impacto financeiro &lt; R$ 10.000</li>
+<li>Tentativa de ataque sem sucesso</li>
+<li>Violação de política interna</li>
+<li>Sem repercussão externa</li>
+</ul></li>
+<li><strong>SLA Resposta:</strong> &lt; 8 horas</li>
+<li><strong>Escalação:</strong> Analista de Segurança</li>
+</ul>
+<hr />
+<h2 data-number="1.3" id="matriz-de-impacto-cia"><span
+class="header-section-number">1.3</span> 📈 Matriz de Impacto CIA</h2>
+<h3 data-number="1.3.1" id="confidencialidade"><span
+class="header-section-number">1.3.1</span>
+<strong>Confidencialidade</strong></h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 39%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Descrição</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALTO</strong></td>
+<td>Dados ultrassecretos ou regulamentados</td>
+<td>CPF, cartões de crédito, dados médicos, PI</td>
+</tr>
+<tr>
+<td><strong>MÉDIO</strong></td>
+<td>Dados internos sensíveis</td>
+<td>Estratégias de negócio, relatórios financeiros</td>
+</tr>
+<tr>
+<td><strong>BAIXO</strong></td>
+<td>Dados públicos ou de baixa sensibilidade</td>
+<td>Informações de marketing, dados agregados</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.3.2" id="integridade"><span
+class="header-section-number">1.3.2</span>
+<strong>Integridade</strong></h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 39%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Descrição</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALTO</strong></td>
+<td>Sistemas críticos de missão</td>
+<td>Core banking, controle industrial, emergência</td>
+</tr>
+<tr>
+<td><strong>MÉDIO</strong></td>
+<td>Sistemas importantes de negócio</td>
+<td>ERP, CRM, e-commerce</td>
+</tr>
+<tr>
+<td><strong>BAIXO</strong></td>
+<td>Sistemas auxiliares</td>
+<td>Intranet, sistemas de suporte</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.3.3" id="disponibilidade"><span
+class="header-section-number">1.3.3</span>
+<strong>Disponibilidade</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Descrição</th>
+<th>RTO</th>
+<th>RPO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ALTO</strong></td>
+<td>Sistemas 24/7 críticos</td>
+<td>&lt; 1 hora</td>
+<td>&lt; 15 min</td>
+</tr>
+<tr>
+<td><strong>MÉDIO</strong></td>
+<td>Sistemas horário comercial</td>
+<td>&lt; 4 horas</td>
+<td>&lt; 1 hora</td>
+</tr>
+<tr>
+<td><strong>BAIXO</strong></td>
+<td>Sistemas não-essenciais</td>
+<td>&lt; 24 horas</td>
+<td>&lt; 8 horas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="1.4" id="matriz-de-urgência"><span
+class="header-section-number">1.4</span> ⚡ Matriz de Urgência</h2>
+<h3 data-number="1.4.1" id="imediata-30-min"><span
+class="header-section-number">1.4.1</span> <strong>🚨 IMEDIATA (&lt; 30
+min)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Ataque em andamento</li>
+<li>Sistemas críticos comprometidos</li>
+<li>Exposição de dados em massa</li>
+<li>Ameaça à segurança física</li>
+<li>Ransomware ativo</li>
+</ul></li>
+</ul>
+<h3 data-number="1.4.2" id="alta-1-hora"><span
+class="header-section-number">1.4.2</span> <strong>🔥 ALTA (&lt; 1
+hora)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Evidências de comprometimento</li>
+<li>Sistemas importantes afetados</li>
+<li>Possível exposição de dados</li>
+<li>Violação detectada por terceiros</li>
+<li>Ameaça de deadline regulatório</li>
+</ul></li>
+</ul>
+<h3 data-number="1.4.3" id="normal-4-horas"><span
+class="header-section-number">1.4.3</span> <strong>⚠️ NORMAL (&lt; 4
+horas)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Incidente contido</li>
+<li>Impacto limitado</li>
+<li>Investigação necessária</li>
+<li>Melhorias de segurança</li>
+<li>Compliance preventivo</li>
+</ul></li>
+</ul>
+<h3 data-number="1.4.4" id="baixa-8-horas"><span
+class="header-section-number">1.4.4</span> <strong>📋 BAIXA (&lt; 8
+horas)</strong></h3>
+<ul>
+<li><strong>Critérios:</strong>
+<ul>
+<li>Incidente resolvido</li>
+<li>Análise pós-incidente</li>
+<li>Documentação</li>
+<li>Treinamento</li>
+<li>Auditoria de rotina</li>
+</ul></li>
+</ul>
+<hr />
+<h2 data-number="1.5" id="matriz-de-priorização"><span
+class="header-section-number">1.5</span> 🎯 Matriz de Priorização</h2>
+<table>
+<thead>
+<tr>
+<th>Severidade</th>
+<th>Impacto Alto</th>
+<th>Impacto Médio</th>
+<th>Impacto Baixo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Crítico</strong></td>
+<td>P1 - Imediata</td>
+<td>P1 - Imediata</td>
+<td>P2 - Alta</td>
+</tr>
+<tr>
+<td><strong>Alto</strong></td>
+<td>P1 - Imediata</td>
+<td>P2 - Alta</td>
+<td>P3 - Normal</td>
+</tr>
+<tr>
+<td><strong>Médio</strong></td>
+<td>P2 - Alta</td>
+<td>P3 - Normal</td>
+<td>P4 - Baixa</td>
+</tr>
+<tr>
+<td><strong>Baixo</strong></td>
+<td>P3 - Normal</td>
+<td>P4 - Baixa</td>
+<td>P4 - Baixa</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.5.1" id="definição-das-prioridades"><span
+class="header-section-number">1.5.1</span> <strong>Definição das
+Prioridades:</strong></h3>
+<ul>
+<li><strong>P1 (Imediata):</strong> Resposta em &lt; 30 min, equipe
+completa mobilizada</li>
+<li><strong>P2 (Alta):</strong> Resposta em &lt; 1 hora, líder técnico +
+especialistas</li>
+<li><strong>P3 (Normal):</strong> Resposta em &lt; 4 horas, analista de
+plantão</li>
+<li><strong>P4 (Baixa):</strong> Resposta em &lt; 8 horas, próxima
+janela de trabalho</li>
+</ul>
+<hr />
+<h2 data-number="1.6" id="exemplos-de-classificação"><span
+class="header-section-number">1.6</span> 📊 Exemplos de
+Classificação</h2>
+<h3 data-number="1.6.1" id="exemplo-1-ransomware"><span
+class="header-section-number">1.6.1</span> <strong>Exemplo 1:
+Ransomware</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> Malware</li>
+<li><strong>Severidade:</strong> Crítico (sistemas indisponíveis)</li>
+<li><strong>Impacto:</strong> Alto (disponibilidade + integridade)</li>
+<li><strong>Urgência:</strong> Imediata (ataque ativo)</li>
+<li><strong>Prioridade:</strong> P1</li>
+<li><strong>SLA:</strong> &lt; 30 minutos</li>
+</ul>
+<h3 data-number="1.6.2" id="exemplo-2-phishing-bem-sucedido"><span
+class="header-section-number">1.6.2</span> <strong>Exemplo 2: Phishing
+bem-sucedido</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> Phishing/Social Engineering</li>
+<li><strong>Severidade:</strong> Alto (credenciais comprometidas)</li>
+<li><strong>Impacto:</strong> Médio (confidencialidade)</li>
+<li><strong>Urgência:</strong> Alta (acesso não autorizado)</li>
+<li><strong>Prioridade:</strong> P2</li>
+<li><strong>SLA:</strong> &lt; 1 hora</li>
+</ul>
+<h3 data-number="1.6.3" id="exemplo-3-defacement-de-site"><span
+class="header-section-number">1.6.3</span> <strong>Exemplo 3: Defacement
+de site</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> Defacement/Alteração</li>
+<li><strong>Severidade:</strong> Médio (reputação afetada)</li>
+<li><strong>Impacto:</strong> Médio (integridade)</li>
+<li><strong>Urgência:</strong> Alta (visibilidade pública)</li>
+<li><strong>Prioridade:</strong> P2</li>
+<li><strong>SLA:</strong> &lt; 1 hora</li>
+</ul>
+<h3 data-number="1.6.4" id="exemplo-4-tentativa-de-ddos-bloqueada"><span
+class="header-section-number">1.6.4</span> <strong>Exemplo 4: Tentativa
+de DDoS bloqueada</strong></h3>
+<ul>
+<li><strong>Categoria:</strong> DDoS</li>
+<li><strong>Severidade:</strong> Baixo (sem impacto)</li>
+<li><strong>Impacto:</strong> Baixo (tentativa frustrada)</li>
+<li><strong>Urgência:</strong> Normal (monitoramento)</li>
+<li><strong>Prioridade:</strong> P3</li>
+<li><strong>SLA:</strong> &lt; 4 horas</li>
+</ul>
+<hr />
+<h2 data-number="1.7" id="processo-de-reclassificação"><span
+class="header-section-number">1.7</span> 🔄 Processo de
+Reclassificação</h2>
+<h3 data-number="1.7.1" id="quando-reclassificar"><span
+class="header-section-number">1.7.1</span> <strong>Quando
+Reclassificar:</strong></h3>
+<ul>
+<li>Novas evidências encontradas</li>
+<li>Escopo do incidente expandido</li>
+<li>Impacto maior que inicialmente avaliado</li>
+<li>Mudança no status de contenção</li>
+</ul>
+<h3 data-number="1.7.2" id="critérios-para-upgrade"><span
+class="header-section-number">1.7.2</span> <strong>Critérios para
+Upgrade:</strong></h3>
+<ul>
+<li>Sistemas críticos adicionais afetados</li>
+<li>Exposição de dados maior que estimada</li>
+<li>Repercussão externa negativa</li>
+<li>Violação regulatória confirmada</li>
+</ul>
+<h3 data-number="1.7.3" id="critérios-para-downgrade"><span
+class="header-section-number">1.7.3</span> <strong>Critérios para
+Downgrade:</strong></h3>
+<ul>
+<li>Incidente contido com sucesso</li>
+<li>Impacto menor que inicialmente estimado</li>
+<li>Dados não foram realmente expostos</li>
+<li>Falso positivo confirmado</li>
+</ul>
+<hr />
+<h2 data-number="1.8" id="formulário-de-classificação"><span
+class="header-section-number">1.8</span> 📝 Formulário de
+Classificação</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## CLASSIFICAÇÃO DE INCIDENTE</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>**ID do Incidente:** INC-YYYY-NNNN</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>**Data/Hora:** DD/MM/YYYY HH:MM</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>**Classificador:** <span class="co">[</span><span class="ot">Nome</span><span class="co">]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### CATEGORIA</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Malware</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Phishing/Social Engineering  </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> DDoS</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Data Breach/Exfiltração</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Comprometimento de Conta</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Defacement/Alteração</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> APT</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Insider Threat</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Outro: ________________</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### SEVERIDADE</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Crítico</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Alto</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Médio</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Baixo</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### IMPACTO</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>**Confidencialidade:** <span class="co">[ ]</span> Alto <span class="co">[ ]</span> Médio <span class="co">[ ]</span> Baixo</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>**Integridade:** <span class="co">[ ]</span> Alto <span class="co">[ ]</span> Médio <span class="co">[ ]</span> Baixo  </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>**Disponibilidade:** <span class="co">[ ]</span> Alto <span class="co">[ ]</span> Médio <span class="co">[ ]</span> Baixo</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### URGÊNCIA</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Imediata (&lt; 30 min)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Alta (&lt; 1 hora)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Normal (&lt; 4 horas)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> Baixa (&lt; 8 horas)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### PRIORIDADE CALCULADA</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P1 - Imediata</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P2 - Alta</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P3 - Normal</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">[ ]</span> P4 - Baixa</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### JUSTIFICATIVA</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Explicar os critérios usados para classificação</span><span class="co">]</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### PRÓXIMAS AÇÕES</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Definir ações imediatas baseadas na classificação</span><span class="co">]</span></span></code></pre></div>
+<hr />
+<p><strong>🎯 Esta matriz garante classificação consistente e resposta
+adequada a cada tipo de incidente de segurança!</strong></p>
+</body>
+</html>
