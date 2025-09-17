@@ -326,8 +326,5 @@ Ao completar este tutorial, você terá demonstrado:
 ## 🎓 Próximos Passos
 
 1. **Criar Relatório:** Use o template `RELATORIO-template.md`
-2. **Expandir Ataques:** Teste Command Injection, File Inclusion
-3. **Configurar Containment:** Implementar regras iptables
-4. **Automatizar Resposta:** Scripts de detecção e bloqueio
 
 **🏆 Parabéns! Você completou um laboratório completo de segurança ofensiva e defensiva!**
