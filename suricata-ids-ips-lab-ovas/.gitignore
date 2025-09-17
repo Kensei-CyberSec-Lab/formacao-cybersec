@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Python/node caches
+__pycache__/
+node_modules/
+
+# VirtualBox/OVA artifacts
+*.ova
+*.ovf
+*.mf
+*.vmdk
+*.vdi
+*.log
+
+# Release outputs
+RELEASE/CHECKSUMS.sha256
