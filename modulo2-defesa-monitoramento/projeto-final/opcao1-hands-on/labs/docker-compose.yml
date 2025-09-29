@@ -19,8 +19,8 @@ services:
     environment:
       - BACKEND=http://dvwa:80        # para onde o WAF faz proxy_pass
       - SERVER_NAME=localhost         # hostname do WAF
-      - MODSEC_RULE_ENGINE=On  # modo blocking (bloqueia ataques)
-      # - MODSEC_RULE_ENGINE=DetectionOnly
+      #- MODSEC_RULE_ENGINE=On  # modo blocking (bloqueia ataques)
+      - MODSEC_RULE_ENGINE=On
       # Níveis de paranoia (afinam detecção/bloqueio):
       - BLOCKING_PARANOIA=1
       - DETECTION_PARANOIA=1
