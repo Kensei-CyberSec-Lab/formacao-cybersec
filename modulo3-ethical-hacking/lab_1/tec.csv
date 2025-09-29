@@ -1,4 +1,0 @@
-domain,technology,version,confidence
-www.acme-corp-lab.com,Apache,2.4.41,high
-admin.acme-corp-lab.com,Nginx,1.18.0,high
-dev.acme-corp-lab.com,Apache,2.4.41,medium

@@ -1,5 +1,0 @@
-name,type,status,discovered_date
-www.acme-corp-lab.com,subdomain,active,2024-01-15
-admin.acme-corp-lab.com,subdomain,active,2024-01-15
-dev.acme-corp-lab.com,subdomain,active,2024-01-15
-old.acme-corp-lab.com,subdomain,active,2024-01-15
