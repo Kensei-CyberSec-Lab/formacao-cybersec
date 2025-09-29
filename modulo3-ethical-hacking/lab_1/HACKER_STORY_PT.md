@@ -244,24 +244,6 @@ Alex criou um novo scan no SpiderFoot, selecionando módulos relevantes para DNS
 
 *"O SpiderFoot vai coletar dados de fontes que não consegui acessar manualmente. É sempre bom ter múltiplas perspectivas."*
 
-### "E agora vamos visualizar tudo no Neo4j"
-
-Alex acessou o Neo4j Browser em `http://localhost:7474` e fez login com as credenciais `neo4j:test`.
-
-*"Excelente! O Neo4j também está rodando no Docker. Agora vou importar os dados que coletei manualmente para criar visualizações."*
-
-```bash
-# "Preparando os dados para visualização"
-echo "name,type" > subdomains_neo4j.csv
-cat subdomains.txt | sed 's/$/,subdomain/' >> subdomains_neo4j.csv
-
-# "Criando relacionamentos entre subdomínios e IPs"
-echo "name,ip,type" > ips_neo4j.csv
-cat resolved_subdomains.txt | awk -F'[][]' '{print $2 "," $4 ",ip"}' >> ips_neo4j.csv
-```
-
-*"A visualização em grafos vai me ajudar a entender melhor as conexões entre todos esses sistemas."*
-
 ---
 
 ## 📊 Fase 6: Documentando os Achados

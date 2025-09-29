@@ -1,0 +1,5 @@
+subdomain,ip,ttl
+www.acme-corp-lab.com,18.239.69.111,300
+admin.acme-corp-lab.com,54.152.245.201,300
+dev.acme-corp-lab.com,34.207.53.34,300
+old.acme-corp-lab.com,3.94.82.59,300
