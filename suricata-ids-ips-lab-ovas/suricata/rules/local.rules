@@ -1,0 +1,12 @@
+# DVWA visibilidade (legítimo)
+alert http any any -> $HOME_NET any (msg:"LAB DVWA access"; flow:to_server,established; http.uri; content:"/dvwa"; nocase; classtype:policy-violation; sid:1000003; rev:2;)
+
+# SQLi simples (alert)
+alert http any any -> $HOME_NET any (msg:"LAB SQLi attempt (simple)"; flow:to_server,established; content:"' or '1'='1"; http.request_body; nocase; classtype:web-application-attack; sid:1000001; rev:3;)
+
+# XSS simples (alert)
+alert http any any -> $HOME_NET any (msg:"LAB XSS attempt (simple)"; flow:to_server,established; content:"<script>alert('Hacked')</script>"; http.request_body; nocase; classtype:web-application-attack; sid:1000002; rev:3;)
+
+# Versões drop p/ IPS
+drop http any any -> $HOME_NET any (msg:"LAB BLOCK SQLi (simple)"; flow:to_server,established; content:"' or '1'='1"; http.request_body; nocase; classtype:web-application-attack; sid:1100001; rev:2;)
+drop http any any -> $HOME_NET any (msg:"LAB BLOCK XSS (simple)"; flow:to_server,established; content:"<script>alert('Hacked')</script>"; http.request_body; nocase; classtype:web-application-attack; sid:1100002; rev:2;)
