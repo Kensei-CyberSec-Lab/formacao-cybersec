@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Wed Oct  1 13:28:49 2025 as: /usr/lib/nmap/nmap -vvv -p 22,80 -4 -sS -T2 -oA results/3.94.82.59/rustscan_3.94.82.59 3.94.82.59 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -vvv -p 22,80 -4 -sS -T2 -oA results/3.94.82.59/rustscan_3.94.82.59 3.94.82.59" start="1759325329" startstr="Wed Oct  1 13:28:49 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="2" services="22,80"/>
+<verbose level="3"/>
+<debugging level="0"/>
+<taskbegin task="Ping Scan" time="1759325329"/>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="3.94.82.59" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<taskend task="Ping Scan" time="1759325335" extrainfo="1 total hosts"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1759325335"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1759325335"/>
+<taskbegin task="SYN Stealth Scan" time="1759325335"/>
+<taskend task="SYN Stealth Scan" time="1759325338" extrainfo="2 total ports"/>
+<host starttime="1759325335" endtime="1759325338"><status state="up" reason="reset" reason_ttl="63"/>
+<address addr="3.94.82.59" addrtype="ipv4"/>
+<hostnames>
+<hostname name="ec2-3-94-82-59.compute-1.amazonaws.com" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="filtered" reason="no-response" reason_ttl="0"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="filtered" reason="no-response" reason_ttl="0"/><service name="http" method="table" conf="3"/></port>
+</ports>
+<times srtt="4216" rttvar="5000" to="400000"/>
+</host>
+<runstats><finished time="1759325338" timestr="Wed Oct  1 13:28:58 2025" summary="Nmap done at Wed Oct  1 13:28:58 2025; 1 IP address (1 host up) scanned in 8.76 seconds" elapsed="8.76" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

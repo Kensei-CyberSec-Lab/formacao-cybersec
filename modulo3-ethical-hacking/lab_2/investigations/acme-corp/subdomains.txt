@@ -1,0 +1,4 @@
+admin.acme-corp-lab.com
+dev.acme-corp-lab.com
+old.acme-corp-lab.com
+www.acme-corp-lab.com

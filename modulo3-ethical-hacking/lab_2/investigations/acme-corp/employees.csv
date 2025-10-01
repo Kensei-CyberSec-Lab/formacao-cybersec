@@ -1,0 +1,6 @@
+employee_id,name,email,department,phone
+001,John Doe,john.doe@acme-corp-lab.com,IT,+1-555-0101
+002,Jane Smith,jane.smith@acme-corp-lab.com,Finance,+1-555-0102
+003,Bob Wilson,bob.wilson@acme-corp-lab.com,Admin,+1-555-0103
+004,Alice Brown,alice.brown@acme-corp-lab.com,Marketing,+1-555-0104
+005,Charlie Davis,charlie.davis@acme-corp-lab.com,Sales,+1-555-0105

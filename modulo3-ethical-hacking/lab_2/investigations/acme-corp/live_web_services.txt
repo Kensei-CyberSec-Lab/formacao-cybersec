@@ -1,0 +1,3 @@
+https://www.acme-corp-lab.com [[32m200[0m] [[36mAcme Logística - Soluções Integradas em Supply Chain[0m] [[35mAmazon CloudFront,Amazon S3,Amazon Web Services,HTTP/3[0m]
+http://admin.acme-corp-lab.com [[32m200[0m] [[36mAcme Corp – Official Website – Just another WordPress site[0m] [[35mApache HTTP Server:2.4.65,MySQL,PHP:8.1.33,Twenty Twenty-One,WordPress Block Editor,WordPress:5.8[0m]
+http://old.acme-corp-lab.com [[33m301[0m] [[35mAmazon S3,Amazon Web Services[0m]

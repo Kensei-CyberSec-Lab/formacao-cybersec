@@ -1,0 +1,5 @@
+# Nmap 7.95 scan initiated Wed Oct  1 13:28:49 2025 as: /usr/lib/nmap/nmap -vvv -p 22,80 -4 -sS -T2 -oA results/3.94.82.59/rustscan_3.94.82.59 3.94.82.59
+# Ports scanned: TCP(2;22,80) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 3.94.82.59 (ec2-3-94-82-59.compute-1.amazonaws.com)	Status: Up
+Host: 3.94.82.59 (ec2-3-94-82-59.compute-1.amazonaws.com)	Ports: 22/filtered/tcp//ssh///, 80/filtered/tcp//http///
+# Nmap done at Wed Oct  1 13:28:58 2025 -- 1 IP address (1 host up) scanned in 8.76 seconds

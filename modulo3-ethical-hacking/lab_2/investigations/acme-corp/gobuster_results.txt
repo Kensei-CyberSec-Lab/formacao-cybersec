@@ -1,0 +1,3 @@
+wp-admin            [36m (Status: 301)[0m [Size: 239][34m [--> http://54.152.245.201/wp-admin/][0m
+wp-content          [36m (Status: 301)[0m [Size: 241][34m [--> http://54.152.245.201/wp-content/][0m
+wp-includes         [36m (Status: 301)[0m [Size: 242][34m [--> http://54.152.245.201/wp-includes/][0m

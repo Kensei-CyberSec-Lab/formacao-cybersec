@@ -7,7 +7,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - ./labs:/home/kali/labs
+      - ./investigations/acme-corp:/home/kali/investigations/acme-corp
     command: /bin/bash
 
   spiderfoot:

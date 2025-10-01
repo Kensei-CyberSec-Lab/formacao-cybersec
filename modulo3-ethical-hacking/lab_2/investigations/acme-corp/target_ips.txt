@@ -1,0 +1,11 @@
+# IPs descobertos na investigação OSINT - Lab 1
+# Esses IPs serão usados para enumeração ativa no Lab 2
+
+# IP do servidor old.acme-corp-lab.com (página legacy com links sensíveis)
+3.94.82.59
+
+# IP do servidor dev.acme-corp-lab.com (API expondo credenciais)
+34.207.53.34
+
+# IP do servidor admin.acme-corp-lab.com (WordPress administrativo)
+54.152.245.201

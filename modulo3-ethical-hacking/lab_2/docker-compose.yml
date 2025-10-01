@@ -1,0 +1,16 @@
+services:
+  kali:
+    build:
+      context: .
+      dockerfile: kali.Dockerfile
+    container_name: kensei_kali
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./investigations/acme-corp:/home/kali/investigations/acme-corp
+    command: /bin/bash
+
+
+networks:
+  default:
+    name: kensei_lab_net

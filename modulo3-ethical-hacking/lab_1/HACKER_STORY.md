@@ -63,15 +63,7 @@ Alex sabia que o Amass poderia encontrar subdomínios adicionais, mas também sa
 
 ```bash
 # "Vamos tentar o Amass, mas com timeout para não perder tempo"
-timeout 300 amass enum -passive -d acme-corp-lab.com -o amass_results.txt -v || echo "Amass timeout - continuando com Subfinder"
-
-# Verificando se o Amass completou
-if [ -f amass_results.txt ]; then
-    echo "=== RESULTADOS DO AMASS ==="
-    cat amass_results.txt
-else
-    echo "Amass não completou - usando apenas resultados do Subfinder"
-fi
+amass enum -passive -d acme-corp-lab.com -o amass_results.txt -v 
 ```
 
 *"Como esperado, o Amass demorou muito. Mas não importa - o Subfinder já nos deu uma boa base para trabalhar."*
@@ -143,8 +135,8 @@ awk '/^<!--/,/-->$/' legacy_page.html
 
 ```bash
 # "Vamos baixar esses arquivos S3"
-curl -s https://acme-corp-lab-public-files-6nssymq7.s3.us-east-1.amazonaws.com/company_info.txt
-curl -s https://acme-corp-lab-public-files-6nssymq7.s3.us-east-1.amazonaws.com/employees.csv
+curl --output company_info.txt -s https://acme-corp-lab-public-files-6nssymq7.s3.us-east-1.amazonaws.com/company_info.txt
+curl --output employees.csv -s https://acme-corp-lab-public-files-6nssymq7.s3.us-east-1.amazonaws.com/employees.csv
 ```
 
 *"Jackpot!"* Alex sorriu. Os arquivos continham informações detalhadas da empresa:
@@ -179,7 +171,7 @@ curl -I http://dev.acme-corp-lab.com.s3-website-us-east-1.amazonaws.com
 curl -I http://54.152.245.201:80/
 
 # "E o serviço dev"
-curl -s http://34.207.53.34:3000/ | head -5
+curl -s http://34.207.53.34:3000/
 ```
 
 O serviço admin retornou informações sobre WordPress, e o serviço dev mostrou uma API JSON com endpoints interessantes.
@@ -232,7 +224,79 @@ gobuster dir -u http://54.152.245.201:80 -w custom_wordlist.txt -o gobuster_resu
 
 ---
 
-## 🔍 Fase 5: Análise com Ferramentas Avançadas
+## 🔍 Fase 5: Coletando IPs para Enumeração Ativa
+
+### "OSINT me trouxe até aqui. Agora preciso dos IPs reais para o próximo passo."
+
+Alex sabia que a investigação OSINT havia revelado informações valiosas, mas para realizar enumeração ativa de serviços (no Lab 2), ele precisaria dos endereços IP reais dos sistemas descobertos.
+
+*"Vamos coletar todos os IPs que encontramos. Esses serão meus alvos para a próxima fase."*
+
+#### 5.1: Descobrindo o IP por trás do Redirecionamento
+
+Alex lembrou que `old.acme-corp-lab.com` tinha um redirecionamento HTTP. O domínio provavelmente resolve para um bucket S3, mas o redirecionamento aponta para o IP real do servidor.
+
+```bash
+# Seguir o redirecionamento e capturar o IP real
+curl -I -L http://old.acme-corp-lab.com 2>&1 | grep -i "location"
+
+# Ou usar curl verbose para ver todos os redirecionamentos
+curl -v http://old.acme-corp-lab.com 2>&1 | grep -E "Connected to|Location:"
+```
+
+*"Aha! O redirecionamento aponta para um IP real. Esse é o servidor que está hospedando a página legacy, não o bucket S3."*
+
+Alternativamente, Alex abriu o navegador e acessou `http://old.acme-corp-lab.com/`, depois inspecionou a URL final na barra de endereços após o redirecionamento.
+
+*"Perfeito! Agora tenho o IP real do servidor legacy."*
+
+#### 5.2: Coletando Todos os IPs Descobertos
+
+
+**Por quê?** Organizar os IPs em um arquivo facilita o trabalho no Lab 2, onde cada IP será alvo de enumeração ativa (scan de portas, enumeração SMB, LDAP, etc.).
+
+#### 5.3: Coletando IPs dos Links na Página Legacy
+
+Alex acessou `http://old.acme-corp-lab.com/` no navegador e observou os links presentes na página. Alguns desses links apontavam para outros domínios ou diretamente para IPs.
+
+```bash
+# Baixar o HTML da página legacy seguindo redirecionamentos
+curl -L -s http://old.acme-corp-lab.com/ > old_acme_page.html
+
+# Extrair todos os links (href) da página
+curl -v http://admin.acme-corp-lab.com.s3-website-us-east-1.amazonaws.com 2>&1 | grep -E "Connected to|Location:"
+curl -v http://dev.acme-corp-lab.com.s3-website-us-east-1.amazonaws.com 2>&1 | grep -E "Connected to|Location:"
+```
+
+*"Interessante... a página legacy contém links para outros serviços. Vou testar cada link e seguir os redirecionamentos para descobrir os IPs reais."*
+
+Alex organizou todos os IPs encontrados durante a investigação:
+
+```bash
+# Criar arquivo com lista de IPs para o Lab 2
+cat > target_ips.txt << 'EOF'
+# IPs descobertos na investigação OSINT - Lab 1
+# Esses IPs serão usados para enumeração ativa no Lab 2
+
+# IP do servidor old.acme-corp-lab.com (página legacy com links sensíveis)
+<IP>
+
+# IP do servidor dev.acme-corp-lab.com (API expondo credenciais)
+<IP>
+
+# IP do servidor admin.acme-corp-lab.com (WordPress administrativo)
+<IP>
+EOF
+```
+
+#### 5.4: Documentando os Alvos
+
+
+*"Agora tenho uma lista clara de alvos. No Lab 2, vou enumerar cada um desses IPs para descobrir quais serviços estão rodando e como estão configurados."*
+
+---
+
+## 🔍 Fase 6: Análise com Ferramentas Avançadas
 
 ### "Vamos usar o SpiderFoot para uma análise mais profunda"
 
@@ -246,7 +310,7 @@ Alex criou um novo scan no SpiderFoot, selecionando módulos relevantes para DNS
 
 ---
 
-## 📊 Fase 6: Documentando os Achados
+## 📊 Fase 7: Documentando os Achados
 
 ### "Sempre documente tudo. Conhecimento sem documentação é conhecimento perdido."
 
@@ -331,19 +395,52 @@ Alex sabia que as vulnerabilidades que havia encontrado eram sérias. Em um cen�
 
 ---
 
-## 🌅 O Fim da Jornada
+## 🌅 O Fim da Jornada... Por Enquanto
 
 **5 da manhã. Primeira luz do dia.**
 
-Alex finalizou seu relatório e o salvou. Ele havia descoberto vulnerabilidades significativas, mas mais importante, havia demonstrado como uma investigação OSINT sistemática pode revelar a verdadeira postura de segurança de uma organização.
+Alex finalizou seu relatório e o salvou. Ele havia descoberto vulnerabilidades significativas através de OSINT: subdomínios expostos, APIs vazando credenciais, buckets S3 mal configurados, e uma página legacy servindo como hub central desprotegido.
 
-*"Esta empresa tem muito trabalho pela frente,"* pensou Alex, *"mas pelo menos agora eles sabem exatamente o que precisa ser corrigido."*
+Mas algo o incomodava. Ele olhou para o arquivo `target_ips.txt` na tela.
 
-Ele fechou o laptop e se preparou para dormir, sabendo que havia usado suas habilidades para o bem - descobrindo vulnerabilidades para que pudessem ser corrigidas, não exploradas.
+*"OSINT me mostrou a superfície. Mas o que está rodando DENTRO desses servidores? SMB? LDAP? RDP? Que versões? Que configurações?"*
 
-*"O ambiente Docker tornou tudo mais organizado e reproduzível. Amanhã será outro dia, com novos desafios e novos sistemas para entender. Mas pelo menos o setup estará sempre pronto."*
+Alex sabia que a verdadeira investigação estava apenas começando. OSINT revelou **o quê** estava exposto. A próxima fase — enumeração ativa — revelaria **como** esses sistemas estavam configurados e **quão** vulneráveis realmente eram.
 
-**Fim da história.**
+*"Esta empresa tem muito trabalho pela frente,"* pensou Alex, salvando o arquivo `target_ips.txt` com cuidado. *"Mas pelo menos agora tenho uma lista clara de alvos para a próxima fase."*
+
+Ele configurou um lembrete para o dia seguinte:
+
+```bash
+# Salvar lista de tarefas para o Lab 2
+cat > lab2_tasks.txt << 'EOF'
+LAB 2 - ENUMERAÇÃO ATIVA DE SERVIÇOS
+
+Alvos identificados no Lab 1:
+- IP do servidor old.acme-corp-lab.com
+- 34.207.53.34 (dev.acme-corp-lab.com)
+- 54.152.245.201 (admin.acme-corp-lab.com)
+- IP do servidor www.acme-corp-lab.com
+
+Próximos passos:
+1. Scan de portas completo em cada IP
+2. Enumeração SMB (compartilhamentos, usuários, políticas)
+3. Enumeração LDAP (estrutura do diretório, contas)
+4. Análise de serviços web (headers, tecnologias, vulnerabilidades)
+5. Banner grabbing para identificar versões exatas
+6. Documentar tudo e propor mitigações
+
+Autorização: ✅ Teste de penetração autorizado pela empresa
+EOF
+```
+
+*"O ambiente Docker tornou tudo mais organizado e reproduzível. Amanhã será outro dia — e com alvos bem definidos, a investigação será ainda mais eficiente."*
+
+Alex fechou o laptop e se preparou para dormir, mas sua mente já estava trabalhando nos próximos passos. Ele havia usado suas habilidades para o bem — descobrindo vulnerabilidades para que pudessem ser corrigidas, não exploradas.
+
+**Fim da história... do Lab 1.**
+
+**A jornada continua no Lab 2: Enumeração Ativa de Serviços.**
 
 ---
 
