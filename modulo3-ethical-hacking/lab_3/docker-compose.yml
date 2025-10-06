@@ -1,7 +1,10 @@
 version: '3.8'
 services:
   kali:
-    image: kalilinux/kali-rolling
+    build:
+      context: .
+      dockerfile: Dockerfile.kali-msf
+    image: kensei/kali-msf:latest
     container_name: kensei_kali
     tty: true
     stdin_open: true
@@ -10,21 +13,9 @@ services:
     networks:
       - kensei_net
     platform: ${PLATFORM:-linux/amd64}
-
-  metasploit:
-    image: metasploitframework/metasploit-framework:latest
-    container_name: kensei_msf
-    tty: true
-    stdin_open: true
-    ports:
-      - "4444:4444"
-    volumes:
-      - ./msfdata:/msf
-    networks:
-      - kensei_net
-    environment:
-      - MSF_DATABASE_CONFIG=/msf/config/database.yml
-    platform: ${PLATFORM:-linux/amd64}
+# Metasploit exposed port is optional when using msfconsole inside Kali
+#    ports:
+#      - "4444:4444"
 
 networks:
   kensei_net:

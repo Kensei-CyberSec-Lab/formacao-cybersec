@@ -1,0 +1,27 @@
+FROM kalilinux/kali-rolling
+
+# Configure apt to tolerate SSL issues and force HTTP mirrors
+RUN printf 'Acquire::https::Verify-Peer "false";\nAcquire::https::Verify-Host "false";\n' > /etc/apt/apt.conf.d/99insecure \
+    && printf 'deb http://http.kali.org/kali kali-rolling main contrib non-free non-free-firmware\n' > /etc/apt/sources.list \
+    && apt-get update -qq -o Acquire::AllowInsecureRepositories=true \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ca-certificates || true \
+    && apt-get update -qq -o Acquire::AllowInsecureRepositories=true \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
+       metasploit-framework postgresql postgresql-contrib sudo procps \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create kali user
+RUN useradd -m -s /bin/bash kali \
+    && echo 'kali:kali' | chpasswd \
+    && usermod -aG sudo kali
+
+# Startup script to start PostgreSQL and ensure msfdb is initialized for user kali
+COPY startup-kali-msf.sh /usr/local/bin/startup-kali-msf.sh
+RUN chmod +x /usr/local/bin/startup-kali-msf.sh
+
+ENV HOME=/home/kali
+
+CMD ["/usr/local/bin/startup-kali-msf.sh"]
+
+
