@@ -8,6 +8,9 @@ services:
     stdin_open: true
     volumes:
       - ./investigations/acme-corp:/home/kali/investigations/acme-corp
+    environment:
+      - GOPATH=/root/go
+      - PATH=/root/go/bin:/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     command: /bin/bash
 
 

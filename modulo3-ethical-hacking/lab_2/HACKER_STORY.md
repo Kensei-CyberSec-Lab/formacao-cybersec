@@ -13,96 +13,13 @@ A investigação OSINT do Lab 1 havia revelado informações valiosas sobre a Ac
 
 *"OSINT me mostrou o que está público. Agora preciso entender o que está rodando DENTRO desses sistemas,"* pensou Alex, abrindo seu laptop e o arquivo `target_ips.txt` que havia criado na noite anterior.
 
-A empresa havia autorizado um teste de penetração completo. Alex tinha em mãos uma lista de endereços IP autorizados — todos coletados durante a investigação OSINT:
-
-```
-IPs descobertos no Lab 1:
-- 3.94.82.59 old.acme-corp-lab.com (página legacy)
-- 34.207.53.34 (dev.acme-corp-lab.com - API de desenvolvimento)
-- 54.152.245.201 (admin.acme-corp-lab.com - WordPress)
-- IP do servidor www.acme-corp-lab.com (site principal)
-```
+A empresa havia autorizado um teste de penetração completo. Alex tinha em mãos uma lista de endereços IP autorizados... todos coletados durante a investigação OSINT:
 
 Era hora de ir além do reconhecimento passivo e interagir diretamente com os sistemas web. Cada IP seria alvo de enumeração ativa: scan de portas, análise detalhada de serviços HTTP/HTTPS, enumeração de diretórios, banner grabbing, e análise de APIs.
 
 *"Vamos ver o que esses servidores web realmente estão executando. Apache? Nginx? IIS? Que versões? Que tecnologias? Que endpoints estão expostos? Cada serviço conta uma história diferente sobre como a aplicação foi configurada."*
 
 ---
-
-## 🎯 Objetivos do Aluno
-
-Ao completar este laboratório, você será capaz de:
-
-1. **Identificar serviços ativos** em servidores web usando scan de portas
-2. **Enumerar serviços HTTP/HTTPS** para descobrir tecnologias e versões
-3. **Analisar APIs** para descobrir endpoints e métodos expostos
-4. **Realizar enumeração de diretórios** para descobrir arquivos sensíveis
-5. **Executar banner grabbing** para identificar versões exatas de software
-6. **Documentar achados** de forma profissional e estruturada
-7. **Propor mitigações** baseadas em vulnerabilidades descobertas
-
----
-
-## 🛠️ Ferramentas Permitidas
-
-Este laboratório utiliza as seguintes ferramentas:
-
-- **nmap** — Scanner de portas e serviços (versão e scripts NSE)
-- **rustscan** — Scanner rápido de portas para identificação inicial
-- **curl** — Cliente HTTP para requisições manuais e análise de headers
-- **httpx** — Ferramenta para análise rápida de serviços HTTP/HTTPS
-- **gobuster** — Enumeração de diretórios e arquivos web
-- **nikto** — Scanner de vulnerabilidades web
-- **netcat (nc)** — Ferramenta para banner grabbing manual
-- **jq** — Processador JSON para análise de APIs
-- **whatweb** — Identificação de tecnologias web
-
----
-
-## 📋 Checklist de Entregáveis
-
-Ao final deste laboratório, você deve ter os seguintes arquivos:
-
-### Arquivos de Evidências
-
-- `rustscan_<IP>.gnmap` — Resultado do scan rápido de portas
-- `nmap_<IP>.txt` — Resultado do scan detalhado com versões
-- `httpx_<IP>.txt` — Análise de serviços HTTP/HTTPS
-- `whatweb_<IP>.txt` — Identificação de tecnologias web
-- `gobuster_<IP>.txt` — Enumeração de diretórios e arquivos
-- `curl_headers_<IP>.txt` — Headers HTTP detalhados
-- `api_endpoints_<IP>.txt` — Endpoints de API descobertos
-- `nikto_<IP>.txt` — Scan de vulnerabilidades web
-- `banner_<IP>_<port>.txt` — Banners capturados manualmente
-
-### Documentação
-
-- `notes.md` — Documentação estruturada contendo:
-  - **Resumo Executivo**: 3 achados principais com descrição clara
-  - **Análise de Risco**: Classificação de severidade (baixa/média/alta/crítica)
-  - **3 Recomendações de Mitigação**: Ações práticas e objetivas
-
-### Estrutura de Diretórios
-
-```
-/home/kali/investigations/acme-corp/
-├── results/
-│   ├── <IP_1>/
-│   │   ├── nmap_<IP_1>.txt
-│   │   ├── httpx_<IP_1>.txt
-│   │   ├── whatweb_<IP_1>.txt
-│   │   ├── gobuster_<IP_1>.txt
-│   │   └── ...
-│   ├── <IP_2>/
-│   │   └── ...
-└── notes.md
-```
-
----
-
-## 🔬 Preparando o Ambiente
-
-### "Organização é a chave para um trabalho eficiente"
 
 Alex sempre começava criando uma estrutura organizada. Isso facilitaria a análise posterior e garantiria que nenhuma evidência fosse perdida.
 
@@ -135,8 +52,6 @@ Alex precisava dos IPs reais dos servidores. Como os domínios usam redirecionam
 *"Cada IP terá sua própria pasta. Cada serviço, seu próprio arquivo de evidência."*
 
 ---
-
-## 🚀 Passo 1: Reconhecimento Rápido de Portas
 
 ### "Primeiro, descubra o que está aberto"
 
