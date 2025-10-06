@@ -1,58 +1,52 @@
 # HACKER STORY — Aula 40: Metasploit básico
 
-**Contexto:** Alex já fez OSINT e enumeração ativa nos passos anteriores (Aulas 38/39). Hoje ele usará Metasploit apenas como ferramenta de inventário e PoC controlada. Lembre: somente contra https://acme-corp-lab.com/ ou ambientes locais isolados.
+Alex empurra a cadeira, toma um gole de café e encara a lista de IPs permitidos sobre a mesa. “Hoje não é sobre explorar”, pensa. “É sobre enxergar com nitidez.” O objetivo é transformar a enumeração das aulas anteriores em um inventário confiável: versões, serviços, evidências — munição organizada.
 
-**Cenário:** Alex tem uma lista de IPs autorizados (ex.: `targets.txt`) e quer transformar esses dados em um inventário estruturado, correlacionando versões com CVEs e documentando evidências.
-
----
-
-## Passo a passo (execute conforme lê)
-
-### 1) Preparar ambiente
+Ele liga o laboratório. Nada de glamour, só disciplina:
 
 ```bash
-# subir containers
 docker-compose up -d --build
-
-# entrar no Kali
 docker exec -it kensei_kali /bin/bash
 cd /home/kali/investigations
 ```
 
-### 2) Iniciar Metasploit e DB
+O terminal devolve aquele silêncio confortável de quem está pronto. Alex respira fundo e convoca o arsenal.
 
 ```bash
-# dentro do container metasploit (ou via docker exec)
-msfdb init
 msfconsole
 ```
 
-No `msfconsole`:
+O prompt do Metasploit surge. Primeiro, ele testa o pulso do banco: conexão é vida.
 
 ```text
-msf6 > db_status           # verificar conexão com o DB
+msf6 > db_status
 msf6 > workspace -a acme_investigation
 msf6 > setg RHOSTS_FILE /home/kali/investigations/targets.txt
 ```
 
-### 3) Scanner HTTP version (exemplo controlado)
+“Sem pressa, mas sem pausa.” Alex decide começar pelo que mais expõe versões de cara: HTTP. Ele prepara o módulo como quem ajusta a mira.
 
 ```text
 msf6 > use auxiliary/scanner/http/http_version
 msf6 auxiliary(http_version) > set RHOSTS 10.10.10.5,10.10.10.6   # substitua por IPs autorizados
 msf6 auxiliary(http_version) > set THREADS 8
+msf6 auxiliary(http_version) > spool /home/kali/investigations/msf_scan_http_version.txt
 msf6 auxiliary(http_version) > run
+msf6 auxiliary(http_version) > spool off
 ```
 
-> Salve a saída com `spool /msf/results/msf_scan_http_version.txt` antes de rodar e `spool off` ao terminar.
+Cada banner é uma história, cada número de versão, uma trilha. Alex deixa o arquivo de saída onde precisa estar: na pasta sincronizada com o host. Sem atritos.
 
-### 4) Outros scanners úteis
+Ele amplia o reconhecimento. “Cada serviço revela um pedaço diferente do quebra-cabeça.”
 
-- `auxiliary/scanner/http/robots_txt`
-- `auxiliary/scanner/ssh/ssh_version`
-- `auxiliary/scanner/smb/smb_version`
+```text
+# Outras sondas úteis
+msf6 > use auxiliary/scanner/http/robots_txt
+msf6 > use auxiliary/scanner/ssh/ssh_version
+msf6 > use auxiliary/scanner/smb/smb_version
+```
 
-Exemplo SSH:
+Quando quer foco, Alex escolhe um alvo por vez. Para SSH, ele trata cada conexão como uma entrevista objetiva:
 
 ```text
 msf6 > use auxiliary/scanner/ssh/ssh_version
@@ -60,26 +54,28 @@ msf6 auxiliary(ssh_version) > set RHOSTS 10.10.10.5
 msf6 auxiliary(ssh_version) > run
 ```
 
-### 5) Exportar DB / evidências
+Com o terreno mapeado, é hora de preservar. Evidência que não é exportada é memória volátil.
 
 ```text
-msf6 > db_export /msf/results/db_export_msf.xml
-# no shell do host
-docker cp kensei_msf:/msf/results/db_export_msf.xml ./results/
+msf6 > db_export /home/kali/investigations/db_export_msf.xml
 ```
 
-### 6) Preencher `module_list_tested.txt`
+Sem cópias extras: a pasta `investigations` já está montada no host como `workspace/`. Alex gosta quando as coisas simplesmente… aparecem onde deveriam.
 
-Formato recomendado:
+Antes de encerrar, ele registra o diário da missão. Frio, objetivo, reprodutível — como deve ser.
 
 ```
-<módulo> | RHOSTS=... | RPORT=... | THREADS=... | justificativa curta
+# Exemplo de linha no module_list_tested.txt
+auxiliary/scanner/http/http_version | RHOSTS=10.10.10.5,10.10.10.6 | RPORT=80,443 | THREADS=8 | Inventário de versões HTTP
+auxiliary/scanner/ssh/ssh_version  | RHOSTS=10.10.10.5            | RPORT=22     | THREADS=4 | Versão de SSH para correlação
 ```
+
+Ele recosta. Missão limpa. Sem barulho desnecessário, só o suficiente para transformar dados em inteligência.
 
 ---
 
 ## Notas de ética e segurança
 
-- **Autorização:** confirmar autorização escrita do instrutor para quaisquer testes além de scans passivos/auxiliares.
+- **Autorização:** confirme autorização escrita do instrutor para quaisquer testes além de scans passivos/auxiliares.
 - **Exploração:** não execute módulos `exploit/*` contra `acme-corp-lab.com` sem autorização assinada e snapshots.
 - **Isolamento:** use imagens Metasploitable locais para PoC de exploração.
