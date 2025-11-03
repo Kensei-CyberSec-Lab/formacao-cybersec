@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # Kali Linux CLI - Terminal-based environment
+  kali-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali-cli
+    container_name: kali-cli
+    hostname: kali-cli
+    networks:
+      - pentest-network
+    volumes:
+      - kali-cli-home:/root
+      - kali-cli-tools:/opt/tools
+      - ../shared:/shared
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - DEBIAN_FRONTEND=noninteractive
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    privileged: false
+    
+  # Kali Linux GUI - VNC-based desktop environment  
+  kali-gui:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali-gui
+    container_name: kali-gui
+    hostname: kali-gui
+    ports:
+      - "5901:5901"   # VNC port
+      - "6080:6080"   # noVNC web interface
+    networks:
+      - pentest-network
+    volumes:
+      - kali-gui-home:/root
+      - kali-gui-tools:/opt/tools
+      - ../shared:/shared
+    environment:
+      - VNC_PASSWORD=kalilinux
+      - VNC_GEOMETRY=1920x1080
+      - VNC_DEPTH=24
+      - DEBIAN_FRONTEND=noninteractive
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    privileged: false
+
+networks:
+  pentest-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+          gateway: 172.20.0.1
+
+volumes:
+  kali-cli-home:
+    driver: local
+  kali-cli-tools:
+    driver: local
+  kali-gui-home:
+    driver: local
+  kali-gui-tools:
+    driver: local

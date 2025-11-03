@@ -1,0 +1,273 @@
+# Kali Linux CLI - Complete penetration testing environment
+FROM kalilinux/kali-rolling:latest
+
+# Avoid interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TERM=xterm-256color
+
+# Set locale
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+# Update system and install essential packages
+RUN apt-get update -y && \
+    apt-get dist-upgrade -y && \
+    apt-get install -y \
+        locales \
+        wget \
+        curl \
+        git \
+        vim \
+        nano \
+        tmux \
+        screen \
+        htop \
+        tree \
+        unzip \
+        zip \
+        p7zip-full \
+        build-essential \
+        python3 \
+        python3-pip \
+        python3-dev \
+        python2 \
+        python2-dev \
+        ruby \
+        ruby-dev \
+        golang \
+        nodejs \
+        npm \
+        default-jdk \
+        openjdk-11-jdk \
+        openjdk-17-jdk \
+        ca-certificates \
+        gnupg \
+        lsb-release \
+        software-properties-common \
+        apt-transport-https
+
+# Configure locale
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+
+# Install Kali Linux metapackages for comprehensive tool coverage
+RUN apt-get install -y \
+        kali-tools-top10 \
+        kali-tools-web \
+        kali-tools-database \
+        kali-tools-passwords \
+        kali-tools-wireless \
+        kali-tools-reverse-engineering \
+        kali-tools-exploitation \
+        kali-tools-social-engineering \
+        kali-tools-sniffing-spoofing \
+        kali-tools-post-exploitation \
+        kali-tools-forensics \
+        kali-tools-reporting \
+        kali-tools-information-gathering \
+        kali-tools-vulnerability \
+        kali-linux-headless
+
+# Install additional essential penetration testing tools
+RUN apt-get install -y \
+        # Network tools
+        nmap \
+        masscan \
+        zmap \
+        netcat-traditional \
+        socat \
+        netdiscover \
+        arp-scan \
+        fping \
+        hping3 \
+        traceroute \
+        dnsutils \
+        dnsrecon \
+        fierce \
+        # Web application tools
+        burpsuite \
+        zaproxy \
+        nikto \
+        dirb \
+        dirbuster \
+        gobuster \
+        ffuf \
+        wfuzz \
+        whatweb \
+        wafw00f \
+        sublist3r \
+        amass \
+        assetfinder \
+        httpx-toolkit \
+        # Exploitation frameworks
+        metasploit-framework \
+        exploit-db \
+        searchsploit \
+        sqlmap \
+        commix \
+        # Password attacks
+        john \
+        hashcat \
+        hydra \
+        medusa \
+        ncrack \
+        patator \
+        # Wireless tools
+        aircrack-ng \
+        reaver \
+        bully \
+        kismet \
+        hostapd \
+        dnsmasq \
+        # Forensics and analysis
+        volatility3 \
+        autopsy \
+        sleuthkit \
+        binwalk \
+        foremost \
+        exiftool \
+        strings \
+        file \
+        # Reverse engineering
+        radare2 \
+        gdb \
+        gdb-peda \
+        ltrace \
+        strace \
+        objdump \
+        # Social engineering
+        set \
+        king-phisher \
+        # Post exploitation
+        powershell \
+        empire \
+        # Network sniffing
+        wireshark \
+        tshark \
+        tcpdump \
+        ettercap-text-only \
+        dsniff
+
+# Install additional Python tools via pip
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install \
+        impacket \
+        bloodhound \
+        crackmapexec \
+        nuclei-templates \
+        pwntools \
+        requests \
+        beautifulsoup4 \
+        scapy \
+        paramiko \
+        pycrypto \
+        colorama \
+        termcolor \
+        tqdm \
+        keyboard \
+        psutil \
+        python-nmap \
+        shodan \
+        censys \
+        dnspython \
+        flask \
+        django \
+        jupyter \
+        ipython
+
+# Install additional tools from GitHub
+RUN mkdir -p /opt/tools && cd /opt/tools && \
+    # Install nuclei
+    wget -q https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_2.9.15_linux_amd64.zip && \
+    unzip nuclei_2.9.15_linux_amd64.zip && \
+    mv nuclei /usr/local/bin/ && \
+    rm nuclei_2.9.15_linux_amd64.zip && \
+    # Install subfinder
+    wget -q https://github.com/projectdiscovery/subfinder/releases/latest/download/subfinder_2.6.3_linux_amd64.zip && \
+    unzip subfinder_2.6.3_linux_amd64.zip && \
+    mv subfinder /usr/local/bin/ && \
+    rm subfinder_2.6.3_linux_amd64.zip && \
+    # Install httpx
+    wget -q https://github.com/projectdiscovery/httpx/releases/latest/download/httpx_1.3.7_linux_amd64.zip && \
+    unzip httpx_1.3.7_linux_amd64.zip && \
+    mv httpx /usr/local/bin/ && \
+    rm httpx_1.3.7_linux_amd64.zip && \
+    # Install naabu
+    wget -q https://github.com/projectdiscovery/naabu/releases/latest/download/naabu_2.1.8_linux_amd64.zip && \
+    unzip naabu_2.1.8_linux_amd64.zip && \
+    mv naabu /usr/local/bin/ && \
+    rm naabu_2.1.8_linux_amd64.zip
+
+# Clone useful repositories
+RUN cd /opt/tools && \
+    git clone https://github.com/SecureAuthCorp/impacket.git && \
+    git clone https://github.com/rebootuser/LinEnum.git && \
+    git clone https://github.com/carlospolop/PEASS-ng.git && \
+    git clone https://github.com/PowerShellMafia/PowerSploit.git && \
+    git clone https://github.com/samratashok/nishang.git && \
+    git clone https://github.com/pentestmonkey/php-reverse-shell.git && \
+    git clone https://github.com/swisskyrepo/PayloadsAllTheThings.git && \
+    git clone https://github.com/danielmiessler/SecLists.git && \
+    git clone https://github.com/fuzzdb-project/fuzzdb.git
+
+# Install Metasploit and update
+RUN msfdb init && \
+    msfupdate
+
+# Configure tmux for better terminal experience
+RUN echo 'set -g mouse on' > /root/.tmux.conf && \
+    echo 'set -g history-limit 10000' >> /root/.tmux.conf && \
+    echo 'set -g default-terminal "screen-256color"' >> /root/.tmux.conf
+
+# Configure bash with useful aliases
+RUN echo 'alias ll="ls -la"' >> /root/.bashrc && \
+    echo 'alias la="ls -la"' >> /root/.bashrc && \
+    echo 'alias l="ls -l"' >> /root/.bashrc && \
+    echo 'alias ..="cd .."' >> /root/.bashrc && \
+    echo 'alias ...="cd ../.."' >> /root/.bashrc && \
+    echo 'alias grep="grep --color=auto"' >> /root/.bashrc && \
+    echo 'alias egrep="egrep --color=auto"' >> /root/.bashrc && \
+    echo 'alias fgrep="fgrep --color=auto"' >> /root/.bashrc && \
+    echo 'alias nmap="nmap --reason --open --stats-every 3m --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit"' >> /root/.bashrc && \
+    echo 'export PATH=$PATH:/opt/tools' >> /root/.bashrc && \
+    echo 'export HISTSIZE=10000' >> /root/.bashrc && \
+    echo 'export HISTFILESIZE=10000' >> /root/.bashrc && \
+    echo 'cd /root' >> /root/.bashrc
+
+# Create useful directories
+RUN mkdir -p /root/{scripts,wordlists,exploits,loot,notes} && \
+    mkdir -p /opt/tools/custom
+
+# Set up wordlists symlinks for easy access
+RUN ln -sf /usr/share/wordlists /root/wordlists/kali && \
+    ln -sf /opt/tools/SecLists /root/wordlists/seclists && \
+    ln -sf /opt/tools/fuzzdb /root/wordlists/fuzzdb
+
+# Clean up
+RUN apt-get autoremove -y && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Set working directory
+WORKDIR /root
+
+# Create startup script
+RUN echo '#!/bin/bash' > /root/startup.sh && \
+    echo 'echo "=========================================="' >> /root/startup.sh && \
+    echo 'echo "🐉 Kali Linux CLI - Penetration Testing Environment"' >> /root/startup.sh && \
+    echo 'echo "=========================================="' >> /root/startup.sh && \
+    echo 'echo "Tools available in /opt/tools"' >> /root/startup.sh && \
+    echo 'echo "Wordlists available in /root/wordlists"' >> /root/startup.sh && \
+    echo 'echo "Shared folder: /shared"' >> /root/startup.sh && \
+    echo 'echo "=========================================="' >> /root/startup.sh && \
+    echo 'echo "Quick commands:"' >> /root/startup.sh && \
+    echo 'echo "  nmap -sC -sV <target>    # Service scan"' >> /root/startup.sh && \
+    echo 'echo "  gobuster dir -u <url> -w /root/wordlists/kali/dirb/common.txt"' >> /root/startup.sh && \
+    echo 'echo "  msfconsole               # Metasploit"' >> /root/startup.sh && \
+    echo 'echo "  sqlmap -u <url>          # SQL injection"' >> /root/startup.sh && \
+    echo 'echo "=========================================="' >> /root/startup.sh && \
+    echo '/bin/bash' >> /root/startup.sh && \
+    chmod +x /root/startup.sh
+
+# Default command
+CMD ["/root/startup.sh"]

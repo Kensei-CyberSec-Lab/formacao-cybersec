@@ -1,0 +1,37 @@
+# Dockerignore for Kali Linux containers
+
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Scripts
+*.sh
+!setup.sh
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts  
+*.tar.gz
+*.zip
+*.deb
