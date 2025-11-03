@@ -11,6 +11,12 @@ WORKDIR /root
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Atualiza, instala as ferramentas necessárias (incluindo o cargo) e compila o RustScan
+
+# ---- INÍCIO DA CORREÇÃO ----
+# Força o uso dos repositórios oficiais do Kali para evitar mirrors quebrados.
+RUN echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" > /etc/apt/sources.list
+# ---- FIM DA CORREÇÃO ----
+
 RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
