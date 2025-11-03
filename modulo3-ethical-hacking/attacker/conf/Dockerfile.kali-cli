@@ -39,7 +39,6 @@ RUN apt-get update -y && \
         npm \
         default-jdk \
         openjdk-11-jdk \
-        openjdk-17-jdk \
         ca-certificates \
         gnupg \
         lsb-release \
