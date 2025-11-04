@@ -1,0 +1,19 @@
+name: ci
+on:
+  push: { branches: ["**"] }
+  pull_request:
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install linters
+        run: sudo apt-get update && sudo apt-get install -y shellcheck yamllint
+      - name: ShellCheck
+        run: shellcheck ./suricata/*.sh ./scripts/*.sh
+      - name: YAML lint
+        run: yamllint -d "{extends: default, rules: {line-length: disable}}" ./suricata/suricata.yaml
+      - name: Validate Suricata config (-T)
+        run: |
+          docker run --rm -v "$PWD":/work oisf/suricata:latest \
+            suricata -T -c /work/suricata/suricata.yaml -S /work/suricata/rules/local.rules
