@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Kali Linux CLI - Terminal-based environment
   kali-cli:
