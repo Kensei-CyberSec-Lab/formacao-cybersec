@@ -1,3 +1,5 @@
+name: attacker-environment
+
 services:
   # Kali Linux CLI - Terminal-based environment
   kali-cli:

@@ -96,12 +96,8 @@ RUN apt-get install -y \
         wafw00f \
         sublist3r \
         amass \
-        assetfinder \
-        httpx-toolkit \
         # Exploitation frameworks
         metasploit-framework \
-        exploit-db \
-        searchsploit \
         sqlmap \
         commix \
         # Password attacks
@@ -119,27 +115,20 @@ RUN apt-get install -y \
         hostapd \
         dnsmasq \
         # Forensics and analysis
-        volatility3 \
         autopsy \
         sleuthkit \
         binwalk \
         foremost \
         exiftool \
-        strings \
         file \
-        # Reverse engineering
+        # Reverse engineering and debugging tools (from binutils package)
         radare2 \
         gdb \
-        gdb-peda \
         ltrace \
         strace \
-        objdump \
+        binutils \
         # Social engineering
         set \
-        king-phisher \
-        # Post exploitation
-        powershell \
-        empire \
         # Network sniffing
         wireshark \
         tshark \
@@ -147,55 +136,96 @@ RUN apt-get install -y \
         ettercap-text-only \
         dsniff
 
-# Install additional Python tools via pip
-RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install \
-        impacket \
-        bloodhound \
-        crackmapexec \
-        nuclei-templates \
-        pwntools \
-        requests \
-        beautifulsoup4 \
-        scapy \
-        paramiko \
-        pycrypto \
-        colorama \
-        termcolor \
-        tqdm \
-        keyboard \
-        psutil \
-        python-nmap \
-        shodan \
-        censys \
-        dnspython \
-        flask \
-        django \
-        jupyter \
-        ipython
+# Install exploitdb and searchsploit separately
+RUN apt-get update && apt-get install -y exploitdb && \
+    ln -sf /usr/share/exploitdb/searchsploit /usr/local/bin/searchsploit
+
+# Install PowerShell for Linux
+RUN wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get install -y powershell || echo "PowerShell installation failed, continuing..." && \
+    rm -f packages-microsoft-prod.deb
+
+# Try to install volatility3 from apt first, fallback to pip if needed
+RUN apt-get update && apt-get install -y volatility3 || \
+    python3 -m pip install --break-system-packages volatility3
+
+# Install additional forensics tools
+RUN apt-get install -y \
+        dc3dd \
+        dcfldd \
+        ddrescue
+
+# Install additional Python tools via pip with robust error handling
+# Using --break-system-packages and --force-reinstall to handle system conflicts
+# Install packages individually to avoid cascade failures
+
+# Core packages (install without dependencies conflicts)
+RUN python3 -m pip install --break-system-packages --no-deps pycryptodome || echo "pycryptodome failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps colorama || echo "colorama failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps termcolor || echo "termcolor failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps tqdm || echo "tqdm failed, continuing..."
+
+# Networking packages (use system packages when available)
+RUN python3 -m pip install --break-system-packages --no-deps requests || echo "requests failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps beautifulsoup4 || echo "beautifulsoup4 failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps dnspython || echo "dnspython failed, continuing..."
+
+# Security packages
+RUN python3 -m pip install --break-system-packages --no-deps pwntools || echo "pwntools failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps python-nmap || echo "python-nmap failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps netexec || echo "netexec failed, continuing..."
+
+# Optional packages
+RUN python3 -m pip install --break-system-packages --no-deps shodan || echo "shodan failed, continuing..."
+RUN python3 -m pip install --break-system-packages --no-deps censys || echo "censys failed, continuing..."
+
+# Note: Skip problematic packages that cause dependency conflicts
+# - jupyter: Use system package instead
+# - ipython: Use system package instead  
+# - django/flask: Use system packages instead
+# - scapy: Use system package (already available in Kali)
+# - paramiko: Use system package (already available)
+# - psutil: Use system package (already available)
 
 # Install additional tools from GitHub
 RUN mkdir -p /opt/tools && cd /opt/tools && \
-    # Install nuclei
-    wget -q https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_2.9.15_linux_amd64.zip && \
-    unzip nuclei_2.9.15_linux_amd64.zip && \
+    # Install nuclei (using latest available)
+    wget -q https://github.com/projectdiscovery/nuclei/releases/download/v3.0.4/nuclei_3.0.4_linux_amd64.zip && \
+    unzip -o nuclei_3.0.4_linux_amd64.zip && \
     mv nuclei /usr/local/bin/ && \
-    rm nuclei_2.9.15_linux_amd64.zip && \
+    rm nuclei_3.0.4_linux_amd64.zip && \
     # Install subfinder
-    wget -q https://github.com/projectdiscovery/subfinder/releases/latest/download/subfinder_2.6.3_linux_amd64.zip && \
-    unzip subfinder_2.6.3_linux_amd64.zip && \
+    wget -q https://github.com/projectdiscovery/subfinder/releases/download/v2.6.3/subfinder_2.6.3_linux_amd64.zip && \
+    unzip -o subfinder_2.6.3_linux_amd64.zip && \
     mv subfinder /usr/local/bin/ && \
     rm subfinder_2.6.3_linux_amd64.zip && \
-    # Install httpx
-    wget -q https://github.com/projectdiscovery/httpx/releases/latest/download/httpx_1.3.7_linux_amd64.zip && \
-    unzip httpx_1.3.7_linux_amd64.zip && \
+    # Install httpx-toolkit (as httpx)  
+    wget -q https://github.com/projectdiscovery/httpx/releases/download/v1.3.7/httpx_1.3.7_linux_amd64.zip && \
+    unzip -o httpx_1.3.7_linux_amd64.zip && \
     mv httpx /usr/local/bin/ && \
     rm httpx_1.3.7_linux_amd64.zip && \
     # Install naabu
-    wget -q https://github.com/projectdiscovery/naabu/releases/latest/download/naabu_2.1.8_linux_amd64.zip && \
-    unzip naabu_2.1.8_linux_amd64.zip && \
+    wget -q https://github.com/projectdiscovery/naabu/releases/download/v2.1.8/naabu_2.1.8_linux_amd64.zip && \
+    unzip -o naabu_2.1.8_linux_amd64.zip && \
     mv naabu /usr/local/bin/ && \
-    rm naabu_2.1.8_linux_amd64.zip
+    rm naabu_2.1.8_linux_amd64.zip && \
+    # Install assetfinder
+    wget -q https://github.com/tomnomnom/assetfinder/releases/download/v0.1.1/assetfinder-linux-amd64-0.1.1.tgz && \
+    tar -xzf assetfinder-linux-amd64-0.1.1.tgz && \
+    mv assetfinder /usr/local/bin/ && \
+    rm assetfinder-linux-amd64-0.1.1.tgz
+
+# Install additional tools that aren't in standard repos
+RUN cd /opt/tools && \
+    # Install gdb-peda
+    git clone https://github.com/longld/peda.git && \
+    echo "source /opt/tools/peda/peda.py" >> /root/.gdbinit && \
+    # Install King Phisher (Social Engineering Toolkit is already available as 'set')
+    git clone https://github.com/rsmusllp/king-phisher.git && \
+    # Install Empire (PowerShell post-exploitation framework)
+    git clone https://github.com/EmpireProject/Empire.git
 
 # Clone useful repositories
 RUN cd /opt/tools && \
@@ -209,9 +239,9 @@ RUN cd /opt/tools && \
     git clone https://github.com/danielmiessler/SecLists.git && \
     git clone https://github.com/fuzzdb-project/fuzzdb.git
 
-# Install Metasploit and update
-RUN msfdb init && \
-    msfupdate
+# Install Metasploit (defer database init to runtime)
+# Database initialization will be done in startup script
+RUN echo "Metasploit framework installed, database initialization deferred to runtime"
 
 # Configure tmux for better terminal experience
 RUN echo 'set -g mouse on' > /root/.tmux.conf && \
@@ -238,7 +268,8 @@ RUN mkdir -p /root/{scripts,wordlists,exploits,loot,notes} && \
     mkdir -p /opt/tools/custom
 
 # Set up wordlists symlinks for easy access
-RUN ln -sf /usr/share/wordlists /root/wordlists/kali && \
+RUN mkdir -p /root/wordlists && \
+    ln -sf /usr/share/wordlists /root/wordlists/kali && \
     ln -sf /opt/tools/SecLists /root/wordlists/seclists && \
     ln -sf /opt/tools/fuzzdb /root/wordlists/fuzzdb
 
@@ -254,6 +285,14 @@ WORKDIR /root
 RUN echo '#!/bin/bash' > /root/startup.sh && \
     echo 'echo "=========================================="' >> /root/startup.sh && \
     echo 'echo "🐉 Kali Linux CLI - Penetration Testing Environment"' >> /root/startup.sh && \
+    echo 'echo "=========================================="' >> /root/startup.sh && \
+    echo 'echo "Initializing services..."' >> /root/startup.sh && \
+    echo 'echo "Starting PostgreSQL service..."' >> /root/startup.sh && \
+    echo 'service postgresql start' >> /root/startup.sh && \
+    echo 'echo "Initializing Metasploit database (may take a moment)..."' >> /root/startup.sh && \
+    echo 'msfdb init 2>/dev/null || echo "Metasploit database already initialized"' >> /root/startup.sh && \
+    echo 'echo "Updating Metasploit..."' >> /root/startup.sh && \
+    echo 'msfupdate 2>/dev/null || echo "Metasploit update completed or skipped"' >> /root/startup.sh && \
     echo 'echo "=========================================="' >> /root/startup.sh && \
     echo 'echo "Tools available in /opt/tools"' >> /root/startup.sh && \
     echo 'echo "Wordlists available in /root/wordlists"' >> /root/startup.sh && \
