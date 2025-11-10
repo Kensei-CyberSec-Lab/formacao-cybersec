@@ -1,354 +1,40 @@
-# Kali Linux GUI with VNC - Complete desktop environment for penetration testing
-FROM kalilinux/kali-rolling:latest
+# Simplified Kali GUI image based on the working lab_7 setup
+ARG KALI_IMAGE=kalilinux/kali-rolling
+FROM ${KALI_IMAGE}
 
-# Avoid interactive prompts during package installation
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TERM=xterm-256color
+ENV DEBIAN_FRONTEND=noninteractive \
+    TERM=xterm-256color \
+    DISPLAY=:1 \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    VNC_PASSWORD=kalilinux \
+    VNC_GEOMETRY=1280x800 \
+    VNC_DEPTH=24
 
-# Set VNC environment variables
-ENV VNC_PASSWORD=kalilinux
-ENV VNC_GEOMETRY=1920x1080
-ENV VNC_DEPTH=24
-ENV DISPLAY=:1
+# Force the official HTTP mirror to avoid flaky mirrors
+RUN echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" > /etc/apt/sources.list
 
-# Set locale
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-
-# Update system and install essential packages
-RUN apt-get update -y && \
-    apt-get dist-upgrade -y && \
+# Install XFCE desktop, VNC server and noVNC bridge
+RUN apt-get update && \
     apt-get install -y \
-        locales \
-        wget \
-        curl \
-        git \
-        vim \
-        nano \
-        unzip \
-        zip \
-        p7zip-full \
-        build-essential \
-        python3 \
-        python3-pip \
-        python3-dev \
-        python2 \
-        python2-dev \
-        ruby \
-        ruby-dev \
-        golang \
-        nodejs \
-        npm \
-        default-jdk \
-        openjdk-11-jdk \
-        ca-certificates \
-        gnupg \
-        lsb-release \
-        software-properties-common \
-        apt-transport-https
-
-# Configure locale
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    locale-gen
-
-# Install VNC and desktop environment
-RUN apt-get install -y \
-        tigervnc-standalone-server \
-        tigervnc-common \
+        kali-desktop-xfce \
+        kali-linux-default \
+        tightvncserver \
         novnc \
         websockify \
-        supervisor \
-        xfce4 \
-        xfce4-goodies \
-        xfce4-terminal \
-        firefox-esr \
-        chromium \
         dbus-x11 \
         x11-xserver-utils \
-        x11-utils \
-        xauth \
-        xfonts-base \
-        xfonts-75dpi \
-        xfonts-100dpi
+        xfce4-terminal && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install Kali Linux metapackages for comprehensive tool coverage
-RUN apt-get install -y \
-        kali-tools-top10 \
-        kali-tools-web \
-        kali-tools-database \
-        kali-tools-passwords \
-        kali-tools-wireless \
-        kali-tools-reverse-engineering \
-        kali-tools-exploitation \
-        kali-tools-social-engineering \
-        kali-tools-sniffing-spoofing \
-        kali-tools-post-exploitation \
-        kali-tools-forensics \
-        kali-tools-reporting \
-        kali-tools-information-gathering \
-        kali-tools-vulnerability \
-        kali-linux-default
+# Provide the same VNC startup flow used in lab_7
+COPY xstartup /opt/vnc/xstartup
+RUN chmod +x /opt/vnc/xstartup
 
-# Install GUI-specific penetration testing tools
-RUN apt-get install -y \
-        # Network tools
-        nmap \
-        masscan \
-        zmap \
-        netcat-traditional \
-        socat \
-        netdiscover \
-        arp-scan \
-        fping \
-        hping3 \
-        traceroute \
-        dnsutils \
-        dnsrecon \
-        fierce \
-        # Web application tools
-        burpsuite \
-        zaproxy \
-        nikto \
-        dirb \
-        dirbuster \
-        gobuster \
-        ffuf \
-        wfuzz \
-        whatweb \
-        wafw00f \
-        sublist3r \
-        amass \
-        assetfinder \
-        httpx-toolkit \
-        # Exploitation frameworks
-        metasploit-framework \
-        exploit-db \
-        searchsploit \
-        sqlmap \
-        commix \
-        # Password attacks
-        john \
-        hashcat \
-        hydra \
-        medusa \
-        ncrack \
-        patator \
-        # Wireless tools
-        aircrack-ng \
-        reaver \
-        bully \
-        kismet \
-        hostapd \
-        dnsmasq \
-        # Forensics and analysis
-        volatility3 \
-        autopsy \
-        sleuthkit \
-        binwalk \
-        foremost \
-        exiftool \
-        strings \
-        file \
-        # Reverse engineering
-        radare2 \
-        ghidra \
-        gdb \
-        gdb-peda \
-        ltrace \
-        strace \
-        objdump \
-        # Social engineering
-        set \
-        king-phisher \
-        # Post exploitation
-        powershell \
-        empire \
-        # Network sniffing
-        wireshark \
-        tshark \
-        tcpdump \
-        ettercap-graphical \
-        dsniff \
-        # Additional GUI tools
-        maltego \
-        cherrytree \
-        keepassxc \
-        gimp \
-        libreoffice
+COPY start-vnc.sh /usr/local/bin/start-vnc.sh
+RUN chmod +x /usr/local/bin/start-vnc.sh
 
-# Install additional Python tools via pip
-RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install \
-        impacket \
-        bloodhound \
-        crackmapexec \
-        nuclei-templates \
-        pwntools \
-        requests \
-        beautifulsoup4 \
-        scapy \
-        paramiko \
-        pycrypto \
-        colorama \
-        termcolor \
-        tqdm \
-        keyboard \
-        psutil \
-        python-nmap \
-        shodan \
-        censys \
-        dnspython \
-        flask \
-        django \
-        jupyter \
-        ipython
-
-# Install additional tools from GitHub
-RUN mkdir -p /opt/tools && cd /opt/tools && \
-    # Install nuclei
-    wget -q https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_2.9.15_linux_amd64.zip && \
-    unzip nuclei_2.9.15_linux_amd64.zip && \
-    mv nuclei /usr/local/bin/ && \
-    rm nuclei_2.9.15_linux_amd64.zip && \
-    # Install subfinder
-    wget -q https://github.com/projectdiscovery/subfinder/releases/latest/download/subfinder_2.6.3_linux_amd64.zip && \
-    unzip subfinder_2.6.3_linux_amd64.zip && \
-    mv subfinder /usr/local/bin/ && \
-    rm subfinder_2.6.3_linux_amd64.zip && \
-    # Install httpx
-    wget -q https://github.com/projectdiscovery/httpx/releases/latest/download/httpx_1.3.7_linux_amd64.zip && \
-    unzip httpx_1.3.7_linux_amd64.zip && \
-    mv httpx /usr/local/bin/ && \
-    rm httpx_1.3.7_linux_amd64.zip && \
-    # Install naabu
-    wget -q https://github.com/projectdiscovery/naabu/releases/latest/download/naabu_2.1.8_linux_amd64.zip && \
-    unzip naabu_2.1.8_linux_amd64.zip && \
-    mv naabu /usr/local/bin/ && \
-    rm naabu_2.1.8_linux_amd64.zip
-
-# Clone useful repositories
-RUN cd /opt/tools && \
-    git clone https://github.com/SecureAuthCorp/impacket.git && \
-    git clone https://github.com/rebootuser/LinEnum.git && \
-    git clone https://github.com/carlospolop/PEASS-ng.git && \
-    git clone https://github.com/PowerShellMafia/PowerSploit.git && \
-    git clone https://github.com/samratashok/nishang.git && \
-    git clone https://github.com/pentestmonkey/php-reverse-shell.git && \
-    git clone https://github.com/swisskyrepo/PayloadsAllTheThings.git && \
-    git clone https://github.com/danielmiessler/SecLists.git && \
-    git clone https://github.com/fuzzdb-project/fuzzdb.git
-
-# Install Metasploit and update
-RUN msfdb init && \
-    msfupdate
-
-# Configure VNC
-RUN mkdir -p /root/.vnc && \
-    echo "$VNC_PASSWORD" | vncpasswd -f > /root/.vnc/passwd && \
-    chmod 600 /root/.vnc/passwd
-
-# Create VNC startup script
-RUN echo '#!/bin/bash' > /root/.vnc/xstartup && \
-    echo 'unset SESSION_MANAGER' >> /root/.vnc/xstartup && \
-    echo 'unset DBUS_SESSION_BUS_ADDRESS' >> /root/.vnc/xstartup && \
-    echo '/etc/X11/xinit/xinitrc' >> /root/.vnc/xstartup && \
-    echo '[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup' >> /root/.vnc/xstartup && \
-    echo '[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources' >> /root/.vnc/xstartup && \
-    echo 'xsetroot -solid grey' >> /root/.vnc/xstartup && \
-    echo 'vncconfig -iconic &' >> /root/.vnc/xstartup && \
-    echo 'startxfce4 &' >> /root/.vnc/xstartup && \
-    chmod +x /root/.vnc/xstartup
-
-# Configure XFCE desktop
-RUN mkdir -p /root/.config/xfce4/xfconf/xfce-perchannel-xml && \
-    echo '<?xml version="1.0" encoding="UTF-8"?>' > /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml && \
-    echo '<channel name="xfce4-panel" version="1.0">' >> /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml && \
-    echo '  <property name="panels" type="uint" value="1"/>' >> /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml && \
-    echo '</channel>' >> /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-
-# Create desktop shortcuts for common tools
-RUN mkdir -p /root/Desktop && \
-    echo '[Desktop Entry]' > /root/Desktop/Terminal.desktop && \
-    echo 'Type=Application' >> /root/Desktop/Terminal.desktop && \
-    echo 'Name=Terminal' >> /root/Desktop/Terminal.desktop && \
-    echo 'Exec=xfce4-terminal' >> /root/Desktop/Terminal.desktop && \
-    echo 'Icon=utilities-terminal' >> /root/Desktop/Terminal.desktop && \
-    echo '' >> /root/Desktop/Terminal.desktop && \
-    echo '[Desktop Entry]' > /root/Desktop/Firefox.desktop && \
-    echo 'Type=Application' >> /root/Desktop/Firefox.desktop && \
-    echo 'Name=Firefox' >> /root/Desktop/Firefox.desktop && \
-    echo 'Exec=firefox-esr' >> /root/Desktop/Firefox.desktop && \
-    echo 'Icon=firefox-esr' >> /root/Desktop/Firefox.desktop && \
-    echo '' >> /root/Desktop/Firefox.desktop && \
-    echo '[Desktop Entry]' > /root/Desktop/Wireshark.desktop && \
-    echo 'Type=Application' >> /root/Desktop/Wireshark.desktop && \
-    echo 'Name=Wireshark' >> /root/Desktop/Wireshark.desktop && \
-    echo 'Exec=wireshark' >> /root/Desktop/Wireshark.desktop && \
-    echo 'Icon=wireshark' >> /root/Desktop/Wireshark.desktop && \
-    echo '' >> /root/Desktop/Wireshark.desktop && \
-    echo '[Desktop Entry]' > /root/Desktop/Burp-Suite.desktop && \
-    echo 'Type=Application' >> /root/Desktop/Burp-Suite.desktop && \
-    echo 'Name=Burp Suite' >> /root/Desktop/Burp-Suite.desktop && \
-    echo 'Exec=burpsuite' >> /root/Desktop/Burp-Suite.desktop && \
-    echo 'Icon=burpsuite' >> /root/Desktop/Burp-Suite.desktop && \
-    chmod +x /root/Desktop/*.desktop
-
-# Create supervisor configuration
-RUN mkdir -p /etc/supervisor/conf.d
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Create useful directories
-RUN mkdir -p /root/{scripts,wordlists,exploits,loot,notes} && \
-    mkdir -p /opt/tools/custom
-
-# Set up wordlists symlinks for easy access
-RUN ln -sf /usr/share/wordlists /root/wordlists/kali && \
-    ln -sf /opt/tools/SecLists /root/wordlists/seclists && \
-    ln -sf /opt/tools/fuzzdb /root/wordlists/fuzzdb
-
-# Configure bash with useful aliases
-RUN echo 'alias ll="ls -la"' >> /root/.bashrc && \
-    echo 'alias la="ls -la"' >> /root/.bashrc && \
-    echo 'alias l="ls -l"' >> /root/.bashrc && \
-    echo 'alias ..="cd .."' >> /root/.bashrc && \
-    echo 'alias ...="cd ../.."' >> /root/.bashrc && \
-    echo 'alias grep="grep --color=auto"' >> /root/.bashrc && \
-    echo 'alias egrep="egrep --color=auto"' >> /root/.bashrc && \
-    echo 'alias fgrep="fgrep --color=auto"' >> /root/.bashrc && \
-    echo 'alias nmap="nmap --reason --open --stats-every 3m --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit"' >> /root/.bashrc && \
-    echo 'export PATH=$PATH:/opt/tools' >> /root/.bashrc && \
-    echo 'export HISTSIZE=10000' >> /root/.bashrc && \
-    echo 'export HISTFILESIZE=10000' >> /root/.bashrc
-
-# Clean up
-RUN apt-get autoremove -y && \
-    apt-get autoclean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Set working directory
-WORKDIR /root
-
-# Expose VNC and noVNC ports
 EXPOSE 5901 6080
 
-# Create startup script
-RUN echo '#!/bin/bash' > /root/start-vnc.sh && \
-    echo 'echo "Starting VNC server..."' >> /root/start-vnc.sh && \
-    echo 'vncserver :1 -geometry $VNC_GEOMETRY -depth $VNC_DEPTH' >> /root/start-vnc.sh && \
-    echo 'echo "Starting noVNC web interface..."' >> /root/start-vnc.sh && \
-    echo 'websockify --web=/usr/share/novnc/ 6080 localhost:5901 &' >> /root/start-vnc.sh && \
-    echo 'echo "=========================================="' >> /root/start-vnc.sh && \
-    echo 'echo "🐉 Kali Linux GUI - VNC Environment"' >> /root/start-vnc.sh && \
-    echo 'echo "=========================================="' >> /root/start-vnc.sh && \
-    echo 'echo "VNC Server: localhost:5901"' >> /root/start-vnc.sh && \
-    echo 'echo "VNC Password: $VNC_PASSWORD"' >> /root/start-vnc.sh && \
-    echo 'echo "Web Interface: http://localhost:6080"' >> /root/start-vnc.sh && \
-    echo 'echo "=========================================="' >> /root/start-vnc.sh && \
-    echo 'echo "Available tools on desktop and in menu"' >> /root/start-vnc.sh && \
-    echo 'echo "Shared folder: /shared"' >> /root/start-vnc.sh && \
-    echo 'echo "=========================================="' >> /root/start-vnc.sh && \
-    echo 'tail -f /dev/null' >> /root/start-vnc.sh && \
-    chmod +x /root/start-vnc.sh
-
-# Default command
-CMD ["/root/start-vnc.sh"]
+CMD ["/usr/local/bin/start-vnc.sh"]

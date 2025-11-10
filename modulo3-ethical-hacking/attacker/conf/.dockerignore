@@ -11,6 +11,7 @@
 # Scripts
 *.sh
 !setup.sh
+!start-vnc.sh
 
 # IDE
 .vscode

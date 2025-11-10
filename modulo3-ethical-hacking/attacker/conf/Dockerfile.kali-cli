@@ -1,5 +1,6 @@
 # Kali Linux CLI - Complete penetration testing environment
-FROM kalilinux/kali-rolling:latest
+ARG KALI_IMAGE=kalilinux/kali-last-release:latest
+FROM ${KALI_IMAGE}
 
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -65,7 +66,8 @@ RUN apt-get install -y \
         kali-tools-reporting \
         kali-tools-information-gathering \
         kali-tools-vulnerability \
-        kali-linux-headless
+        kali-linux-headless \
+        kali-linux-everything
 
 # Install additional essential penetration testing tools
 RUN apt-get install -y \

@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.kali-cli
+      args:
+        KALI_IMAGE: ${KALI_IMAGE}
     container_name: kali-cli
     hostname: kali-cli
     networks:
@@ -33,6 +35,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.kali-gui
+      args:
+        KALI_IMAGE: ${KALI_IMAGE}
     container_name: kali-gui
     hostname: kali-gui
     ports:
